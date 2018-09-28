@@ -15,6 +15,12 @@ import { HomeComponent } from './components/home/home.component';
 import { AlertComponent } from './directives/alert/alert.component';
 import { routing } from './app.routing';
 import { HeaderComponent } from './components/header/header.component';
+import { UsersOrgComponent } from './components/users-org/users-org.component';
+import { ProductsPriceComponent } from './components/products-price/products-price.component';
+import { CataloguesComponent } from './components/catalogues/catalogues.component';
+import { FiltersComponent } from './components/filters/filters.component';
+import { StoreRegionComponent } from './components/store-region/store-region.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -23,7 +29,12 @@ import { HeaderComponent } from './components/header/header.component';
     LoginComponent,
     HomeComponent,
     AlertComponent,
-    HeaderComponent
+    HeaderComponent,
+    UsersOrgComponent,
+    ProductsPriceComponent,
+    CataloguesComponent,
+    FiltersComponent,
+    StoreRegionComponent
   ],
   imports: [
     BrowserModule,
@@ -31,7 +42,8 @@ import { HeaderComponent } from './components/header/header.component';
     HttpClientModule,
     BrowserAnimationsModule,
     FormsModule,
-    routing
+    routing,
+    NgbModule
   ],
   providers: [
     AuthGuard,

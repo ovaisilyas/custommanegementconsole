@@ -13,12 +13,12 @@
     <div class="col-lg-12">
       <nav class="custTabCls">
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
-          <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Home</a>
-          <a class="nav-item nav-link" id="nav-user-tab" data-toggle="tab" href="#nav-user" role="tab" aria-controls="nav-user" aria-selected="false">User & Organisations</a>
-          <a class="nav-item nav-link" id="nav-product-tab" data-toggle="tab" href="#nav-product" role="tab" aria-controls="nav-product" aria-selected="false">Products & Prices</a>
-          <a class="nav-item nav-link" id="nav-catalogue-tab" data-toggle="tab" href="#nav-catalogue" role="tab" aria-controls="nav-catalogue" aria-selected="false">Catalogues</a>
-          <a class="nav-item nav-link" id="nav-filter-tab" data-toggle="tab" href="#nav-filter" role="tab" aria-controls="nav-filter" aria-selected="false">Filters</a>
-          <a class="nav-item nav-link" id="nav-regionsetting-tab" data-toggle="tab" href="#nav-regionsetting" role="tab" aria-controls="nav-regionsetting" aria-selected="false">Store & Region Settings</a>
+          <a class="nav-item nav-link" routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Home</a>
+          <a class="nav-item nav-link" routerLink="/users-org" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">User & Organisations</a>
+          <a class="nav-item nav-link" id="nav-product-tab" routerLink="/product-prices" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Products & Prices</a>
+          <a class="nav-item nav-link" id="nav-catalogue-tab" routerLink="/catalogue" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Catalogues</a>
+          <a class="nav-item nav-link" id="nav-filter-tab" routerLink="/filters" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Filters</a>
+          <a class="nav-item nav-link" id="nav-storeregion-tab" routerLink="/store-region" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Store & Region Settings</a>
         </div>
       </nav>
     </div>

@@ -1,0 +1,227 @@
+<app-header></app-header>
+<div class="container-fluid PageContWrap">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="tab-content" id="nav-tabContent">
+          <form>
+            <div class="form-row align-items-center userSearchRow">
+              <div class="col-auto">
+                <div class="mb-2">
+                  <label class="form-check-label font-weight-bold">User Accounts</label>
+                </div>
+              </div>
+
+              <div class="col-4 col-sm-3">
+                <input type="text" class="form-control" id="inputPassword" placeholder="Search user or Customer">
+              </div>
+              <div class="col-3">
+                <div class="mb-2">
+                  <label class="form-check-label hintTxtRow"><small>Click on a ID to edit customer or user, or use the add buttons.</small></label>
+                </div>
+              </div>
+              <div class="col-auto">
+                <div class="mb-2">
+                  <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#addCustomer">Add Customer</button>
+                </div>
+              </div>
+              <div class="col-auto">
+                <div class="mb-2">
+                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#adduser">Add User</button>
+                </div>
+              </div>
+            </div>
+          </form>
+
+          <div class="userDataGrid table-responsive">
+            <table class="table table-bordered table-striped">
+              <thead>
+              <tr>
+                <th scope="col">Customer</th>
+                <th scope="col">User</th>
+                <th scope="col">User ID</th>
+                <th scope="col">Roles</th>
+                <th scope="col">Active</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td scope="row">Office brands</td>
+                <td>David Anson</td>
+                <td>danson@officebrands.com.au</td>
+                <td>Buyer | Approver | Admin</td>
+                <td>
+                  <label><a href="#">Reset Password</a></label>
+                  <div class="form-check form-check-inline customCheckNew text-right">
+                    <input class="form-check-input" type="checkbox" id="inlineCheckbox11" value="option1"></div>
+                </td>
+              </tr>
+              <tr>
+                <td scope="row">Office brands</td>
+                <td>David Anson</td>
+                <td>danson@officebrands.com.au</td>
+                <td>Buyer | Approver | Admin</td>
+                <td>Reset Password</td>
+              </tr>
+              <tr>
+                <td scope="row">Office brands</td>
+                <td>David Anson</td>
+                <td>danson@officebrands.com.au</td>
+                <td>Buyer | Approver | Admin</td>
+                <td>Reset Password</td>
+              </tr>
+
+              </tbody>
+            </table>
+          </div>
+
+          <div>
+
+            <!-- Modal Add User-->
+            <div class="modal fade addUserModal" id="adduser" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle1"><span>Add User</span> <span>Edit User</span></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+
+                    <div class="form-group row">
+                      <label for="inputPassword" class="col-sm-3 col-form-label">Customer:</label>
+                      <div class="col-sm-9">
+                        <select class="form-control" id="exampleFormControlSelect12">
+                          <option>1</option>
+                          <option>2</option>
+                          <option>3</option>
+                          <option>4</option>
+                          <option>5</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <label for="inputPassword" class="col-sm-3 col-form-label">User First Name:</label>
+                      <div class="col-sm-9">
+                        <input type="text" class="form-control">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="inputPassword" class="col-sm-3 col-form-label">User Last Name:</label>
+                      <div class="col-sm-9">
+                        <input type="text" class="form-control">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="inputPassword" class="col-sm-3 col-form-label">User Email:</label>
+                      <div class="col-sm-9">
+                        <input type="text" class="form-control">
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <label for="inputPassword" class="col-sm-3 col-form-label">User Phone Number:</label>
+                      <div class="col-sm-9">
+                        <input type="text" class="form-control">
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <label for="inputPassword" class="col-sm-3 col-form-label">User ID:</label>
+                      <div class="col-sm-9">
+                        <input type="text" class="form-control">
+                      </div>
+                    </div>
+
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="checkbox" id="inlineCheckbox12" value="option1">
+                      <label class="form-check-label" for="inlineCheckbox12">Byer</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="checkbox" id="inlineCheckbox13" value="option1">
+                      <label class="form-check-label" for="inlineCheckbox13">Approver</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="checkbox" id="inlineCheckbox14" value="option1">
+                      <label class="form-check-label" for="inlineCheckbox14">Admin</label>
+                    </div>
+
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-PrimaryModal">Save changes</button>
+                    <button type="button" class="btn btn-PrimaryModal">Save</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Modal Add Customer-->
+            <div class="modal fade addCustomerModal" id="addCustomer" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle"><span>Add Customer</span> <span>Edit Customer</span></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+
+                    <div class="form-group row">
+                      <label for="inputPassword" class="col-sm-3 col-form-label">Customer Name:</label>
+                      <div class="col-sm-9">
+                        <input type="text" class="form-control">
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <label for="inputPassword" class="col-sm-3 col-form-label">Address:</label>
+                      <div class="col-sm-9">
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="inputPassword" class="col-sm-3 col-form-label">Postcard:</label>
+                      <div class="col-sm-3">
+                        <input type="text" class="form-control">
+                      </div>
+                      <label for="inputPassword" class="col-sm-2 col-form-label text-right">Suburb:</label>
+                      <div class="col-sm-4">
+                        <select class="form-control" id="exampleFormControlSelect13">
+                          <option>1</option>
+                          <option>2</option>
+                          <option>3</option>
+                          <option>4</option>
+                          <option>5</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="inputPassword" class="col-sm-3 col-form-label">Contract:</label>
+                      <div class="col-sm-5">
+                        <select class="form-control" id="exampleFormControlSelect14">
+                          <option>List</option>
+                          <option>2</option>
+                          <option>3</option>
+                          <option>4</option>
+                          <option>5</option>
+                        </select>
+                      </div>
+                    </div>
+
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-PrimaryModal">Save changes</button>
+                    <button type="button" class="btn btn-PrimaryModal">Save</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
