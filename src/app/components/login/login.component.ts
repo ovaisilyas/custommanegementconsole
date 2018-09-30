@@ -52,11 +52,16 @@ export class LoginComponent implements OnInit {
     this.authenticationService.doLogin(this.f.username.value, this.f.password.value)
       .subscribe(
         data => {
-          console.log(data);
+          localStorage.setItem('storeId', data['STORE_ID']);
+          localStorage.setItem('userId', data['userId']);
+          localStorage.setItem('WCToken', data['WCToken']);
+          localStorage.setItem('WCTrustedToken', data['WCTrustedToken']);
+          localStorage.setItem('personalizationID', data['personalizationID']);
           this.router.navigate(['/home']);
           this.loading = false;
         },
         error => {
+          console.log('in error' , error);
           this.alertService.error(error);
           this.loading = false;
         });

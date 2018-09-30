@@ -3,38 +3,39 @@
   <div class="row">
     <div class="col-lg-12">
       <div class="tab-content" id="nav-tabContent">
-          <form>
-            <div class="form-row align-items-center userSearchRow">
-              <div class="col-auto">
-                <div class="mb-2">
-                  <label class="form-check-label font-weight-bold">User Accounts</label>
-                </div>
-              </div>
-
-              <div class="col-4 col-sm-3">
-                <input type="text" class="form-control" id="inputPassword" placeholder="Search user or Customer">
-              </div>
-              <div class="col-3">
-                <div class="mb-2">
-                  <label class="form-check-label hintTxtRow"><small>Click on a ID to edit customer or user, or use the add buttons.</small></label>
-                </div>
-              </div>
-              <div class="col-auto">
-                <div class="mb-2">
-                  <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#addCustomer">Add Customer</button>
-                </div>
-              </div>
-              <div class="col-auto">
-                <div class="mb-2">
-                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#adduser">Add User</button>
-                </div>
+        <form>
+          <div class="form-row align-items-center userSearchRow">
+            <div class="col-auto">
+              <div class="mb-2">
+                <label class="form-check-label font-weight-bold">User Accounts</label>
               </div>
             </div>
-          </form>
 
-          <div class="userDataGrid table-responsive">
-            <table class="table table-bordered table-striped">
-              <thead>
+            <div class="col-4 col-sm-3">
+              <input type="text" class="form-control" id="searchTerm" #searchTerm (keyup.enter)="onEnter(searchTerm.value)" placeholder="Search user or Customer">
+            </div>
+            <div class="col-5">
+              <div class="mb-2">
+                <label class="form-check-label hintTxtRow"><small>Click on a ID to edit customer or user, or use the add buttons.</small></label>
+              </div>
+            </div>
+            <div class="col-auto" style="width: 16.6%; text-align: right;">
+              <div class="mb-2">
+                <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#addCustomer">Add Customer</button>
+              </div>
+            </div>
+            <div class="col-auto">
+              <div class="mb-2">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#adduser">Add User</button>
+              </div>
+            </div>
+          </div>
+        </form>
+
+        <app-alert></app-alert>
+        <div class="userDataGrid table-responsive">
+          <table class="table table-bordered table-striped">
+            <thead>
               <tr>
                 <th scope="col">Customer</th>
                 <th scope="col">User</th>
@@ -42,185 +43,190 @@
                 <th scope="col">Roles</th>
                 <th scope="col">Active</th>
               </tr>
-              </thead>
-              <tbody>
-              <tr>
-                <td scope="row">Office brands</td>
-                <td>David Anson</td>
-                <td>danson@officebrands.com.au</td>
-                <td>Buyer | Approver | Admin</td>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of itemList">
+                <td scope="row">{{item.orgName}}</td>
+                <td><a data-toggle="modal" data-target="#editUser" (click)="getUser(item.userId)">{{item.firstName}} {{item.lastName}}</a></td>
+                <td>{{item.logonId}}</td>
+                <td><p *ngFor="let role of roleList">{{role.role}}Buyer</p></td>
                 <td>
-                  <label><a href="#">Reset Password</a></label>
+                  <label><a (click)="resetPassword(item.logonId)">Reset Password</a></label>
                   <div class="form-check form-check-inline customCheckNew text-right">
-                    <input class="form-check-input" type="checkbox" id="inlineCheckbox11" value="option1"></div>
+                    <input class="form-check-input" type="checkbox" id="userStatusCheckbox" name="userStatusCheckbox" value="{{item.userStatus}}"
+                           [checked]="item.userStatus == '1'"
+                           (change)="updateUserStatus(item.userId, item.userStatus)"></div>
                 </td>
               </tr>
-              <tr>
-                <td scope="row">Office brands</td>
-                <td>David Anson</td>
-                <td>danson@officebrands.com.au</td>
-                <td>Buyer | Approver | Admin</td>
-                <td>Reset Password</td>
-              </tr>
-              <tr>
-                <td scope="row">Office brands</td>
-                <td>David Anson</td>
-                <td>danson@officebrands.com.au</td>
-                <td>Buyer | Approver | Admin</td>
-                <td>Reset Password</td>
-              </tr>
+            </tbody>
+          </table>
+        </div>
 
-              </tbody>
-            </table>
-          </div>
+        <div>
 
-          <div>
-
-            <!-- Modal Add User-->
-            <div class="modal fade addUserModal" id="adduser" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-              <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalCenterTitle1"><span>Add User</span> <span>Edit User</span></h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
+          <!-- Modal Add User-->
+          <div class="modal fade addUserModal" id="adduser" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalCenterTitle1"><span>Add User</span></h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <form #userForm="ngForm" (ngSubmit)="onSaveUser()">
                   <div class="modal-body">
 
                     <div class="form-group row">
-                      <label for="inputPassword" class="col-sm-3 col-form-label">Customer:</label>
+                      <label for="customerSelectBox" class="col-sm-3 col-form-label">Customer:</label>
                       <div class="col-sm-9">
-                        <select class="form-control" id="exampleFormControlSelect12">
-                          <option>1</option>
-                          <option>2</option>
-                          <option>3</option>
-                          <option>4</option>
-                          <option>5</option>
+                        <select class="form-control" id="customerSelectBox" required
+                                [(ngModel)]="userDetail.parentMemberId" name="parentMemberId" #parentMemberId="ngModel">
+                          <option> -- Select Customer -- </option>
+                          <option *ngFor="let item of customerList" [value]="item.orgEntityId">{{item.orgEntityName}}</option>
                         </select>
                       </div>
                     </div>
 
                     <div class="form-group row">
-                      <label for="inputPassword" class="col-sm-3 col-form-label">User First Name:</label>
+                      <label for="userFirstName" class="col-sm-3 col-form-label">User First Name:</label>
                       <div class="col-sm-9">
-                        <input type="text" class="form-control">
+                        <input type="text" id="userFirstName" class="form-control" required
+                               [(ngModel)]="userDetail.firstName" name="firstName" #firstName="ngModel">
                       </div>
                     </div>
                     <div class="form-group row">
-                      <label for="inputPassword" class="col-sm-3 col-form-label">User Last Name:</label>
+                      <label for="userLastName" class="col-sm-3 col-form-label">User Last Name:</label>
                       <div class="col-sm-9">
-                        <input type="text" class="form-control">
+                        <input type="text" id="userLastName" class="form-control" required
+                               [(ngModel)]="userDetail.lastName" name="lastName" #lastName="ngModel">
                       </div>
                     </div>
                     <div class="form-group row">
-                      <label for="inputPassword" class="col-sm-3 col-form-label">User Email:</label>
+                      <label for="userEmail" class="col-sm-3 col-form-label">User Email:</label>
                       <div class="col-sm-9">
-                        <input type="text" class="form-control">
-                      </div>
-                    </div>
-
-                    <div class="form-group row">
-                      <label for="inputPassword" class="col-sm-3 col-form-label">User Phone Number:</label>
-                      <div class="col-sm-9">
-                        <input type="text" class="form-control">
+                        <input type="text" id="userEmail" class="form-control" required
+                               [(ngModel)]="userDetail.email1" name="email1" #email1="ngModel">
                       </div>
                     </div>
 
                     <div class="form-group row">
-                      <label for="inputPassword" class="col-sm-3 col-form-label">User ID:</label>
+                      <label for="userPhone" class="col-sm-3 col-form-label">User Phone Number:</label>
                       <div class="col-sm-9">
-                        <input type="text" class="form-control">
+                        <input type="text" id="userPhone" class="form-control" required
+                               [(ngModel)]="userDetail.phone1" name="phone1" #phone1="ngModel">
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <label for="userLogonId" class="col-sm-3 col-form-label">User ID:</label>
+                      <div class="col-sm-9">
+                        <input type="text" id="userLogonId" class="form-control" required
+                               [(ngModel)]="userDetail.logonId" name="logonId" #logonId="ngModel">
                       </div>
                     </div>
 
                     <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="checkbox" id="inlineCheckbox12" value="option1">
-                      <label class="form-check-label" for="inlineCheckbox12">Byer</label>
+                      <input class="form-check-input" type="checkbox" id="inlineCheckbox12" value="buyer" checked>
+                      <label class="form-check-label" for="inlineCheckbox12">Buyer</label>
                     </div>
                     <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="checkbox" id="inlineCheckbox13" value="option1">
+                      <input class="form-check-input" type="checkbox" id="inlineCheckbox13" value="approver">
                       <label class="form-check-label" for="inlineCheckbox13">Approver</label>
                     </div>
                     <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="checkbox" id="inlineCheckbox14" value="option1">
+                      <input class="form-check-input" type="checkbox" id="inlineCheckbox14" value="admin">
                       <label class="form-check-label" for="inlineCheckbox14">Admin</label>
                     </div>
 
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-PrimaryModal">Save changes</button>
-                    <button type="button" class="btn btn-PrimaryModal">Save</button>
+                    <button type="submit" class="btn btn-PrimaryModal" [disabled]="!userForm.form.valid">Save changes</button>
                   </div>
-                </div>
+                </form>
               </div>
             </div>
+          </div>
 
-            <!-- Modal Add Customer-->
-            <div class="modal fade addCustomerModal" id="addCustomer" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-              <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalCenterTitle"><span>Add Customer</span> <span>Edit Customer</span></h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
+          <!-- Modal Edit User-->
+          <div class="modal fade editUserModal" id="editUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="EditUserTitle"><span>Edit User</span></h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <form [formGroup]="userEditForm" (ngSubmit)="editUser()">
                   <div class="modal-body">
 
                     <div class="form-group row">
-                      <label for="inputPassword" class="col-sm-3 col-form-label">Customer Name:</label>
+                      <label for="customerSelectBoxEdit" class="col-sm-3 col-form-label">Customer:</label>
                       <div class="col-sm-9">
-                        <input type="text" class="form-control">
+                        <select class="form-control" id="customerSelectBoxEdit">
+                          <option> -- Select Customer -- </option>
+                          <option *ngFor="let item of customerList" [value]="item.orgEntityId">{{item.orgEntityName}}</option>
+                        </select>
                       </div>
                     </div>
 
                     <div class="form-group row">
-                      <label for="inputPassword" class="col-sm-3 col-form-label">Address:</label>
+                      <label for="userFirstNameEdit" class="col-sm-3 col-form-label">User First Name:</label>
                       <div class="col-sm-9">
-                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                        <input type="text" id="userFirstNameEdit" formControlName="firstName" name="firstName" class="form-control">
                       </div>
                     </div>
                     <div class="form-group row">
-                      <label for="inputPassword" class="col-sm-3 col-form-label">Postcard:</label>
-                      <div class="col-sm-3">
-                        <input type="text" class="form-control">
-                      </div>
-                      <label for="inputPassword" class="col-sm-2 col-form-label text-right">Suburb:</label>
-                      <div class="col-sm-4">
-                        <select class="form-control" id="exampleFormControlSelect13">
-                          <option>1</option>
-                          <option>2</option>
-                          <option>3</option>
-                          <option>4</option>
-                          <option>5</option>
-                        </select>
+                      <label for="userLastNameEdit" class="col-sm-3 col-form-label">User Last Name:</label>
+                      <div class="col-sm-9">
+                        <input type="text" id="userLastNameEdit" formControlName="lastName" class="form-control">
                       </div>
                     </div>
                     <div class="form-group row">
-                      <label for="inputPassword" class="col-sm-3 col-form-label">Contract:</label>
-                      <div class="col-sm-5">
-                        <select class="form-control" id="exampleFormControlSelect14">
-                          <option>List</option>
-                          <option>2</option>
-                          <option>3</option>
-                          <option>4</option>
-                          <option>5</option>
-                        </select>
+                      <label for="userEmailEdit" class="col-sm-3 col-form-label">User Email:</label>
+                      <div class="col-sm-9">
+                        <input type="text" id="userEmailEdit" formControlName="email1" class="form-control">
                       </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <label for="userPhoneEdit" class="col-sm-3 col-form-label">User Phone Number:</label>
+                      <div class="col-sm-9">
+                        <input type="text" id="userPhoneEdit" class="form-control" formControlName="phone1">
+                      </div>
+                    </div>
+
+
+                    <input type="hidden" id="userId" class="form-control" formControlName="userId">
+
+
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="checkbox" id="buyerCheckbox" value="buyer" checked>
+                      <label class="form-check-label" for="buyerCheckbox">Buyer</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="checkbox" id="approverCheckBox" value="approver">
+                      <label class="form-check-label" for="approverCheckBox">Approver</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="checkbox" id="adminCheckBox" value="admin">
+                      <label class="form-check-label" for="adminCheckBox">Admin</label>
                     </div>
 
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-PrimaryModal">Save changes</button>
-                    <button type="button" class="btn btn-PrimaryModal">Save</button>
+                    <button type="submit" class="btn btn-PrimaryModal" [disabled]="!userEditForm.valid">Save changes</button>
                   </div>
-                </div>
+                </form>
               </div>
             </div>
           </div>
+
+          <app-org-detail></app-org-detail>
+        </div>
       </div>
     </div>
   </div>

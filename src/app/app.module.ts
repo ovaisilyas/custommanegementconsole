@@ -20,7 +20,7 @@ import { ProductsPriceComponent } from './components/products-price/products-pri
 import { CataloguesComponent } from './components/catalogues/catalogues.component';
 import { FiltersComponent } from './components/filters/filters.component';
 import { StoreRegionComponent } from './components/store-region/store-region.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { OrgDetailComponent } from './components/users-org/org-detail/org-detail.component';
 
 
 @NgModule({
@@ -34,7 +34,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     ProductsPriceComponent,
     CataloguesComponent,
     FiltersComponent,
-    StoreRegionComponent
+    StoreRegionComponent,
+    OrgDetailComponent
   ],
   imports: [
     BrowserModule,
@@ -42,8 +43,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     HttpClientModule,
     BrowserAnimationsModule,
     FormsModule,
-    routing,
-    NgbModule
+    routing
   ],
   providers: [
     AuthGuard,

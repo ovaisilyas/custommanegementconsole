@@ -1,7 +1,8 @@
 /**************Global Css**************/
 
 input.form-control,select.form-control,textarea.form-control{border:1px solid #6a6a6a;border-radius: 0rem;}
-a{color:#282828; text-decoration: underline;}
+a{color:#282828;}
+.userDataGrid a{ text-decoration: underline;}
 a:hover{color:#404040;}
 .btn-primary {color: #fff;background-color: #28a745;border-color: #28a745;}
 .btn-primary:not(:disabled):not(.disabled).active:focus, .btn-primary:not(:disabled):not(.disabled):active:focus, .show>.btn-primary.dropdown-toggle:focus {
@@ -39,7 +40,7 @@ a:hover{color:#404040;}
 .custTabCls .nav-tabs .nav-link:nth-of-type(n){border-right: 0px;}
 .custTabCls .nav-tabs .nav-link:last-child{border-right: 1px solid;}
 .custTabCls .nav-link{padding: .5rem 1.1rem;}
-.custTabCls a.nav-link {color:#6a6a6a;}
+.custTabCls a.nav-link {color:#6a6a6a;width: 16.6%;text-align: center;}
 .PageContWrap .tab-content{padding:10px;} 
 .userSearchRow{padding-top:10px; padding-bottom: 10px;}
 .userSearchRow input{border-radius: 1.25rem;height: calc(2rem + 2px);line-height: 1;}
