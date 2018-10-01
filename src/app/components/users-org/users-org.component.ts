@@ -11,6 +11,8 @@ import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {ResetPasswordModel} from '../../model/resetpassword.model';
 import {UserStatusModel} from '../../model/userstatus.model';
 import {AlertService} from '../../services/alert.service';
+import {OrgDetailModel} from '../../model/orgdetail.model';
+import {OrgService} from '../../services/org.service';
 
 @Component({
   selector: 'app-users-org',
@@ -31,11 +33,14 @@ export class UsersOrgComponent implements OnInit {
   resetPassModel: ResetPasswordModel;
   userStatusModel: UserStatusModel;
 
+  orgDetail = new OrgDetailModel('', '', '', '', '', '', '-2001', '', 'O');
+
   constructor(
     private searchService: SearchService,
     private usersService: UsersService,
     private formBuilder: FormBuilder,
     private alertService: AlertService,
+    private orgService: OrgService,
   ) {}
 
   ngOnInit() {
@@ -182,6 +187,62 @@ export class UsersOrgComponent implements OnInit {
     this.submitted = true;
     console.log(this.userDetailEdit);
     this.usersService.editUser(this.userDetailEdit)
+      .pipe(map(
+        (res) => {
+          return res;
+        }
+      ))
+      .subscribe(
+        data => {
+          console.log(data);
+          this.alertService.success(data);
+        },
+        error => {
+          console.log(error);
+          this.alertService.error(error);
+        });
+  }
+
+  getOrg(orgId: string) {
+    this.orgService.getOrg(orgId)
+      .pipe(map(
+        (org) => {
+          const orgD = org['Organization Details'];
+          console.log(orgD);
+          return orgD;
+        }
+      ))
+      .subscribe(
+        data => {
+          this.orgDetail = data;
+        },
+        error => {
+          console.log(error);
+        });
+  }
+
+  addCustomer() {
+    this.submitted = true;
+    console.log(this.orgDetail);
+    this.orgService.saveOrg(this.orgDetail)
+      .pipe(map(
+        (res) => {
+          return res;
+        }
+      ))
+      .subscribe(
+        data => {
+          console.log(data);
+        },
+        error => {
+          console.log(error);
+        });
+  }
+
+  editCustomer() {
+    this.submitted = true;
+    console.log(this.orgDetail);
+    this.orgService.editOrg(this.orgDetail)
       .pipe(map(
         (res) => {
           return res;

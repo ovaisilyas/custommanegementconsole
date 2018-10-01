@@ -20,7 +20,6 @@ import { ProductsPriceComponent } from './components/products-price/products-pri
 import { CataloguesComponent } from './components/catalogues/catalogues.component';
 import { FiltersComponent } from './components/filters/filters.component';
 import { StoreRegionComponent } from './components/store-region/store-region.component';
-import { OrgDetailComponent } from './components/users-org/org-detail/org-detail.component';
 
 
 @NgModule({
@@ -34,8 +33,7 @@ import { OrgDetailComponent } from './components/users-org/org-detail/org-detail
     ProductsPriceComponent,
     CataloguesComponent,
     FiltersComponent,
-    StoreRegionComponent,
-    OrgDetailComponent
+    StoreRegionComponent
   ],
   imports: [
     BrowserModule,
