@@ -13,6 +13,7 @@ import {UserStatusModel} from '../../model/userstatus.model';
 import {AlertService} from '../../services/alert.service';
 import {OrgDetailModel} from '../../model/orgdetail.model';
 import {OrgService} from '../../services/org.service';
+import {ViewChild, ElementRef} from '@angular/core';
 
 @Component({
   selector: 'app-users-org',
@@ -29,11 +30,13 @@ export class UsersOrgComponent implements OnInit {
   userDetailEdit = new UserDetailEditModel('', '', '', '', ''
     , '', []);
   submitted = false;
-  userEditForm: FormGroup;
+  loading = false;
   resetPassModel: ResetPasswordModel;
   userStatusModel: UserStatusModel;
 
   orgDetail = new OrgDetailModel('', '', '', '', '', '', '-2001', '', 'O');
+
+  @ViewChild('closeBtn') closeBtn: ElementRef;
 
   constructor(
     private searchService: SearchService,
@@ -45,18 +48,11 @@ export class UsersOrgComponent implements OnInit {
 
   ngOnInit() {
     this.getCustomers();
-    this.userEditForm = this.formBuilder.group({
-      parentMemberId: new FormControl(''),
-      firstName: new FormControl(''),
-      lastName: new FormControl(''),
-      email1: new FormControl(''),
-      phone1: new FormControl(''),
-      userId: new FormControl(''),
-      roles: this.formBuilder.array([]),
-    });
+    
   }
 
   onEnter(value: string) {
+    this.loading = true;
     this.searchService.searchData(value)
       .pipe(map(
         (users) => {
@@ -70,11 +66,13 @@ export class UsersOrgComponent implements OnInit {
       ))
       .subscribe(
         data => {
+          this.loading = false;
           this.itemList = data;
           this.alertService.clear();
         },
         error => {
           console.log(error);
+          this.loading = false;
         });
   }
 
@@ -96,21 +94,23 @@ export class UsersOrgComponent implements OnInit {
         });
   }
 
+  //call this wherever you want to close modal
+  private closeModal(): void {
+      this.closeBtn.nativeElement.click();
+  }
+
   getUser(userId: string) {
     this.usersService.getUser(userId)
       .pipe(map(
         (user) => {
+          const userD = user;
           console.log(user);
           return user;
         }
       ))
       .subscribe(
         data => {
-          this.userDetailEdit = data;
-          this.userEditForm.patchValue(data);
-          this.userEditForm = this.formBuilder.group({
-            parentMemberId: new FormControl(this.userDetailEdit.parentMemberId)
-          });
+          this.userDetail = data;
         },
         error => {
           console.log(error);
@@ -119,7 +119,7 @@ export class UsersOrgComponent implements OnInit {
 
   onSaveUser() {
     this.submitted = true;
-    this.userDetail.roles.push(this.userRoles);
+    //this.userDetail.roles.push(this.userRoles);
     console.log(this.userDetail);
     this.usersService.saveUser(this.userDetail)
       .pipe(map(
@@ -130,7 +130,8 @@ export class UsersOrgComponent implements OnInit {
       .subscribe(
         data => {
           console.log(data);
-          this.alertService.success(data);
+          this.closeModal();
+          this.alertService.success('User Added Successfully');
         },
         error => {
           console.log(error);
@@ -215,6 +216,7 @@ export class UsersOrgComponent implements OnInit {
       .subscribe(
         data => {
           this.orgDetail = data;
+          this.orgDetail.country = "Australia";
         },
         error => {
           console.log(error);
@@ -233,6 +235,8 @@ export class UsersOrgComponent implements OnInit {
       .subscribe(
         data => {
           console.log(data);
+          this.closeModal();
+          this.alertService.success('Customer Added Successfully');
         },
         error => {
           console.log(error);

@@ -47,7 +47,7 @@
             <tbody>
               <tr *ngFor="let item of itemList">
                 <td scope="row"><a data-toggle="modal" data-target="#addCustomer" (click)="getOrg(item.orgId)">{{item.orgName}}</a></td>
-                <td><a data-toggle="modal" data-target="#editUser" (click)="getUser(item.userId)">{{item.firstName}} {{item.lastName}}</a></td>
+                <td><a data-toggle="modal" data-target="#adduser" (click)="getUser(item.userId)">{{item.firstName}} {{item.lastName}}</a></td>
                 <td>{{item.logonId}}</td>
                 <td><p *ngFor="let role of roleList">{{role.role}}Buyer</p></td>
                 <td>
@@ -60,6 +60,7 @@
               </tr>
             </tbody>
           </table>
+           <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
         </div>
 
         <div>
@@ -70,7 +71,7 @@
               <div class="modal-content">
                 <div class="modal-header">
                   <h5 class="modal-title" id="exampleModalCenterTitle1"><span>Add User</span></h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close" #closeBtn>
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
@@ -149,13 +150,13 @@
             </div>
           </div>
 
-          <!-- Modal Edit User-->
+          <!-- Modal Edit User
           <div class="modal fade editUserModal" id="editUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header">
                   <h5 class="modal-title" id="EditUserTitle"><span>Edit User</span></h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close" #closeBtn>
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
@@ -165,7 +166,7 @@
                     <div class="form-group row">
                       <label for="customerSelectBoxEdit" class="col-sm-3 col-form-label">Customer:</label>
                       <div class="col-sm-9">
-                        <select class="form-control" id="customerSelectBoxEdit">
+                        <select class="form-control" id="customerSelectBoxEdit" formControlName="parentMemberId">
                           <option> -- Select Customer -- </option>
                           <option *ngFor="let item of customerList" [value]="item.orgEntityId">{{item.orgEntityName}}</option>
                         </select>
@@ -223,7 +224,7 @@
                 </form>
               </div>
             </div>
-          </div>
+          </div> -->
 
           <!-- Modal Add Customer-->
           <div class="modal fade addCustomerModal" id="addCustomer" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -231,7 +232,7 @@
               <div class="modal-content">
                 <div class="modal-header">
                   <h5 class="modal-title" id="exampleModalCenterTitle"><span>Add Customer</span> <span>Edit Customer</span></h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close" #closeBtn>
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
