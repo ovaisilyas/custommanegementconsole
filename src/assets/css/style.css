@@ -2,7 +2,6 @@
 
 input.form-control,select.form-control,textarea.form-control{border:1px solid #6a6a6a;border-radius: 0rem;}
 a{color:#282828;}
-.userDataGrid a{ text-decoration: underline;}
 a:hover{color:#404040;}
 .btn-primary {color: #fff;background-color: #28a745;border-color: #28a745;}
 .btn-primary:not(:disabled):not(.disabled).active:focus, .btn-primary:not(:disabled):not(.disabled):active:focus, .show>.btn-primary.dropdown-toggle:focus {
@@ -20,7 +19,7 @@ a:hover{color:#404040;}
 }
 
 /****************Login css******************/
-.loginBoxCont{margin-top:50px;}
+.loginBoxCont{margin-top:40px;}
 .loginBoxCont .webTxt, .navbarCont .navbar-text{text-align: center; font-size: 1.8em;font-style: italic;font-family: cursive;}
 .loginBoxCont .offLogoLogin{text-align: center;padding-top:20px;padding-bottom: 3px; }
 .loginBoxCont .offAllLogos{text-align: center; border-top:2px solid #6a6a6a;padding-top:10px;padding-bottom:15px;}
@@ -38,14 +37,29 @@ a:hover{color:#404040;}
 .custTabCls .nav-tabs .nav-link.active{background-color: #e0e0e0;border-color: #6a6a6a #6a6a6a #6a6a6a;}
 .custTabCls .nav-tabs .nav-link {border: 1px solid #6a6a6a;border-top-left-radius: .50rem;border-top-right-radius: .50rem;}
 .custTabCls .nav-tabs .nav-link:nth-of-type(n){border-right: 0px;}
-.custTabCls .nav-tabs .nav-link:last-child{border-right: 1px solid;}
+.custTabCls ul li:last-child {border-right:1px solid; border-top-right-radius: 8px;}
 .custTabCls .nav-link{padding: .5rem 1.1rem;}
-.custTabCls a.nav-link {color:#6a6a6a;width: 16.6%;text-align: center;}
+.custTabCls a.nav-link {color:#6a6a6a;text-align: center;}
 .PageContWrap .tab-content{padding:10px;} 
 .userSearchRow{padding-top:10px; padding-bottom: 10px;}
 .userSearchRow input{border-radius: 1.25rem;height: calc(2rem + 2px);line-height: 1;}
 .userSearchRow .hintTxtRow{line-height: 1;}
+.userSearchRow .btn:first-child{margin-right: 5px;}
 .userDataGrid table th{background-color:#9e9e9e; color:#fff;font-weight: normal; text-align: center;}
 .userDataGrid table td{color:#282828; text-align: center;}
 .userDataGrid .form-check-input{margin-left: 10px;margin-right: 0rem;}
-.addUserModal {}
+.userDataGrid table td a{text-decoration: underline !important; cursor: pointer;}
+
+.custTabCls ul.nav.nav-tabs > li {float: none;display: table-cell;}
+
+ @media (min-width: 1366px)  { 
+    .custTabCls ul.nav.nav-tabs {display: table;width: 100%;table-layout: fixed;
+    }
+ } 
+
+@media (min-width: 1024px) and (max-width: 1366px) { 
+   .custTabCls ul.nav.nav-tabs {display: table;width: 100%;table-layout: auto};
+ } 
+ @media (max-width: 990px) { 
+    .custTabCls ul.nav.nav-tabs{table-layout: auto;}
+  }
