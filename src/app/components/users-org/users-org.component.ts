@@ -2,9 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SearchService } from '../../services/search.service';
 import {map} from 'rxjs/operators';
 import {UserlistModel} from '../../model/userlist.model';
-import {UserRole} from '../../model/roles.model';
 import {UsersService} from '../../services/users.service';
-import {UserDetailEditModel} from '../../model/userdetailedit.model';
 import {CustomerlistModel} from '../../model/customerlist.model';
 import {UserDetailModel} from '../../model/userdetail.model';
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
@@ -13,6 +11,9 @@ import {UserStatusModel} from '../../model/userstatus.model';
 import {AlertService} from '../../services/alert.service';
 import {OrgDetailModel} from '../../model/orgdetail.model';
 import {OrgService} from '../../services/org.service';
+import {ViewChild, ElementRef} from '@angular/core';
+
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-users-org',
@@ -22,18 +23,15 @@ import {OrgService} from '../../services/org.service';
 export class UsersOrgComponent implements OnInit {
   customerList: CustomerlistModel[];
   itemList: UserlistModel[];
-  roleList: UserRole[];
   userDetail = new UserDetailModel('', '', '', '', ''
-    , '', []);
-  userRoles = new UserRole('-29');
-  userDetailEdit = new UserDetailEditModel('', '', '', '', ''
-    , '', []);
+    , '', false, false, false);
   submitted = false;
-  userEditForm: FormGroup;
   resetPassModel: ResetPasswordModel;
   userStatusModel: UserStatusModel;
 
   orgDetail = new OrgDetailModel('', '', '', '', '', '', '-2001', '', 'O');
+
+  @ViewChild('closeBtn') closeBtn: ElementRef;
 
   constructor(
     private searchService: SearchService,
@@ -41,30 +39,19 @@ export class UsersOrgComponent implements OnInit {
     private formBuilder: FormBuilder,
     private alertService: AlertService,
     private orgService: OrgService,
+    private spinner: NgxSpinnerService,
   ) {}
 
   ngOnInit() {
-    this.getCustomers();
-    this.userEditForm = this.formBuilder.group({
-      parentMemberId: new FormControl(''),
-      firstName: new FormControl(''),
-      lastName: new FormControl(''),
-      email1: new FormControl(''),
-      phone1: new FormControl(''),
-      userId: new FormControl(''),
-      roles: this.formBuilder.array([]),
-    });
   }
 
   onEnter(value: string) {
+    this.spinner.show();
     this.searchService.searchData(value)
       .pipe(map(
         (users) => {
           const searchDetails = users['SearchDetails'];
           const searchList = searchDetails['SearchList'];
-          for (const user of searchList) {
-            this.roleList = user['UserRole'];
-          }
           return searchList;
         }
       ))
@@ -72,9 +59,11 @@ export class UsersOrgComponent implements OnInit {
         data => {
           this.itemList = data;
           this.alertService.clear();
+          this.spinner.hide();
         },
         error => {
           console.log(error);
+          this.spinner.hide();
         });
   }
 
@@ -92,11 +81,17 @@ export class UsersOrgComponent implements OnInit {
           this.customerList = data;
         },
         error => {
-          console.log(error);
+          console.log('Unable to Fetch Customers');
         });
   }
 
+  private closeModal(): void {
+    this.closeBtn.nativeElement.click();
+  }
+
   getUser(userId: string) {
+    this.spinner.show();
+    this.getCustomers();
     this.usersService.getUser(userId)
       .pipe(map(
         (user) => {
@@ -106,21 +101,28 @@ export class UsersOrgComponent implements OnInit {
       ))
       .subscribe(
         data => {
-          this.userDetailEdit = data;
-          this.userEditForm.patchValue(data);
-          this.userEditForm = this.formBuilder.group({
-            parentMemberId: new FormControl(this.userDetailEdit.parentMemberId)
-          });
+          this.userDetail = data;
+          this.userDetail.buyer = JSON.parse(data['buyer']);
+          this.userDetail.approver = JSON.parse(data['approver']);
+          this.userDetail.admin = JSON.parse(data['admin']);
+          this.spinner.hide();
         },
         error => {
           console.log(error);
+          this.spinner.hide();
         });
   }
 
   onSaveUser() {
-    this.submitted = true;
-    this.userDetail.roles.push(this.userRoles);
+    this.spinner.show();
     console.log(this.userDetail);
+    if (this.userDetail.approver === null) {
+      this.userDetail.approver = false;
+    }
+    if (this.userDetail.admin === null) {
+      this.userDetail.admin = false;
+    }
+
     this.usersService.saveUser(this.userDetail)
       .pipe(map(
         (res) => {
@@ -129,16 +131,20 @@ export class UsersOrgComponent implements OnInit {
       ))
       .subscribe(
         data => {
+          this.spinner.hide();
           console.log(data);
-          this.alertService.success(data);
+          this.closeModal();
+          this.alertService.success('User Added Successfully');
         },
         error => {
+          this.spinner.hide();
           console.log(error);
           this.alertService.error(error);
         });
   }
 
   resetPassword(logonId: string) {
+    this.spinner.show();
     this.resetPassModel = new ResetPasswordModel(logonId, '-');
     this.submitted = true;
     this.usersService.resetPassword(this.resetPassModel)
@@ -149,16 +155,19 @@ export class UsersOrgComponent implements OnInit {
       ))
       .subscribe(
         data => {
+          this.spinner.hide();
           console.log(data);
-          this.alertService.success(data);
+          this.alertService.success('Password reset email has been sent successfully');
         },
         error => {
+          this.spinner.hide();
           console.log(error);
           this.alertService.error(error);
         });
   }
 
   updateUserStatus(userId: string, status: string) {
+    this.spinner.show();
     if (status === '1') {
       status = '0';
     } else {
@@ -176,17 +185,19 @@ export class UsersOrgComponent implements OnInit {
         data => {
           console.log(data['message']);
           this.alertService.success(data['message']);
+          this.spinner.hide();
         },
         error => {
           console.log(error);
           this.alertService.error(error);
+          this.spinner.hide();
         });
   }
 
   editUser() {
     this.submitted = true;
-    console.log(this.userDetailEdit);
-    this.usersService.editUser(this.userDetailEdit)
+    console.log(this.userDetail);
+    this.usersService.editUser(this.userDetail)
       .pipe(map(
         (res) => {
           return res;
@@ -195,7 +206,7 @@ export class UsersOrgComponent implements OnInit {
       .subscribe(
         data => {
           console.log(data);
-          this.alertService.success(data);
+          this.alertService.success('User has been updated successfully');
         },
         error => {
           console.log(error);
@@ -204,6 +215,7 @@ export class UsersOrgComponent implements OnInit {
   }
 
   getOrg(orgId: string) {
+    this.spinner.show();
     this.orgService.getOrg(orgId)
       .pipe(map(
         (org) => {
@@ -215,14 +227,17 @@ export class UsersOrgComponent implements OnInit {
       .subscribe(
         data => {
           this.orgDetail = data;
+          this.orgDetail.country = 'Australia';
+          this.spinner.hide();
         },
         error => {
           console.log(error);
+          this.spinner.hide();
         });
   }
 
   addCustomer() {
-    this.submitted = true;
+    this.spinner.show();
     console.log(this.orgDetail);
     this.orgService.saveOrg(this.orgDetail)
       .pipe(map(
@@ -232,9 +247,13 @@ export class UsersOrgComponent implements OnInit {
       ))
       .subscribe(
         data => {
+          this.spinner.hide();
           console.log(data);
+          this.closeModal();
+          this.alertService.success('Customer Added Successfully');
         },
         error => {
+          this.spinner.hide();
           console.log(error);
         });
   }
@@ -254,7 +273,7 @@ export class UsersOrgComponent implements OnInit {
           this.alertService.success(data);
         },
         error => {
-          console.log(error);
+          console.log(error['error']);
           this.alertService.error(error);
         });
   }

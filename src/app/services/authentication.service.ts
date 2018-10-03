@@ -28,12 +28,8 @@ export class AuthenticationService {
   }
 
   logout() {
-    // remove user from local storage to log user out
-    localStorage.removeItem('storeId');
-    localStorage.removeItem('userId');
-    localStorage.removeItem('WCToken');
-    localStorage.removeItem('WCTrustedToken');
-    localStorage.removeItem('personalizationID');
+    // remove user from session storage to log user out
+    sessionStorage.clear();
   }
 
   private handleError(error: HttpErrorResponse) {

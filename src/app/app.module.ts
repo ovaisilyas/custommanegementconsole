@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 
+import { NgxSpinnerModule } from 'ngx-spinner';
+
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { AlertService } from './services/alert.service';
@@ -20,6 +22,7 @@ import { ProductsPriceComponent } from './components/products-price/products-pri
 import { CataloguesComponent } from './components/catalogues/catalogues.component';
 import { FiltersComponent } from './components/filters/filters.component';
 import { StoreRegionComponent } from './components/store-region/store-region.component';
+import { AutofocusDirective } from './directives/autofocus.directive';
 
 
 @NgModule({
@@ -33,7 +36,8 @@ import { StoreRegionComponent } from './components/store-region/store-region.com
     ProductsPriceComponent,
     CataloguesComponent,
     FiltersComponent,
-    StoreRegionComponent
+    StoreRegionComponent,
+    AutofocusDirective
   ],
   imports: [
     BrowserModule,
@@ -41,6 +45,7 @@ import { StoreRegionComponent } from './components/store-region/store-region.com
     HttpClientModule,
     BrowserAnimationsModule,
     FormsModule,
+    NgxSpinnerModule,
     routing
   ],
   providers: [

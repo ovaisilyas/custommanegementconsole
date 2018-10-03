@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 import {UserDetailModel} from '../model/userdetail.model';
-import {UserDetailEditModel} from '../model/userdetailedit.model';
 import {ResetPasswordModel} from '../model/resetpassword.model';
 import {UserStatusModel} from '../model/userstatus.model';
 
@@ -12,11 +11,11 @@ import {UserStatusModel} from '../model/userstatus.model';
   providedIn: 'root'
 })
 export class UsersService {
-  userId = localStorage.getItem('userId');
-  WCToken = localStorage.getItem('WCToken');
-  WCTrustedToken = localStorage.getItem('WCTrustedToken');
-  personalizationID = localStorage.getItem('personalizationID');
-  storeId = localStorage.getItem('storeId');
+  storeId = sessionStorage.getItem('storeId');
+  userId = sessionStorage.getItem('userId');
+  WCToken = sessionStorage.getItem('WCToken');
+  WCTrustedToken = sessionStorage.getItem('WCTrustedToken');
+  personalizationID = sessionStorage.getItem('personalizationID');
 
   constructor(
     private httpClient: HttpClient,
@@ -32,6 +31,7 @@ export class UsersService {
   };
 
   getCustomers() {
+    console.log(this.storeId);
     console.log('in getCustomers function');
     console.log(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcorganization/customerlist`);
     return this.httpClient.get<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcorganization/customerlist`,
@@ -39,27 +39,32 @@ export class UsersService {
   }
 
   saveUser(userdetail: UserDetailModel) {
+    console.log(this.storeId);
     console.log('in save function');
     console.log(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcuser/adduser`);
+    console.log(userdetail);
     return this.httpClient.post<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcuser/adduser`, userdetail,
       this.httpOptions);
   }
 
   getUser(userId: string) {
+    console.log(this.storeId);
     console.log('in getUser function');
     console.log(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcuser/${userId}`);
     return this.httpClient.get<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcuser/${userId}`,
       this.httpOptions);
   }
 
-  editUser(userdetailEdit: UserDetailEditModel) {
+  editUser(userdetail: UserDetailModel) {
+    console.log(this.storeId);
     console.log('in edit function');
     console.log(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcuser/updateuser`);
-    return this.httpClient.post<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcuser/updateuser`, userdetailEdit,
+    return this.httpClient.post<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcuser/updateuser`, userdetail,
       this.httpOptions);
   }
 
   resetPassword(resetPassModel: ResetPasswordModel) {
+    console.log(this.storeId);
     console.log('in reset pass function');
     console.log(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcuserpasswordreset/passwordreset`);
     console.log(resetPassModel);
@@ -68,6 +73,7 @@ export class UsersService {
   }
 
   updateUserStatus(userStatusModel: UserStatusModel) {
+    console.log(this.storeId);
     console.log('in userStatus function');
     console.log(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcuserstatus/update`);
     console.log(userStatusModel);

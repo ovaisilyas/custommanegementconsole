@@ -1,6 +1,3 @@
-import { UserRole } from './roles.model';
-
-
 export class UserlistModel {
   public orgName: string;
   public firstName: string;
@@ -9,9 +6,12 @@ export class UserlistModel {
   public userId: string;
   public userStatus: string;
   public orgId: string;
-  public Roles: UserRole[];
+  public buyer: string;
+  public approver: string;
+  public admin: string;
 
-  constructor(orgName: string, firstName: string, lastName: string, logonId: string, userId: string, status: string, orgId: string,  role: UserRole[]) {
+  constructor(orgName: string, firstName: string, lastName: string, logonId: string, userId: string, status: string, orgId: string,
+              buyer: string, approver: string, admin: string) {
     this.orgName = orgName;
     this.firstName = firstName;
     this.lastName = lastName;
@@ -19,6 +19,9 @@ export class UserlistModel {
     this.userId = userId;
     this.userStatus = status;
     this.orgId = orgId;
-    this.Roles = role;
+    this.buyer = buyer;
+    this.approver = approver;
+    this.admin = admin;
+
   }
 }

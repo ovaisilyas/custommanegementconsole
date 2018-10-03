@@ -1,3 +1,10 @@
+<ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="medium"
+  color="#fff"
+  type="ball-scale-multiple">
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
 <app-header></app-header>
 <div class="container-fluid PageContWrap">
   <div class="row">
@@ -12,7 +19,8 @@
             </div>
 
             <div class="col-4 col-sm-3">
-              <input type="text" class="form-control" id="searchTerm" #searchTerm (keyup.enter)="onEnter(searchTerm.value)" placeholder="Search user or Customer">
+              <input type="text" class="form-control" id="searchTerm" #searchTerm (keyup.enter)="onEnter(searchTerm.value)"
+                     appAutofocus placeholder="Search user or Customer">
             </div>
             <div class="col-4">
               <div class="mb-2">
@@ -21,8 +29,8 @@
             </div>
             <div class="col text-right">
                 <div>
-                  <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#addCustomer">Add Customer</button>
-                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#adduser">Add User</button>
+                  <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#addCustomer" (click)="orgDetailForm.reset()">Add Customer</button>
+                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#adduser" (click)="userForm.reset()">Add User</button>
                 </div>
               </div>
           </div>
@@ -43,9 +51,9 @@
             <tbody>
               <tr *ngFor="let item of itemList">
                 <td scope="row"><a data-toggle="modal" data-target="#addCustomer" (click)="getOrg(item.orgId)">{{item.orgName}}</a></td>
-                <td><a data-toggle="modal" data-target="#editUser" (click)="getUser(item.userId)">{{item.firstName}} {{item.lastName}}</a></td>
+                <td><a data-toggle="modal" data-target="#adduser" (click)="getUser(item.userId)">{{item.firstName}} {{item.lastName}}</a></td>
                 <td>{{item.logonId}}</td>
-                <td><p *ngFor="let role of roleList">{{role.role}}Buyer</p></td>
+                <td><p *ngIf="item.buyer === 'true'">Buyer </p> <p *ngIf="item.approver === 'true'">| Approver</p> <p *ngIf="item.admin === 'true'">| Admin</p></td>
                 <td>
                   <label><a (click)="resetPassword(item.logonId)">Reset Password</a></label>
                   <div class="form-check form-check-inline customCheckNew text-right">
@@ -65,22 +73,26 @@
             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalCenterTitle1"><span>Add User</span></h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <h5 class="modal-title" id="exampleModalCenterTitle1"><span>Add / Edit User</span></h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close" #closeBtn>
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
-                <form #userForm="ngForm" (ngSubmit)="onSaveUser()">
+                <form #userForm="ngForm" (ngSubmit)="userForm.form.valid && onSaveUser()" novalidate>
                   <div class="modal-body">
 
                     <div class="form-group row">
                       <label for="customerSelectBox" class="col-sm-3 col-form-label">Customer:</label>
                       <div class="col-sm-9">
                         <select class="form-control" id="customerSelectBox" required
-                                [(ngModel)]="userDetail.parentMemberId" name="parentMemberId" #parentMemberId="ngModel">
+                                [(ngModel)]="userDetail.parentMemberId" name="parentMemberId" #parentMemberId="ngModel"
+                                [ngClass]="{ 'is-invalid': userForm.submitted && parentMemberId.invalid }">
                           <option> -- Select Customer -- </option>
                           <option *ngFor="let item of customerList" [value]="item.orgEntityId">{{item.orgEntityName}}</option>
                         </select>
+                        <div *ngIf="userForm.submitted && parentMemberId.invalid" class="invalid-feedback">
+                          <div *ngIf="!!parentMemberId.errors.required">Customer is required</div>
+                        </div>
                       </div>
                     </div>
 
@@ -88,21 +100,34 @@
                       <label for="userFirstName" class="col-sm-3 col-form-label">User First Name:</label>
                       <div class="col-sm-9">
                         <input type="text" id="userFirstName" class="form-control" required
-                               [(ngModel)]="userDetail.firstName" name="firstName" #firstName="ngModel">
+                               [(ngModel)]="userDetail.firstName" name="firstName" #firstName="ngModel"
+                               [ngClass]="{ 'is-invalid': userForm.submitted && firstName.invalid }">
+                        <div *ngIf="userForm.submitted && firstName.invalid" class="invalid-feedback">
+                          <div *ngIf="!!firstName.errors.required">First Name is required</div>
+                        </div>
                       </div>
                     </div>
                     <div class="form-group row">
                       <label for="userLastName" class="col-sm-3 col-form-label">User Last Name:</label>
                       <div class="col-sm-9">
                         <input type="text" id="userLastName" class="form-control" required
-                               [(ngModel)]="userDetail.lastName" name="lastName" #lastName="ngModel">
+                               [(ngModel)]="userDetail.lastName" name="lastName" #lastName="ngModel"
+                               [ngClass]="{ 'is-invalid': userForm.submitted && lastName.invalid }">
+                        <div *ngIf="userForm.submitted && lastName.invalid" class="invalid-feedback">
+                          <div *ngIf="!!lastName.errors.required">Last Name is required</div>
+                        </div>
                       </div>
                     </div>
                     <div class="form-group row">
                       <label for="userEmail" class="col-sm-3 col-form-label">User Email:</label>
                       <div class="col-sm-9">
                         <input type="text" id="userEmail" class="form-control" required
-                               [(ngModel)]="userDetail.email1" name="email1" #email1="ngModel">
+                               [(ngModel)]="userDetail.email1" name="email1" #email1="ngModel"
+                               [ngClass]="{ 'is-invalid': userForm.submitted && email1.invalid }" email="true">
+                        <div *ngIf="userForm.submitted && email1.errors" class="invalid-feedback">
+                          <div *ngIf="!!email1.errors.required">Email is required</div>
+                          <div *ngIf="!!email1.errors.email">Email must be a valid email address</div>
+                        </div>
                       </div>
                     </div>
 
@@ -123,15 +148,18 @@
                     </div>
 
                     <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="checkbox" id="inlineCheckbox12" value="buyer" checked>
+                      <input class="form-check-input" type="checkbox" id="inlineCheckbox12" [value]="userDetail.buyer"
+                             [(ngModel)]="userDetail.buyer" name="buyer" #buyer="ngModel">
                       <label class="form-check-label" for="inlineCheckbox12">Buyer</label>
                     </div>
                     <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="checkbox" id="inlineCheckbox13" value="approver">
+                      <input class="form-check-input" type="checkbox" id="inlineCheckbox13" [value]="userDetail.approver"
+                             [(ngModel)]="userDetail.approver" name="approver" #approver="ngModel">
                       <label class="form-check-label" for="inlineCheckbox13">Approver</label>
                     </div>
                     <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="checkbox" id="inlineCheckbox14" value="admin">
+                      <input class="form-check-input" type="checkbox" id="inlineCheckbox14" [value]="userDetail.admin"
+                             [(ngModel)]="userDetail.admin" name="admin" #admin="ngModel">
                       <label class="form-check-label" for="inlineCheckbox14">Admin</label>
                     </div>
 
@@ -145,89 +173,13 @@
             </div>
           </div>
 
-          <!-- Modal Edit User-->
-          <div class="modal fade editUserModal" id="editUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="EditUserTitle"><span>Edit User</span></h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <form [formGroup]="userEditForm" (ngSubmit)="editUser()">
-                  <div class="modal-body">
-
-                    <div class="form-group row">
-                      <label for="customerSelectBoxEdit" class="col-sm-3 col-form-label">Customer:</label>
-                      <div class="col-sm-9">
-                        <select class="form-control" id="customerSelectBoxEdit">
-                          <option> -- Select Customer -- </option>
-                          <option *ngFor="let item of customerList" [value]="item.orgEntityId">{{item.orgEntityName}}</option>
-                        </select>
-                      </div>
-                    </div>
-
-                    <div class="form-group row">
-                      <label for="userFirstNameEdit" class="col-sm-3 col-form-label">User First Name:</label>
-                      <div class="col-sm-9">
-                        <input type="text" id="userFirstNameEdit" formControlName="firstName" name="firstName" class="form-control">
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <label for="userLastNameEdit" class="col-sm-3 col-form-label">User Last Name:</label>
-                      <div class="col-sm-9">
-                        <input type="text" id="userLastNameEdit" formControlName="lastName" class="form-control">
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <label for="userEmailEdit" class="col-sm-3 col-form-label">User Email:</label>
-                      <div class="col-sm-9">
-                        <input type="text" id="userEmailEdit" formControlName="email1" class="form-control">
-                      </div>
-                    </div>
-
-                    <div class="form-group row">
-                      <label for="userPhoneEdit" class="col-sm-3 col-form-label">User Phone Number:</label>
-                      <div class="col-sm-9">
-                        <input type="text" id="userPhoneEdit" class="form-control" formControlName="phone1">
-                      </div>
-                    </div>
-
-
-                    <input type="hidden" id="userId" class="form-control" formControlName="userId">
-
-
-                    <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="checkbox" id="buyerCheckbox" value="buyer" checked>
-                      <label class="form-check-label" for="buyerCheckbox">Buyer</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="checkbox" id="approverCheckBox" value="approver">
-                      <label class="form-check-label" for="approverCheckBox">Approver</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="checkbox" id="adminCheckBox" value="admin">
-                      <label class="form-check-label" for="adminCheckBox">Admin</label>
-                    </div>
-
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-PrimaryModal" [disabled]="!userEditForm.valid">Save changes</button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-
           <!-- Modal Add Customer-->
           <div class="modal fade addCustomerModal" id="addCustomer" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalCenterTitle"><span>Add Customer</span> <span>Edit Customer</span></h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <h5 class="modal-title" id="exampleModalCenterTitle"><span>Add / Edit Customer</span></h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close" #closeBtn>
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
