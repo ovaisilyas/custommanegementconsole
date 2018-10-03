@@ -50,6 +50,8 @@ a:hover{color:#404040;}
 .userDataGrid .form-check-input{margin-left: 10px;margin-right: 0rem;}
 .userDataGrid table td a{text-decoration: underline !important; cursor: pointer;}
 
+.userSearchRow #searchTerm{background:url(../images/search.png) left no-repeat; background-position-x: 5px; padding-left: 25px;}
+
 .custTabCls ul.nav.nav-tabs > li {float: none;display: table-cell;}
 
  @media (min-width: 1366px)  { 
