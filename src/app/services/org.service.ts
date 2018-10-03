@@ -7,11 +7,11 @@ import {OrgDetailModel} from '../model/orgdetail.model';
   providedIn: 'root'
 })
 export class OrgService {
-  userId = localStorage.getItem('userId');
-  WCToken = localStorage.getItem('WCToken');
-  WCTrustedToken = localStorage.getItem('WCTrustedToken');
-  personalizationID = localStorage.getItem('personalizationID');
-  storeId = localStorage.getItem('storeId');
+  userId = sessionStorage.getItem('userId');
+  WCToken = sessionStorage.getItem('WCToken');
+  WCTrustedToken = sessionStorage.getItem('WCTrustedToken');
+  personalizationID = sessionStorage.getItem('personalizationID');
+  storeId = sessionStorage.getItem('storeId');
 
   constructor(
     private httpClient: HttpClient,

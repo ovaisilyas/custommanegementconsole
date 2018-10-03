@@ -53,7 +53,7 @@
                 <td scope="row"><a data-toggle="modal" data-target="#addCustomer" (click)="getOrg(item.orgId)">{{item.orgName}}</a></td>
                 <td><a data-toggle="modal" data-target="#adduser" (click)="getUser(item.userId)">{{item.firstName}} {{item.lastName}}</a></td>
                 <td>{{item.logonId}}</td>
-                <td><p *ngIf="item.buyer === 'true'">Buyer </p> <p *ngIf="item.approver === 'true'">| Approver</p> <p *ngIf="item.admin === 'true'">| Admin</p></td>
+                <td><span *ngIf="item.buyer === 'true'">Buyer </span> <span *ngIf="item.approver === 'true'">| Approver</span> <span *ngIf="item.admin === 'true'">| Admin</span></td>
                 <td>
                   <label><a (click)="resetPassword(item.logonId)">Reset Password</a></label>
                   <div class="form-check form-check-inline customCheckNew text-right">

@@ -43,6 +43,7 @@ export class UsersOrgComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.getCustomers();
   }
 
   onEnter(value: string) {
@@ -91,7 +92,6 @@ export class UsersOrgComponent implements OnInit {
 
   getUser(userId: string) {
     this.spinner.show();
-    this.getCustomers();
     this.usersService.getUser(userId)
       .pipe(map(
         (user) => {
