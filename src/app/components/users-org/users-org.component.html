@@ -14,21 +14,17 @@
             <div class="col-4 col-sm-3">
               <input type="text" class="form-control" id="searchTerm" #searchTerm (keyup.enter)="onEnter(searchTerm.value)" placeholder="Search user or Customer">
             </div>
-            <div class="col-5">
+            <div class="col-4">
               <div class="mb-2">
                 <label class="form-check-label hintTxtRow"><small>Click on a ID to edit customer or user, or use the add buttons.</small></label>
               </div>
             </div>
-            <div class="col-auto" style="width: 16.6%; text-align: right;">
-              <div class="mb-2">
-                <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#addCustomer">Add Customer</button>
+            <div class="col text-right">
+                <div>
+                  <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#addCustomer">Add Customer</button>
+                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#adduser">Add User</button>
+                </div>
               </div>
-            </div>
-            <div class="col-auto">
-              <div class="mb-2">
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#adduser">Add User</button>
-              </div>
-            </div>
           </div>
         </form>
 
