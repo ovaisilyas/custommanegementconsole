@@ -1,9 +1,106 @@
 <app-header></app-header>
-<div class="container-fluid PageContWrap">
+<div class="container-fluid PageContWrap prodPageCont">
   <div class="row">
     <div class="col-lg-12">
       <div class="tab-content" id="nav-tabContent">
-          Coming Soon
+        <form>
+          <div class="form-row align-items-center userSearchRow">
+              <div class="col-auto">
+                <div class="mb-2">
+                  <label class="form-check-label font-weight-bold">Active Product List</label>
+                </div>
+              </div>
+  
+              <div class="col-4 col-sm-3">
+                <input type="text" class="form-control searchIcon" id="searchTerm" #searchTerm (keyup.enter)="onEnter(searchTerm.value)"
+                       appAutofocus placeholder="Search user or Customer">
+              </div>
+              
+              <div class="col text-right">
+                  <div>
+                    <button type="button" class="btn btn-PrimaryModal btn-default" data-toggle="modal" data-target="#addCustomer" (click)="orgDetailForm.reset()">New Contract</button>
+                    <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#addCustomer" (click)="orgDetailForm.reset()">Download to Excel</button>
+                    <button type="button" class="btn btn-PrimaryModal btn-default" data-toggle="modal" data-target="#addCustomer" (click)="orgDetailForm.reset()">View Pricing</button>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#adduser" (click)="userForm.reset()">Add Item</button>
+                    <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#addCustomer" (click)="orgDetailForm.reset()">Download to Excel</button>
+                    <button type="button" class="btn btn-PrimaryModal btn-default" data-toggle="modal" data-target="#addCustomer" (click)="orgDetailForm.reset()">All Contracts</button>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#adduser" (click)="userForm.reset()">Add Store Product</button>
+                  </div>
+                </div>
+            </div>
+            </form>
+
+            <div class="productPriceGrid table-responsive">
+                <table class="table table-bordered table-striped">
+                  <thead>
+                    <tr>
+                      <th scope="col">Range</th>
+                      <th scope="col">EZCode</th>
+                      <th scope="col">Description</th>
+                      <th scope="col">List Price (Inc. GST)</th>
+                      <th scope="col">Gov price (Ex GST)</th>
+                      <th scope="col">Actions</th>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td scope="row">Catalogue</td>
+                      <td>7000587</td>
+                      <td>Initiative A4 Office</td>
+                      <td>$5.60</td>
+                      <td>$4.66</td>
+                      <td><a href="">Open Contract</a></td>
+                    </tr>
+                    <tr>
+                        <td scope="row">Catalogue</td>
+                        <td>7000587</td>
+                        <td>Initiative A4 Office</td>
+                        <td>$5.60</td>
+                        <td>$4.66</td>
+                        <td><a href="">Open Contract</a></td>
+                      </tr>
+                    
+                   
+                  </tbody>
+                </table>
+              </div>
+
+               <div class="productContractGrid table-responsive">
+                <table class="table table-bordered table-striped">
+                  <thead>
+                    <tr>
+                      <th scope="col">Contract</th>
+                      <th scope="col">Code</th>
+                      <th scope="col">Description</th>
+                      <th scope="col">Price (Ex GST)</th>
+                      <th scope="col">Actions</th>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td scope="row">Top Customers</td>
+                      <td>4000587</td>
+                      <td>Initiative A4 Office</td>
+                      <td>$5.60</td>
+                      <td><a href="">Edit Price</a> 
+                        <a href="">Customers</a>
+                        <a href="">Delete</a></td>
+                    </tr>
+
+                    <tr>
+                        <td scope="row">Top Customers</td>
+                        <td>4000587</td>
+                        <td>Initiative A4 Office</td>
+                        <td>$5.60</td>
+                        <td><a href="">Edit Price</a> 
+                          <a href="">Customers</a>
+                          <a href="">Delete</a></td>
+                      </tr>
+                   
+                    
+                   
+                  </tbody>
+                </table>
+              </div>
+
       </div>
     </div>
   </div>
