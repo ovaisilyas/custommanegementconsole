@@ -23,11 +23,12 @@ import { NgxSpinnerService } from 'ngx-spinner';
 export class UsersOrgComponent implements OnInit {
   customerList: CustomerlistModel[];
   itemList: UserlistModel[];
-  userDetail = new UserDetailModel('', '', '', '', ''
+  userDetail = new UserDetailModel('', '', '', '', '', '', '', '', '', '', '',''
     , '', false, false, false);
   submitted = false;
   resetPassModel: ResetPasswordModel;
   userStatusModel: UserStatusModel;
+  searchTerm = "";
 
   orgDetail = new OrgDetailModel('', '', '', '', '', '', '-2001', '', 'O');
 
@@ -48,6 +49,7 @@ export class UsersOrgComponent implements OnInit {
 
   onEnter(value: string) {
     this.spinner.show();
+    this.searchTerm = value;
     this.searchService.searchData(value)
       .pipe(map(
         (users) => {
@@ -64,6 +66,10 @@ export class UsersOrgComponent implements OnInit {
         },
         error => {
           console.log(error);
+          this.alertService.error(error);
+          if(this.itemList != undefined) {
+            this.itemList.length = 0;
+          }
           this.spinner.hide();
         });
   }
@@ -135,6 +141,7 @@ export class UsersOrgComponent implements OnInit {
           console.log(data);
           this.closeModal();
           this.alertService.success('User Added Successfully');
+          this.onEnter(this.searchTerm);
         },
         error => {
           this.spinner.hide();
@@ -166,12 +173,12 @@ export class UsersOrgComponent implements OnInit {
         });
   }
 
-  updateUserStatus(userId: string, status: string) {
+  updateUserStatus(userId: string, event: any) {
     this.spinner.show();
-    if (status === '1') {
-      status = '0';
-    } else {
+    if (event.currentTarget.checked) {
       status = '1';
+    } else {
+      status = '0';
     }
     this.userStatusModel = new UserStatusModel(userId, status);
     this.submitted = true;
@@ -207,6 +214,7 @@ export class UsersOrgComponent implements OnInit {
         data => {
           console.log(data);
           this.alertService.success('User has been updated successfully');
+          this.onEnter(this.searchTerm);
         },
         error => {
           console.log(error);
@@ -254,6 +262,7 @@ export class UsersOrgComponent implements OnInit {
         },
         error => {
           this.spinner.hide();
+          this.alertService.error(error);
           console.log(error);
         });
   }
@@ -273,7 +282,7 @@ export class UsersOrgComponent implements OnInit {
           this.alertService.success(data);
         },
         error => {
-          console.log(error['error']);
+          console.log(error);
           this.alertService.error(error);
         });
   }

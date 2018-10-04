@@ -29,8 +29,8 @@
             </div>
             <div class="col text-right">
                 <div>
-                  <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#addCustomer" (click)="orgDetailForm.reset()">Add Customer</button>
-                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#adduser" (click)="userForm.reset()">Add User</button>
+                  <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#addCustomer" (click)="orgDetailForm.reset(); this.orgDetail.parentMemberId = ''">Add Customer</button>
+                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#adduser" (click)="userForm.reset(); this.userDetail.userId = ''">Add User</button>
                 </div>
               </div>
           </div>
@@ -53,13 +53,13 @@
                 <td scope="row"><a data-toggle="modal" data-target="#addCustomer" (click)="getOrg(item.orgId)">{{item.orgName}}</a></td>
                 <td><a data-toggle="modal" data-target="#adduser" (click)="getUser(item.userId)">{{item.firstName}} {{item.lastName}}</a></td>
                 <td>{{item.logonId}}</td>
-                <td><span *ngIf="item.buyer === 'true'">Buyer </span> <span *ngIf="item.approver === 'true'">| Approver</span> <span *ngIf="item.admin === 'true'">| Admin</span></td>
+                <td><span *ngIf="item.buyer === 'true'">Buyer</span><span *ngIf="item.approver && item.buyer === 'true'"> | </span><span *ngIf="item.approver === 'true'">Approver</span><span *ngIf="(item.approver && item.admin === 'true') || (item.buyer && item.admin === 'true')"> | </span><span *ngIf="item.admin === 'true'">Admin</span></td>
                 <td>
                   <label><a (click)="resetPassword(item.logonId)">Reset Password</a></label>
                   <div class="form-check form-check-inline customCheckNew text-right">
                     <input class="form-check-input" type="checkbox" id="userStatusCheckbox" name="userStatusCheckbox" value="{{item.userStatus}}"
                            [checked]="item.userStatus == '1'"
-                           (change)="updateUserStatus(item.userId, item.userStatus)"></div>
+                           (change)="updateUserStatus(item.userId, $event)"></div>
                 </td>
               </tr>
             </tbody>
@@ -73,23 +73,36 @@
             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalCenterTitle1"><span>Add / Edit User</span></h5>
+                  <h5 class="modal-title" id="exampleModalCenterTitle1"><span *ngIf="!userDetail.userId">Add </span><span *ngIf="userDetail.userId">Edit </span> User</h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close" #closeBtn>
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
-                <form #userForm="ngForm" (ngSubmit)="userForm.form.valid && onSaveUser()" novalidate>
+                <form #userForm="ngForm" novalidate>
                   <div class="modal-body">
 
                     <div class="form-group row">
                       <label for="customerSelectBox" class="col-sm-3 col-form-label">Customer:</label>
                       <div class="col-sm-9">
-                        <select class="form-control" id="customerSelectBox" required
+                        <select class="form-control" *ngIf="userDetail.userId" disabled id="customerSelectBox" required
                                 [(ngModel)]="userDetail.parentMemberId" name="parentMemberId" #parentMemberId="ngModel"
                                 [ngClass]="{ 'is-invalid': userForm.submitted && parentMemberId.invalid }">
                           <option> -- Select Customer -- </option>
                           <option *ngFor="let item of customerList" [value]="item.orgEntityId">{{item.orgEntityName}}</option>
                         </select>
+                        <select class="form-control" *ngIf="!userDetail.userId" id="customerSelectBox" required
+                                [(ngModel)]="userDetail.parentMemberId" name="parentMemberId" #parentMemberId="ngModel"
+                                [ngClass]="{ 'is-invalid': userForm.submitted && parentMemberId.invalid }">
+                          <option> -- Select Customer -- </option>
+                          <option *ngFor="let item of customerList" [value]="item.orgEntityId">{{item.orgEntityName}}</option>
+                        </select>
+                        <!-- <input type="text" list="customerDatalist" class="form-control" id="customerSelectBox" required
+                        [(ngModel)]="userDetail.parentMemberId" name="parentMemberId" #parentMemberId="ngModel"
+                        [ngClass]="{ 'is-invalid': userForm.submitted && parentMemberId.invalid }">
+                        <datalist id="customerDatalist">
+                          <option>-- Select Customer --</option>
+                          <option *ngFor="let item of customerList" [value]="item.orgEntityId">{{item.orgEntityName}}</option>
+                        </datalist> -->
                         <div *ngIf="userForm.submitted && parentMemberId.invalid" class="invalid-feedback">
                           <div *ngIf="!!parentMemberId.errors.required">Customer is required</div>
                         </div>
@@ -99,7 +112,7 @@
                     <div class="form-group row">
                       <label for="userFirstName" class="col-sm-3 col-form-label">User First Name:</label>
                       <div class="col-sm-9">
-                        <input type="text" id="userFirstName" class="form-control" required
+                        <input type="text" id="userFirstName" class="form-control" pattern="[a-zA-Z ]*" required
                                [(ngModel)]="userDetail.firstName" name="firstName" #firstName="ngModel"
                                [ngClass]="{ 'is-invalid': userForm.submitted && firstName.invalid }">
                         <div *ngIf="userForm.submitted && firstName.invalid" class="invalid-feedback">
@@ -110,7 +123,7 @@
                     <div class="form-group row">
                       <label for="userLastName" class="col-sm-3 col-form-label">User Last Name:</label>
                       <div class="col-sm-9">
-                        <input type="text" id="userLastName" class="form-control" required
+                        <input type="text" id="userLastName" class="form-control" pattern="[a-zA-Z ]*" required
                                [(ngModel)]="userDetail.lastName" name="lastName" #lastName="ngModel"
                                [ngClass]="{ 'is-invalid': userForm.submitted && lastName.invalid }">
                         <div *ngIf="userForm.submitted && lastName.invalid" class="invalid-feedback">
@@ -142,8 +155,10 @@
                     <div class="form-group row">
                       <label for="userLogonId" class="col-sm-3 col-form-label">User ID:</label>
                       <div class="col-sm-9">
-                        <input type="text" id="userLogonId" class="form-control" required
+                        <input type="text" *ngIf="!userDetail.userId" id="userLogonId" class="form-control" required
                                [(ngModel)]="userDetail.logonId" name="logonId" #logonId="ngModel">
+                        <input type="text" *ngIf="userDetail.userId" disabled id="userLogonId" class="form-control" required
+                                [(ngModel)]="userDetail.logonId" name="logonId" #logonId="ngModel">
                       </div>
                     </div>
 
@@ -166,7 +181,8 @@
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-PrimaryModal" [disabled]="!userForm.form.valid">Save changes</button>
+                    <button type="submit" *ngIf="!userDetail.userId" class="btn btn-PrimaryModal" [disabled]="!(userForm.form.valid && (buyer.value || approver.value || admin.value))" (click)="onSaveUser()">Save changes</button>
+                    <button type="submit" *ngIf="userDetail.userId" class="btn btn-PrimaryModal" [disabled]="!(userForm.form.valid && (buyer.value || approver.value || admin.value))" (click)="editUser()">Save Edit changes</button>
                   </div>
                 </form>
               </div>
@@ -178,18 +194,20 @@
             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalCenterTitle"><span>Add / Edit Customer</span></h5>
+                  <h5 class="modal-title" id="exampleModalCenterTitle"><span *ngIf="!orgDetail.parentMemberId">Add </span><span *ngIf="orgDetail.parentMemberId">Edit </span>Customer</h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close" #closeBtn>
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
-                <form #orgDetailForm="ngForm" (ngSubmit)="addCustomer()">
+                <form #orgDetailForm="ngForm">
                   <div class="modal-body">
 
                     <div class="form-group row">
                       <label for="orgEntityName" class="col-sm-3 col-form-label">Customer Name:</label>
                       <div class="col-sm-9">
-                        <input type="text" class="form-control" id="orgEntityName"
+                        <input type="text" *ngIf="!orgDetail.parentMemberId" class="form-control" id="orgEntityName"
+                               [(ngModel)]="orgDetail.orgEntityName" name="orgEntityName" #orgEntityName="ngModel" required>
+                        <input type="text" *ngIf="orgDetail.parentMemberId" disabled class="form-control" id="orgEntityName"
                                [(ngModel)]="orgDetail.orgEntityName" name="orgEntityName" #orgEntityName="ngModel">
                       </div>
                     </div>
@@ -198,7 +216,7 @@
                       <label for="address1" class="col-sm-3 col-form-label">Address:</label>
                       <div class="col-sm-9">
                         <input type="text" class="form-control" id="address1"
-                               [(ngModel)]="orgDetail.address1" name="address1" #address1="ngModel">
+                               [(ngModel)]="orgDetail.address1" name="address1" #address1="ngModel" required>
                       </div>
                     </div>
 
@@ -214,7 +232,7 @@
                       <label for="city" class="col-sm-3 col-form-label">City:</label>
                       <div class="col-sm-9">
                         <input type="text" class="form-control" id="city"
-                               [(ngModel)]="orgDetail.city" name="city" #city="ngModel">
+                               [(ngModel)]="orgDetail.city" name="city" #city="ngModel" required>
                       </div>
                     </div>
 
@@ -227,12 +245,12 @@
                       <label for="zipCode" class="col-sm-3 col-form-label">Postcode:</label>
                       <div class="col-sm-3">
                         <input type="text" class="form-control" id="zipCode"
-                               [(ngModel)]="orgDetail.zipCode" name="zipCode" #zipCode="ngModel">
+                               [(ngModel)]="orgDetail.zipCode" name="zipCode" #zipCode="ngModel" minlength="4" maxlength="4" required>
                       </div>
                       <label for="state" class="col-sm-2 col-form-label text-right">Suburb:</label>
                       <div class="col-sm-4">
                         <select class="form-control" id="state"
-                                [(ngModel)]="orgDetail.state" name="state" #state="ngModel">
+                                [(ngModel)]="orgDetail.state" name="state" #state="ngModel" required>
                           <option value="AU-ACT" selected="selected">Australian Capital Territory</option>
                           <option value="AU-NSW">New South Wales</option>
                           <option value="AU-NT">Northern Territory</option>
@@ -271,7 +289,8 @@
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-PrimaryModal" [disabled]="!orgDetailForm.form.valid">Save changes</button>
+                    <button type="submit" *ngIf="!orgDetail.parentMemberId" class="btn btn-PrimaryModal" [disabled]="!orgDetailForm.form.valid" (click)="addCustomer()">Save changes</button>
+                    <button type="submit" *ngIf="orgDetail.parentMemberId" class="btn btn-PrimaryModal" [disabled]="!orgDetailForm.form.valid" (click)="editCustomer()">Save Edit changes</button>
                   </div>
                 </form>
               </div>
