@@ -73,3 +73,11 @@ a:hover{color:#404040;}
  @media (max-width: 990px) {
     .custTabCls ul.nav.nav-tabs{table-layout: auto;}
   }
+
+  button.calendar, button.calendar:active {
+    width: 2.75rem;
+    background-image: url(../images/calendar.png)!important;
+    background-repeat: no-repeat;
+    background-size: 23px;
+    background-position: center;
+  }

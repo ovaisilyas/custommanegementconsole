@@ -29,6 +29,8 @@ export class UsersOrgComponent implements OnInit {
   resetPassModel: ResetPasswordModel;
   userStatusModel: UserStatusModel;
   searchTerm = "";
+  selectedId = "";
+  IdKey = 0;
 
   orgDetail = new OrgDetailModel('', '', '', '', '', '', '-2001', '', 'O');
 
@@ -108,6 +110,7 @@ export class UsersOrgComponent implements OnInit {
       .subscribe(
         data => {
           this.userDetail = data;
+          this.selectedId = this.getOrgEntryName(this.userDetail.parentMemberId);
           this.userDetail.buyer = JSON.parse(data['buyer']);
           this.userDetail.approver = JSON.parse(data['approver']);
           this.userDetail.admin = JSON.parse(data['admin']);
@@ -285,5 +288,23 @@ export class UsersOrgComponent implements OnInit {
           console.log(error);
           this.alertService.error(error);
         });
+  }
+
+  getOrgEntryId(value: any) {
+    this.IdKey = this.customerList.findIndex(function(item,i){
+      return item.orgEntityName === value;
+    });
+    if(this.IdKey != -1) {
+      this.userDetail.parentMemberId = this.customerList[this.IdKey].orgEntityId;
+    }
+  }
+
+  getOrgEntryName(value: any) {
+    this.IdKey = this.customerList.findIndex(function(item,i){
+      return item.orgEntityId === value;
+    });
+    if(this.IdKey != -1) {
+      return this.selectedId = this.customerList[this.IdKey].orgEntityName;
+    }
   }
 }
