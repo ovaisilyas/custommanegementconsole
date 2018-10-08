@@ -53,7 +53,7 @@ a:hover{color:#404040;}
 .userDataGrid table td a, .productPriceGrid table td a, .productContractGrid table a{text-decoration: underline !important; cursor: pointer;}
 
 
-.userSearchRow #searchTerm, .userSearchRow .searchIcon{background:url(../images/search.png) left no-repeat; background-position-x: 5px; padding-left: 25px;}
+.userSearchRow #searchTerm, .userSearchRow .searchIcon, .searchIconNew{background:url(../images/search.png) left no-repeat; background-position-x: 5px; padding-left: 25px;}
 .custTabCls ul.nav.nav-tabs > li {float: none;display: table-cell;}
 
 .homePageCont {padding-top: 10px;}
@@ -81,3 +81,11 @@ a:hover{color:#404040;}
     background-size: 23px;
     background-position: center;
   }
+  .addCustomersModal .card-header{padding: .35rem 1.25rem;}
+  .deleteCustomersModal h5.modal-title{font-size: 12pt;}
+  .custSelectDisplay .alert{padding: .45rem .85rem; margin-bottom: .30rem;border:0px;font-size: 10pt;}
+  .custSelectDisplay .alert-dismissible .close{padding: .45rem .85rem;color:#ff0000;}
+  .custSelectDisplay .alert-secondary{background-color: #edeeef;}
+  .custPriceEdit div{padding:0px 5px 0px 5px; }
+  .custPriceEdit input{width:60px;}
+  
