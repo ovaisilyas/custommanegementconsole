@@ -23,8 +23,10 @@ import { NgxSpinnerService } from 'ngx-spinner';
 export class UsersOrgComponent implements OnInit {
   customerList: CustomerlistModel[];
   itemList: UserlistModel[];
+
   userDetail = new UserDetailModel('', '', '', '', '', '', '', '', '', '', '', ''
     , true, false, false, false, '');
+
   submitted = false;
   resetPassModel: ResetPasswordModel;
   userStatusModel: UserStatusModel;

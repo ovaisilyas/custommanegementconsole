@@ -15,13 +15,13 @@ export class ErrorInterceptor implements HttpInterceptor {
         this.authenticationService.logout();
         location.reload(true);
       }
-      let error = "";
-      if(err.status === 500) {
-        error = "System is down";
+      let error = '';
+      if (err.status === 500) {
+        error = 'System is down';
       }
-      if(err.error.error != undefined) {
+      if (err.error.error !== undefined) {
         error = err.error.error.message || err.statusText;
-      } else if(err.error != undefined) {
+      } else if (err.error !== undefined) {
         error = err.error.message || err.statusText;
       }
       return throwError(error);
