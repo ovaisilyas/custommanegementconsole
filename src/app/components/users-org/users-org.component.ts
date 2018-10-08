@@ -23,16 +23,17 @@ import { NgxSpinnerService } from 'ngx-spinner';
 export class UsersOrgComponent implements OnInit {
   customerList: CustomerlistModel[];
   itemList: UserlistModel[];
-  userDetail = new UserDetailModel('', '', '', '', '', '', '', '', '', '', '',''
-    , '', false, false, false);
+  userDetail = new UserDetailModel('', '', '', '', '', '', '', '', '', '', '', ''
+    , true, false, false, false, '');
   submitted = false;
   resetPassModel: ResetPasswordModel;
   userStatusModel: UserStatusModel;
-  searchTerm = "";
-  selectedId = "";
+  searchTerm = '';
+  selectedId = '';
   IdKey = 0;
+  loading = true;
 
-  orgDetail = new OrgDetailModel('', '', '', '', '', '', '-2001', '', 'O');
+  orgDetail = new OrgDetailModel('', '', '', '', '', '', '-2001', '', 'O', '');
 
   @ViewChild('closeBtn') closeBtn: ElementRef;
 
@@ -69,7 +70,7 @@ export class UsersOrgComponent implements OnInit {
         error => {
           console.log(error);
           this.alertService.error(error);
-          if(this.itemList != undefined) {
+          if (this.itemList !== undefined) {
             this.itemList.length = 0;
           }
           this.spinner.hide();
@@ -88,6 +89,7 @@ export class UsersOrgComponent implements OnInit {
       .subscribe(
         data => {
           this.customerList = data;
+          this.loading = false;
         },
         error => {
           console.log('Unable to Fetch Customers');
@@ -124,6 +126,7 @@ export class UsersOrgComponent implements OnInit {
 
   onSaveUser() {
     this.spinner.show();
+    this.userDetail.status = true;
     console.log(this.userDetail);
     if (this.userDetail.approver === null) {
       this.userDetail.approver = false;
@@ -249,6 +252,8 @@ export class UsersOrgComponent implements OnInit {
 
   addCustomer() {
     this.spinner.show();
+    this.orgDetail.orgEntityType = 'O';
+    this.orgDetail.parentMemberId = '-2001';
     console.log(this.orgDetail);
     this.orgService.saveOrg(this.orgDetail)
       .pipe(map(
@@ -291,19 +296,19 @@ export class UsersOrgComponent implements OnInit {
   }
 
   getOrgEntryId(value: any) {
-    this.IdKey = this.customerList.findIndex(function(item,i){
+    this.IdKey = this.customerList.findIndex(function(item, i) {
       return item.orgEntityName === value;
     });
-    if(this.IdKey != -1) {
+    if (this.IdKey !== -1) {
       this.userDetail.parentMemberId = this.customerList[this.IdKey].orgEntityId;
     }
   }
 
   getOrgEntryName(value: any) {
-    this.IdKey = this.customerList.findIndex(function(item,i){
+    this.IdKey = this.customerList.findIndex(function(item, i) {
       return item.orgEntityId === value;
     });
-    if(this.IdKey != -1) {
+    if (this.IdKey !== -1) {
       return this.selectedId = this.customerList[this.IdKey].orgEntityName;
     }
   }

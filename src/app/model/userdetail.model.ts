@@ -10,15 +10,16 @@ export class UserDetailModel {
   public state: string;
   public zipCode: string;
   public country: string;
-  public status: string;
+  public status: boolean;
   public parentMemberId: string;
   public buyer: boolean;
   public approver: boolean;
   public admin: boolean;
+  public userId: string;
 
-  constructor(logonId: string, firstName: string, lastName: string, email1: string, phone1: string, parentMemberId: string, 
-    address1: string, address2: string, city: string, state: string, zipCode: string, country: string, status: string,
-              buyer: boolean, approver: boolean, admin: boolean) {
+  constructor(logonId: string, firstName: string, lastName: string, email1: string, phone1: string, parentMemberId: string,
+    address1: string, address2: string, city: string, state: string, zipCode: string, country: string, status: boolean,
+              buyer: boolean, approver: boolean, admin: boolean, userId: string) {
     this.logonId = logonId;
     this.firstName = firstName;
     this.lastName = lastName;
@@ -35,6 +36,7 @@ export class UserDetailModel {
     this.buyer = buyer;
     this.approver = approver;
     this.admin = admin;
+    this.userId = userId;
   }
 
 }

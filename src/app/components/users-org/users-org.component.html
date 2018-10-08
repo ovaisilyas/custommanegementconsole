@@ -64,6 +64,25 @@
               </tr>
             </tbody>
           </table>
+          <!-- pager -->
+          <!-- ----- {{pager.pages.length}} -------
+          <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+              <li [ngClass]="{disabled:pager.currentPage === 1}">
+                  <a (click)="setPage(1)">First</a>
+              </li>
+              <li [ngClass]="{disabled:pager.currentPage === 1}">
+                  <a (click)="setPage(pager.currentPage - 1)">Previous</a>
+              </li>
+              <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+                  <a (click)="setPage(page)">{{page}}</a>
+              </li>
+              <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                  <a (click)="setPage(pager.currentPage + 1)">Next</a>
+              </li>
+              <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                  <a (click)="setPage(pager.totalPages)">Last</a>
+              </li>
+          </ul> -->
         </div>
 
         <div>
@@ -84,6 +103,7 @@
                     <div class="form-group row">
                       <label for="customerSelectBox" class="col-sm-3 col-form-label">Customer:</label>
                       <div class="col-sm-9">
+                          <img style="display:inline;" *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
                         <!-- <select class="form-control" *ngIf="userDetail.userId" disabled id="customerSelectBox" required
                                 [(ngModel)]="userDetail.parentMemberId" name="parentMemberId" #parentMemberId="ngModel"
                                 [ngClass]="{ 'is-invalid': userForm.submitted && parentMemberId.invalid }">
@@ -97,12 +117,11 @@
                           <option *ngFor="let item of customerList" [value]="item.orgEntityId">{{item.orgEntityName}}</option>
                         </select>
                         <input type="hidden" [value]="userDetail.orgEntityId" /> -->
-                        <input type="text" list="customerDatalist" *ngIf="userDetail.userId" disabled class="form-control" id="customerSelectBox" required
+                        <input type="text" list="customerDatalist" *ngIf="userDetail.userId" disabled class="form-control" required
                         [(ngModel)]="selectedId" name="selectedId" (change)="getOrgEntryId(selectedId)">
-                        <input type="text" list="customerDatalist" *ngIf="!userDetail.userId" class="form-control" id="customerSelectBox" required
-                        [(ngModel)]="selectedId" name="selectedId" (change)="getOrgEntryId(selectedId)">
+                        <input type="text" list="customerDatalist" *ngIf="!userDetail.userId && !loading" class="form-control" required
+                        [(ngModel)]="selectedId" name="selectedId" (change)="getOrgEntryId(selectedId)" placeholder="Select Customer">
                         <datalist id="customerDatalist">
-                          <option>-- Select Customer --</option>
                           <option *ngFor="let item of customerList" [value]="item.orgEntityName">
                         </datalist>
                         <input type="hidden" [value]="userDetail.parentMemberId" [(ngModel)]="userDetail.parentMemberId" name="parentMemberId" #parentMemberIdtext="ngModel" />
@@ -207,7 +226,7 @@
                       <div class="form-group row">
                           <label for="country" class="col-sm-3 col-form-label">Country:</label>
                           <div class="col-sm-9">
-                            <select class="form-control" id="country"
+                            <select class="form-control" id="userCountry"
                                     [(ngModel)]="userDetail.country" name="country" #country="ngModel">
                               <option value="Australia" selected="selected">Australia</option>
                             </select>
@@ -264,7 +283,7 @@
             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalCenterTitle"><span *ngIf="!orgDetail.parentMemberId">Add </span><span *ngIf="orgDetail.parentMemberId">Edit </span>Customer</h5>
+                  <h5 class="modal-title" id="exampleModalCenterTitle"><span *ngIf="!orgDetail.orgEntityId">Add </span><span *ngIf="orgDetail.orgEntityId">Edit </span>Customer</h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close" #closeBtn>
                     <span aria-hidden="true">&times;</span>
                   </button>
@@ -275,9 +294,9 @@
                     <div class="form-group row">
                       <label for="orgEntityName" class="col-sm-3 col-form-label">Customer Name:</label>
                       <div class="col-sm-9">
-                        <input type="text" *ngIf="!orgDetail.parentMemberId" class="form-control" id="orgEntityName"
+                        <input type="text" *ngIf="!orgDetail.orgEntityId" class="form-control"
                                [(ngModel)]="orgDetail.orgEntityName" name="orgEntityName" #orgEntityName="ngModel" required>
-                        <input type="text" *ngIf="orgDetail.parentMemberId" disabled class="form-control" id="orgEntityName"
+                        <input type="text" *ngIf="orgDetail.orgEntityId" disabled class="form-control"
                                [(ngModel)]="orgDetail.orgEntityName" name="orgEntityName" #orgEntityName="ngModel">
                       </div>
                     </div>
@@ -359,8 +378,8 @@
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" *ngIf="!orgDetail.parentMemberId" class="btn btn-PrimaryModal" [disabled]="!orgDetailForm.form.valid" (click)="addCustomer()">Save changes</button>
-                    <button type="submit" *ngIf="orgDetail.parentMemberId" class="btn btn-PrimaryModal" [disabled]="!orgDetailForm.form.valid" (click)="editCustomer()">Save Edit changes</button>
+                    <button type="submit" *ngIf="!orgDetail.orgEntityId" class="btn btn-PrimaryModal" [disabled]="!orgDetailForm.form.valid" (click)="addCustomer()">Save changes</button>
+                    <button type="submit" *ngIf="orgDetail.orgEntityId" class="btn btn-PrimaryModal" [disabled]="!orgDetailForm.form.valid" (click)="editCustomer()">Save Edit changes</button>
                   </div>
                 </form>
               </div>

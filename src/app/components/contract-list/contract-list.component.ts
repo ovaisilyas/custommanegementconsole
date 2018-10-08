@@ -24,13 +24,14 @@ export class ContractListComponent implements OnInit {
   customerList: CustomerlistModel[];
   itemList: UserlistModel[];
   submitted = false;
-  userDetail = new UserDetailModel('', '', '', '', '', '', '', '', '', '', '',''
-    , '', false, false, false);
+  userDetail = new UserDetailModel('', '', '', '', '', '', '', '', '', '', '', ''
+    , true, false, false, false, '');
 
-  orgDetail = new OrgDetailModel('', '', '', '', '', '', '-2001', '', 'O');
+  orgDetail = new OrgDetailModel('', '', '', '', '', '', '-2001', '', 'O', '');
 
-  selectedId = "";
+  selectedId = '';
   IdKey = 0;
+  loading = true;
 
   constructor(
     private searchService: SearchService,
@@ -57,6 +58,7 @@ export class ContractListComponent implements OnInit {
       .subscribe(
         data => {
           this.customerList = data;
+          this.loading = false;
         },
         error => {
           console.log('Unable to Fetch Customers');
@@ -64,10 +66,10 @@ export class ContractListComponent implements OnInit {
   }
 
   getOrgEntryId(value: any) {
-    this.IdKey = this.customerList.findIndex(function(item,i){
+    this.IdKey = this.customerList.findIndex(function(item, i) {
       return item.orgEntityName === value;
     });
-    if(this.IdKey != -1) {
+    if (this.IdKey !== -1) {
       this.userDetail.parentMemberId = this.customerList[this.IdKey].orgEntityId;
     }
   }

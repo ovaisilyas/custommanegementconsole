@@ -8,9 +8,10 @@ export class OrgDetailModel {
   public parentMemberId: string;
   public zipCode: string;
   public orgEntityType: string;
+  public orgEntityId: string;
 
 
-  constructor(orgEntityName: string, address1: string, address2: string, city: string, state: string, country: string, parentMemberId: string, zipCode: string, orgEntityType: string) {
+  constructor(orgEntityName: string, address1: string, address2: string, city: string, state: string, country: string, parentMemberId: string, zipCode: string, orgEntityType: string, orgEntityId: string) {
     this.orgEntityName = orgEntityName;
     this.address1 = address1;
     this.address2 = address2;
@@ -20,5 +21,6 @@ export class OrgDetailModel {
     this.parentMemberId = parentMemberId;
     this.zipCode = zipCode;
     this.orgEntityType = orgEntityType;
+    this.orgEntityId = orgEntityId;
   }
 }
