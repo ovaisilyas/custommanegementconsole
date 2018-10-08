@@ -27,9 +27,12 @@
             </div>
           </form>
 
-            <div class="productContractGrid table-responsive mt-5">
+
+
+            <div class="productContractGrid">
+              <div class="row">
               <div class="col col-md-3 float-left">
-                <label for="parentMemberId">Contract</label><br/>
+                <div><label for="parentMemberId" class="searchIconNew">Contract</label></div>
                 <input type="text" list="customerDatalist" class="form-control" [(ngModel)]="selectedId" id="customerSelectBox" required (change)="getOrgEntryId(selectedId)">
                   <datalist id="customerDatalist">
                     <option>-- Select Customer --</option>
@@ -37,7 +40,7 @@
                   </datalist>
                   <input type="hidden" [value]="userDetail.parentMemberId" [(ngModel)]="userDetail.parentMemberId" name="parentMemberId" #parentMemberIdtext="ngModel" />
               </div>
-              <div class="col col-md-9 float-left">
+              <div class="col col-md-9 float-left table-responsive">
               <table class="table table-bordered table-striped">
                 <thead>
                   <tr>
@@ -50,28 +53,24 @@
                   <tr>
                     <td>4000587</td>
                     <td>Initiative A4 Office</td>
-                    <td>$5.60</td>
+                    <td>
+                        <div class="d-flex justify-content-center custPriceEdit">
+                            <div><label>$5.87</label></div>
+                            <div><input type="text" class="form-control" id="inlineFormInputName2"></div>
+                            <div><button type="submit" class="btn btn-primary">&#10004;</button></div>
+                            <div><button type="submit" class="btn btn-danger">&#10006;</button></div>
+                          </div>                       
+                    </td>
                     <td><a href="">Edit Price</a> 
-                      <a href="">Customers</a>
-                      <a href="">Delete</a></td>
+                      <a href="#" role="button" data-toggle="modal" data-target="#addCustomers">Customers</a>
+                      <a href="#" role="button" data-toggle="modal" data-target="#deleteCustomers">Delete</a></td>
                   </tr>
 
-                  <tr>
-                      <td>4000587</td>
-                      <td>Initiative A4 Office</td>
-                      <td>$5.60</td>
-                      <td><a href="">Edit Price</a> 
-                        <a href="">Customers</a>
-                        <a href="">Delete</a></td>
-                    </tr>
-                  
-                  
-                  
                 </tbody>
               </table>
             </div>
             </div>
-
+          </div>
       </div>
     </div>
   </div>
@@ -181,3 +180,98 @@
       </div>
     </div>
   </div>
+<!--Modal Add Customers-->
+<div class="modal fade addCustomersModal" id="addCustomers" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalCenterTitle"><span>Add Customers</span></h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form>
+        <div class="modal-body">
+          <form>
+           <div class="form-group row">
+          <label for="inputPassword" class="col-sm-3 col-form-label">Search Customers</label>
+            <div class="col-sm-9">
+                <input list="browsers" name="browser" class="form-control">
+                <datalist id="browsers">
+                  <option value="Acc 1">
+                  <option value="Acc 2">
+                  <option value="Acc 3">
+                  <option value="Acc 4">
+                  <option value="Acc 5">
+                </datalist>
+            </div>
+         </div>
+  
+         <div class="form-group row">
+            <div class="col-sm-12">
+
+                <div class="card">
+                    <div class="card-header">
+                     Selected Customers
+                    </div>
+                    <div class="card-body">
+                        <div class="custSelectDisplay">
+                    
+                          <div class="row">
+                            <div class="col">
+                                <div class="alert alert-secondary alert-dismissible fade show" role="alert">
+                                    Abbott Financial - Infocus Money Management-Infocus Money Management
+                                    <button type="button" class="close" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                            </div>
+                            <div class="col">
+                                <div class="alert alert-secondary alert-dismissible fade show" role="alert">
+                                    ANINDILYAKWA SERVICES ABORIGINAL CORPORATION (ASAC)
+                                    <button type="button" class="close" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                            </div>
+
+                          </div>
+
+                               
+                          </div>
+                    </div>
+                  </div>
+
+              
+            </div>
+         </div>
+        </form>
+   </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-PrimaryModal">Save</button>
+        </div>
+      </form>
+      </div>
+    </div>
+  </div>
+  <!--Modal Delete Customers-->
+  <div class="modal deleteCustomersModal" id="deleteCustomers" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalCenterTitle"><span>Are you sure want to Delete ?</span></h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form>
+         
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-danger">Delete</button>
+          </div>
+        </form>
+        </div>
+      </div>
+    </div>
