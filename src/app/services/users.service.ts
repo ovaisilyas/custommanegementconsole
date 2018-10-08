@@ -68,8 +68,7 @@ export class UsersService {
     console.log('in reset pass function');
     console.log(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcuserpasswordreset/passwordreset`);
     console.log(resetPassModel);
-    return this.httpClient.post<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcuserpasswordreset/passwordreset`, resetPassModel,
-      this.httpOptions);
+    return this.httpClient.post<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcuserpasswordreset/passwordreset`, resetPassModel);
   }
 
   updateUserStatus(userStatusModel: UserStatusModel) {
