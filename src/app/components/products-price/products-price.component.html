@@ -44,16 +44,9 @@
                       <td>Initiative A4 Office</td>
                       <td>$5.60</td>
                       <td>$4.66</td>
-                      <td><a href="">Open Contract</a></td>
+                      <td><a href="#" role="button" data-toggle="modal" data-target="#openContract">Open Contract</a></td>
                     </tr>
-                    <tr>
-                        <td scope="row">Catalogue</td>
-                        <td>7000587</td>
-                        <td>Initiative A4 Office</td>
-                        <td>$5.60</td>
-                        <td>$4.66</td>
-                        <td><a href="">Open Contract</a></td>
-                      </tr>
+                   
                     
                    
                   </tbody>
@@ -123,6 +116,44 @@
                 </div>
              </div> 
                  
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-PrimaryModal">Save</button>
+        </div>
+      </form>
+      </div>
+    </div>
+  </div>
+  <!--Modal Open Contract-->
+  <div class="modal fade openContractModal" id="openContract" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered model-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalCenterTitle"><span>Contract</span></h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form>
+        <div class="modal-body">
+          <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">Contract Name</th>
+                  <th scope="col">Price</th>
+                 
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Aboriginal Areas Protection Authority </td>
+                  <td>$ 99.00</td>
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>

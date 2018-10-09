@@ -46,8 +46,8 @@ a:hover{color:#404040;}
 .userSearchRow .hintTxtRow{line-height: 1;}
 .userSearchRow .btn{margin-right: 5px;}
 .userSearchRow .btn:last-child{margin-right: 0px;}
-.userDataGrid table th, .homePurchaseGrid table th, .homeStoreGrid table th, .productPriceGrid table th, .productContractGrid table th{background-color:#9e9e9e; color:#fff;font-weight: normal; text-align: center;}
-.userDataGrid table td, .homePurchaseGrid table td, .homeStoreGrid table td, .productPriceGrid table td, .productContractGrid table td{color:#282828; text-align: center;}
+.userDataGrid table th, .homePurchaseGrid table th, .homeStoreGrid table th, .productPriceGrid table th, .productContractGrid table th, .openContractModal table th{background-color:#9e9e9e; color:#fff;font-weight: normal; text-align: center;}
+.userDataGrid table td, .homePurchaseGrid table td, .homeStoreGrid table td, .productPriceGrid table td, .productContractGrid table td, .openContractModal table td{color:#282828; text-align: center;}
 .homeStoreGrid table th,.homeStoreGrid table td{text-align: left;}
 .userDataGrid .form-check-input{margin-left: 10px;margin-right: 0rem;}
 .userDataGrid table td a, .productPriceGrid table td a, .productContractGrid table a{text-decoration: underline !important; cursor: pointer;}
