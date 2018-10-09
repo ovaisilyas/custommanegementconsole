@@ -22,4 +22,21 @@ export class SearchService {
     return this.httpClient.get<any>(`${environment.apiUrl}/wcs/resources/store/${storeId}/cmcusersearch/findUser/${searchTerm}`,
       httpOptions);
   }
+
+  searchProduct(searchTerm: string) {
+    console.log('in search product function');
+    const storeId = sessionStorage.getItem('storeId');
+    console.log(`${environment.apiUrl}/wcs/resources/store/${storeId}/cmcproductsearch/findProduct/${searchTerm}`);
+    
+    return this.httpClient.get<any>(`${environment.apiUrl}/wcs/resources/store/${storeId}/cmcproductsearch/findProduct/${searchTerm}`,
+      httpOptions);
+  }
+
+  searchProductOnContract(searchTerm: string, contractId: string) {
+    console.log('Search through the products with in the selected contract');
+  }
+
+  searchContractDetail(searchTerm: string) {
+    console.log('Show contract details table');
+  }
 }

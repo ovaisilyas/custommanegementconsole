@@ -26,7 +26,6 @@ export class UsersOrgComponent implements OnInit {
 
   userDetail = new UserDetailModel('', '', '', '', '', '', '', '', '', '', '', ''
     , true, false, false, false, '');
-
   submitted = false;
   resetPassModel: ResetPasswordModel;
   userStatusModel: UserStatusModel;

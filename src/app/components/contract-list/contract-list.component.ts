@@ -3,14 +3,13 @@ import { SearchService } from '../../services/search.service';
 import {map} from 'rxjs/operators';
 import {UserlistModel} from '../../model/userlist.model';
 import {UsersService} from '../../services/users.service';
+import {ProductService} from '../../services/product.service';
 import {CustomerlistModel} from '../../model/customerlist.model';
+import {ContractListModel} from '../../model/contractlist.model';
+import {ContractDetailModel} from '../../model/contractdetail.model';
 import {UserDetailModel} from '../../model/userdetail.model';
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
-import {ResetPasswordModel} from '../../model/resetpassword.model';
-import {UserStatusModel} from '../../model/userstatus.model';
 import {AlertService} from '../../services/alert.service';
-import {OrgDetailModel} from '../../model/orgdetail.model';
-import {OrgService} from '../../services/org.service';
 import {ViewChild, ElementRef} from '@angular/core';
 
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -23,13 +22,16 @@ import { NgxSpinnerService } from 'ngx-spinner';
 export class ContractListComponent implements OnInit {
   customerList: CustomerlistModel[];
   itemList: UserlistModel[];
+  contractList: ContractListModel[];
+  contractDetail: ContractDetailModel[];
   submitted = false;
   userDetail = new UserDetailModel('', '', '', '', '', '', '', '', '', '', '', ''
     , true, false, false, false, '');
 
-  orgDetail = new OrgDetailModel('', '', '', '', '', '', '-2001', '', 'O', '');
-
-  selectedId = '';
+  searchTerm = '';
+  selectedContractID = '';
+  selectedContractName = '';
+  showContractDetailTable = false;
   IdKey = 0;
   loading = true;
 
@@ -37,40 +39,95 @@ export class ContractListComponent implements OnInit {
     private searchService: SearchService,
     private usersService: UsersService,
     private formBuilder: FormBuilder,
+    private productService: ProductService,
     private alertService: AlertService,
-    private orgService: OrgService,
     private spinner: NgxSpinnerService,
   ) { }
 
   ngOnInit() {
-    this.getCustomers();
+    //this.getContractList();
   }
-
-  getCustomers() {
-    this.usersService.getCustomers()
+  
+  onEnter(value: string) {
+    /* this.spinner.show();
+    this.searchTerm = value;
+    this.searchService.searchProductOnContract(value, this.selectedContractID)
       .pipe(map(
-        (customers) => {
-          const organizationList = customers['organizationList'];
-          console.log(organizationList);
-          return organizationList;
+        (product) => {
+          const searchDetails = product['SearchDetails'];
+          const searchList = searchDetails['SearchList'];
+          return searchList;
         }
       ))
       .subscribe(
         data => {
-          this.customerList = data;
-          this.loading = false;
+          this.contractDetail = data;
+          this.alertService.clear();
+          this.spinner.hide();
         },
         error => {
-          console.log('Unable to Fetch Customers');
-        });
+          console.log(error);
+          this.alertService.error(error);
+          if (this.contractDetail !== undefined) {
+            this.contractDetail.length = 0;
+          }
+          this.spinner.hide();
+        }); */
   }
 
-  getOrgEntryId(value: any) {
-    this.IdKey = this.customerList.findIndex(function(item, i) {
-      return item.orgEntityName === value;
+
+  /* getContractList() {
+    this.productService.getContract()
+      .pipe(map(
+        (contract) => {
+          const contractList = contract['contractList'];
+          console.log(contractList);
+          return contractList;
+        }
+      ))
+      .subscribe(
+        data => {
+          this.contractList = data;
+          this.loading = false;
+          showContractDetailTable = true;
+        },
+        error => {
+          console.log('Unable to Fetch Contract');
+        });
+  } */
+
+  openContractDetail() {
+    /* this.spinner.show();
+    this.searchService.searchContractDetail(this.selectedContractID)
+      .pipe(map(
+        (product) => {
+          const searchDetails = product['SearchDetails'];
+          const searchList = searchDetails['SearchList'];
+          return searchList;
+        }
+      ))
+      .subscribe(
+        data => {
+          this.contractDetail = data;
+          this.alertService.clear();
+          this.spinner.hide();
+        },
+        error => {
+          console.log(error);
+          this.alertService.error(error);
+          if (this.contractDetail !== undefined) {
+            this.contractDetail.length = 0;
+          }
+          this.spinner.hide();
+        }); */
+  }
+
+  getContractId(value: any) {
+    this.IdKey = this.contractList.findIndex(function(item, i) {
+      return item.identifier === value;
     });
     if (this.IdKey !== -1) {
-      this.userDetail.parentMemberId = this.customerList[this.IdKey].orgEntityId;
+      this.selectedContractID = this.contractList[this.IdKey].uniqueID;
     }
   }
 
