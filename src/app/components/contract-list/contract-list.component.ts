@@ -42,9 +42,9 @@ export class ContractListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    //this.getContractList();
+    // this.getContractList();
   }
-  
+
   onEnter(value: string) {
     /* this.spinner.show();
     this.searchTerm = value;

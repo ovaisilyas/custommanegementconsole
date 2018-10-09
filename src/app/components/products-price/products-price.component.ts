@@ -32,7 +32,6 @@ export class ProductsPriceComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    
   }
 
   onEnter(value: string) {

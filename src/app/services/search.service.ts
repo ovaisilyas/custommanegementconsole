@@ -27,7 +27,7 @@ export class SearchService {
     console.log('in search product function');
     const storeId = sessionStorage.getItem('storeId');
     console.log(`${environment.apiUrl}/wcs/resources/store/${storeId}/cmcproductsearch/findProduct/${searchTerm}`);
-    
+
     return this.httpClient.get<any>(`${environment.apiUrl}/wcs/resources/store/${storeId}/cmcproductsearch/findProduct/${searchTerm}`,
       httpOptions);
   }

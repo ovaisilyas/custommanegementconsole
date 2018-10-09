@@ -17,7 +17,7 @@ import {UserDetailModel} from '../model/userdetail.model';
     constructor(
       private httpClient: HttpClient,
     ) { }
-    
+
     httpOptions = {
       headers: new HttpHeaders({ 'Access-Control-Allow-Origin': 'true', 'Content-Type': 'application/json',
         'userId': this.userId,
@@ -30,7 +30,7 @@ import {UserDetailModel} from '../model/userdetail.model';
       console.log(this.storeId);
       console.log('in getCategory function');
       console.log(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmccategory/categorylist`);
-      
+
       return this.httpClient.get<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmccategory/categorylist`,
         this.httpOptions);
     }
@@ -40,7 +40,7 @@ import {UserDetailModel} from '../model/userdetail.model';
     }
 
     getContractDetail(value: string) {
-      console.log('Get Contract detail'+value);
+      console.log('Get Contract detail' + value);
     }
-    
+
   }
