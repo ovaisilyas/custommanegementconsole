@@ -7,7 +7,6 @@ import {ProductService} from '../../services/product.service';
 import {CustomerlistModel} from '../../model/customerlist.model';
 import {ContractListModel} from '../../model/contractlist.model';
 import {ContractDetailModel} from '../../model/contractdetail.model';
-import {UserDetailModel} from '../../model/userdetail.model';
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {AlertService} from '../../services/alert.service';
 import {ViewChild, ElementRef} from '@angular/core';
@@ -25,8 +24,6 @@ export class ContractListComponent implements OnInit {
   contractList: ContractListModel[];
   contractDetail: ContractDetailModel[];
   submitted = false;
-  userDetail = new UserDetailModel('', '', '', '', '', '', '', '', '', '', '', ''
-    , true, false, false, false, '');
 
   searchTerm = '';
   selectedContractID = '';
