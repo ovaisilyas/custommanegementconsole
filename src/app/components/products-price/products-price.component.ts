@@ -4,11 +4,14 @@ import { SearchService } from '../../services/search.service';
 import {map} from 'rxjs/operators';
 import {UsersService} from '../../services/users.service';
 import { ProductService } from '../../services/product.service';
+import { ContractService } from '../../services/contract.service';
+import {PagerService} from '../../services/pager.service';
 import {CategoryListModel} from '../../model/categorylist.model';
 import {AlertService} from '../../services/alert.service';
 import {ViewChild, ElementRef} from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { ProductListModel } from '../../model/product.modal';
+import { ProductListModel } from '../../model/productlist.modal';
+import { ProductModel } from '../../model/product.model';
 
 @Component({
   selector: 'app-products-price',
@@ -18,18 +21,31 @@ import { ProductListModel } from '../../model/product.modal';
 export class ProductsPriceComponent implements OnInit {
   categoryList: CategoryListModel[];
   productList: ProductListModel[];
+  productDetail = new ProductModel('', '', '', '', '', '', '', '', '', '', '', '', '');
   loading = true;
   selectedId = '';
   IdKey = 0;
   searchTerm = '';
 
+
   constructor(
     private productService: ProductService,
+    private contractService: ContractService,
     private searchService: SearchService,
     private usersService: UsersService,
+    private pagerService: PagerService,
     private alertService: AlertService,
     private spinner: NgxSpinnerService,
   ) { }
+
+   // array of all items to be paged
+   private allItems: any[];
+
+   // pager object
+   pager: any = {};
+
+   // paged items
+   pagedItems: any[];
 
   ngOnInit() {
   }
@@ -50,6 +66,9 @@ export class ProductsPriceComponent implements OnInit {
           this.productList = data;
           this.alertService.clear();
           this.spinner.hide();
+          // this.allItems = data;
+          // initialize to page 1
+          this.setPage(1);
         },
         error => {
           console.log(error);
@@ -60,6 +79,14 @@ export class ProductsPriceComponent implements OnInit {
           this.spinner.hide();
         });
   }
+
+  setPage(page: number) {
+    // get pager object from service
+    this.pager = this.pagerService.getPager(this.productList.length, page);
+
+    // get current page of items
+    this.pagedItems = this.productList.slice(this.pager.startIndex, this.pager.endIndex + 1);
+}
 
   getCategory() {
     this.productService.getCategory()
@@ -81,7 +108,28 @@ export class ProductsPriceComponent implements OnInit {
   }
 
   openContract(value: any) {
-    this.productService.getContractDetail(value);
+    this.contractService.getContractDetail(value);
+  }
+
+  saveStoreProduct() {
+    this.spinner.show();
+    this.productService.addStoreProduct(this.productDetail)
+    .pipe(map(
+      (res) => {
+        return res;
+      }
+    ))
+    .subscribe(
+        data => {
+          this.spinner.hide();
+          console.log(data);
+          this.alertService.success('Product Added Successfully');
+          console.log('Product Saved');
+        },
+        error => {
+          console.log(error);
+    });
+
   }
 
   getCategoryId(value: any) {
@@ -89,17 +137,17 @@ export class ProductsPriceComponent implements OnInit {
       return item.identifier === value;
     });
     if (this.IdKey !== -1) {
-      this.categoryList = this.categoryList[this.IdKey].uniqueID;
+      this.productDetail.catgroupId = this.categoryList[this.IdKey].uniqueID;
     }
   }
 
-  getOrgEntryName(value: any) {
+  /* getOrgEntryName(value: any) {
     this.IdKey = this.categoryList.findIndex(function(item, i) {
       return item.uniqueID === value;
     });
     if (this.IdKey !== -1) {
       return this.selectedId = this.categoryList[this.IdKey].identifier;
     }
-  }
+  } */
 
 }

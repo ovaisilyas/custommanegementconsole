@@ -36,7 +36,7 @@
 
             <app-alert></app-alert>
             <div class="productPriceGrid table-responsive">
-                <table class="table table-bordered table-striped">
+                <table class="table table-bordered table-striped" id="productListTable">
                   <thead>
                     <tr>
                       <th scope="col">Range</th>
@@ -47,17 +47,35 @@
                       <th scope="col">Actions</th>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let item of productList">
+                    <tr *ngFor="let item of pagedItems">
                       <td scope="col"> {{item.identifier}}</td>
                       <td scope="col"> {{item.partnumber}}</td>
-                      <td scope="col"> {{item.shortdescription}}</td>
+                      <td scope="col"> <span title="{{item.shortdescription}}">{{item.shortdescription}}</span></td>
                       <td scope="col"> ${{item.listprice | number:'1.2-2'}}</td>
                       <td scope="col">${{item.govtprice | number:'1.2-2'}}</td>
                       <td scope="col"><a href="javascript:void(0)" role="button" data-toggle="modal" data-target="#openContract" (click)="openContract(item.catentryId)">Open Contract</a></td>
                     </tr>
                   </tbody>
                 </table>
-              </div>
+                <!-- pager -->
+            <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+                  <li [ngClass]="{disabled:pager.currentPage === 1}">
+                      <a (click)="setPage(1)">First</a>
+                  </li>
+                  <li [ngClass]="{disabled:pager.currentPage === 1}">
+                      <a (click)="setPage(pager.currentPage - 1)">Previous</a>
+                  </li>
+                  <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+                      <a (click)="setPage(page)">{{page}}</a>
+                  </li>
+                  <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                      <a (click)="setPage(pager.currentPage + 1)">Next</a>
+                  </li>
+                  <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                      <a (click)="setPage(pager.totalPages)">Last</a>
+                  </li>
+              </ul>
+          </div>
       </div>
     </div>
   </div>
@@ -79,62 +97,83 @@
          <div class="form-group row">
           <label for="category" class="col-sm-3 col-form-label">Category:</label>
             <div class="col-sm-9">
-                <!-- <img style="display:inline;" *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-                <input type="text" list="categorylist" *ngIf="!loading" class="form-control" [(ngModel)]="selectedId" required (change)="getCategoryId(selectedId)">
+                <img style="display:inline;" *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+                <input type="text" list="categorylist" name="categoryList" *ngIf="!loading" class="form-control" [(ngModel)]="selectedId" required (change)="getCategoryId(selectedId)" placeholder="Select Category">
                   <datalist id="categorylist">
                     <option *ngFor="let item of categoryList" [value]="item.identifier">
                   </datalist>
-                  <input type="hidden" [value]="categoryList.uniqueID" [(ngModel)]="categoryList.uniqueID" name="uniqueID" #uniqueIDtext="ngModel" /> -->
-              <select class="form-control" id="customerSelectBox" required>
+                  <input type="hidden" [value]="productDetail.catgroupId" [(ngModel)]="productDetail.catgroupId" name="catgroupId" #catgroupIdtext="ngModel" />
+              <!-- <select class="form-control" id="customerSelectBox" required>
                 <option *ngFor="let item of categoryList" [value]="item.uniqueID">{{item.identifier}}</option>
-              </select>
+              </select> -->
                   
             </div>
          </div>
   
          <div class="form-group row">
-          <label for="inputPassword" class="col-sm-3 col-form-label">Contract Name:</label>
+          <label for="inputPassword" class="col-sm-3 col-form-label">Product Name:</label>
             <div class="col-sm-9">
               <input type="text" class="form-control">
             </div>
          </div>
           <div class="form-group row">
-          <label for="inputPassword" class="col-sm-3 col-form-label">Charges by:</label>
+          <label for="inputPassword" class="col-sm-3 col-form-label">Product Number:</label>
             <div class="col-sm-9">
               <input type="text" class="form-control">
             </div>
          </div>
 
-          <div class="form-group row">
+         <div class="form-group row">
+          <label for="inputPassword" class="col-sm-3 col-form-label">Short Description:</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control">
+            </div>
+         </div>
+
+         <div class="form-group row">
           <label for="inputPassword" class="col-sm-3 col-form-label">Long Description:</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control">
+            </div>
+         </div>
+
+         <div class="form-group row">
+          <label for="inputPassword" class="col-sm-3 col-form-label">Keyword:</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control">
+            </div>
+         </div>
+
+         <div class="form-group row">
+          <label for="inputPassword" class="col-sm-3 col-form-label">Price:</label>
             <div class="col-sm-9">
               <input type="text" class="form-control">
             </div>
          </div>
   
           <div class="form-group row">
-          <label for="inputPassword" class="col-sm-3 col-form-label">Min Order Amount:</label>
+          <label for="inputPassword" class="col-sm-3 col-form-label">Available:</label>
             <div class="col-sm-9">
               <input type="text" class="form-control">
             </div>
          </div> 
          <div class="form-group row">
-            <label for="inputPassword" class="col-sm-3 col-form-label">Price Level:</label>
+            <label for="inputPassword" class="col-sm-3 col-form-label">Publish:</label>
               <div class="col-sm-9">
-                <input type="text" class="form-control">
+                <input type="checkbox" class="form-check-label">
               </div>
            </div>
            <div class="form-group row">
-              <label for="inputPassword" class="col-sm-3 col-form-label">Ship By:</label>
+              <label for="inputPassword" class="col-sm-3 col-form-label">Image:</label>
                 <div class="col-sm-9">
-                  <input type="text" class="form-control">
+                  <input type="file" class="form-control">
                 </div>
              </div> 
                  
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-PrimaryModal">Save</button>
+          <button type="button" class="btn btn-PrimaryModal" (click)="saveStoreProduct();">Save</button>
         </div>
       </form>
       </div>

@@ -7,4 +7,3 @@ export class CategoryListModel {
       this.uniqueID = uniqueID;
     }
   }
-  

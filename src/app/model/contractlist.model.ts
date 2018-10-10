@@ -1,10 +1,9 @@
 export class ContractListModel {
-    public identifier: string;
-    public uniqueID: string;
+    public contractName: string;
+    public contractId: string;
 
-    constructor(identifier: string, uniqueid: string) {
-      this.identifier = identifier;
-      this.uniqueID = uniqueid;
+    constructor(contractName: string, contractId: string) {
+      this.contractName = contractName;
+      this.contractId = contractId;
     }
   }
-  

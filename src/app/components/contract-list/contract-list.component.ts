@@ -4,6 +4,7 @@ import {map} from 'rxjs/operators';
 import {UserlistModel} from '../../model/userlist.model';
 import {UsersService} from '../../services/users.service';
 import {ProductService} from '../../services/product.service';
+import {ContractService} from '../../services/contract.service';
 import {CustomerlistModel} from '../../model/customerlist.model';
 import {ContractListModel} from '../../model/contractlist.model';
 import {ContractDetailModel} from '../../model/contractdetail.model';
@@ -37,12 +38,13 @@ export class ContractListComponent implements OnInit {
     private usersService: UsersService,
     private formBuilder: FormBuilder,
     private productService: ProductService,
+    private contractService: ContractService,
     private alertService: AlertService,
     private spinner: NgxSpinnerService,
   ) { }
 
   ngOnInit() {
-    // this.getContractList();
+    this.getContractList();
   }
 
   onEnter(value: string) {
@@ -73,11 +75,12 @@ export class ContractListComponent implements OnInit {
   }
 
 
-  /* getContractList() {
-    this.productService.getContract()
+  getContractList() {
+    this.contractService.getContractList()
       .pipe(map(
         (contract) => {
-          const contractList = contract['contractList'];
+          const contractDetail = contract['Contract Details'];
+          const contractList = contractDetail['contractValues'];
           console.log(contractList);
           return contractList;
         }
@@ -86,16 +89,15 @@ export class ContractListComponent implements OnInit {
         data => {
           this.contractList = data;
           this.loading = false;
-          showContractDetailTable = true;
         },
         error => {
           console.log('Unable to Fetch Contract');
         });
-  } */
+  }
 
   openContractDetail() {
-    /* this.spinner.show();
-    this.searchService.searchContractDetail(this.selectedContractID)
+    this.spinner.show();
+    /* this.searchService.searchContractDetail(this.selectedContractID)
       .pipe(map(
         (product) => {
           const searchDetails = product['SearchDetails'];
@@ -108,6 +110,7 @@ export class ContractListComponent implements OnInit {
           this.contractDetail = data;
           this.alertService.clear();
           this.spinner.hide();
+          this.showContractDetailTable = true;
         },
         error => {
           console.log(error);
@@ -121,10 +124,10 @@ export class ContractListComponent implements OnInit {
 
   getContractId(value: any) {
     this.IdKey = this.contractList.findIndex(function(item, i) {
-      return item.identifier === value;
+      return item.contractName === value;
     });
     if (this.IdKey !== -1) {
-      this.selectedContractID = this.contractList[this.IdKey].uniqueID;
+      this.selectedContractID = this.contractList[this.IdKey].contractId;
     }
   }
 
