@@ -46,8 +46,8 @@
                   <datalist id="contractDatalist">
                     <option *ngFor="let item of contractList" [value]="item.contractName">
                   </datalist>
-                  <input type="hidden" [value]="selectedContractID" [(ngModel)]="selectedContractID" name="contractId" #contractIdtext="ngModel" /><br/>
-                  <div class="text-right"><button type="button" [disabled]="selectedContractID === ''" class="btn btn-primary" (click)="openContractDetail()">Search Contract</button></div>
+                  <input type="hidden" [value]="selectedContractID" [(ngModel)]="selectedContractID" name="contractId" #contractIdtext="ngModel" />
+                  <div class="text-right mt-3"><button type="button" [disabled]="selectedContractID === ''" class="btn btn-primary" (click)="openContractDetail()">Search Contract</button></div>
               </div>
               <div class="col col-md-9 float-left table-responsive" *ngIf="showContractDetailTable">
               <table class="table table-bordered table-striped">
