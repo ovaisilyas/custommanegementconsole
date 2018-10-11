@@ -17,7 +17,18 @@ a:hover{color:#404040;}
 .btn-PrimaryModal:not(:disabled):not(.disabled).active, .btn-PrimaryModal:not(:disabled):not(.disabled):active, .show>.btn-PrimaryModal.dropdown-toggle {color: #fff;
  background-color: #337ab7;border-color: #337ab7;}
  .table td, .table th{padding:.40rem;}
-
+ 
+ /****Calendar button icon*****/
+ button.calendar, button.calendar:active {
+  width: 2.75rem;
+  background-image: url(../images/calendar.png)!important;
+  background-repeat: no-repeat;
+  background-size: 23px;
+  background-position: center;
+ }
+ /*****Pagination*****/
+ .pagination .page-item.active .page-link{background-color: #337ab7; border-color: #337ab7;}
+ .pagination .page-item.active .page-link a:hover{color: #fff;}
 /****************Login css******************/
 .loginBoxCont{margin-top:40px;}
 .loginBoxCont .webTxt, .navbarCont .navbar-text{text-align: center; font-size: 1.8em;font-style: italic;font-family: cursive;}
@@ -52,7 +63,6 @@ a:hover{color:#404040;}
 .userDataGrid .form-check-input{margin-left: 10px;margin-right: 0rem;}
 .userDataGrid table td a, .productPriceGrid table td a, .productContractGrid table a{text-decoration: underline !important; cursor: pointer;}
 
-
 .userSearchRow #searchTerm, .userSearchRow .searchIcon, .searchIconNew{background:url(../images/search.png) left no-repeat; background-position-x: 5px; padding-left: 25px;}
 .custTabCls ul.nav.nav-tabs > li {float: none;display: table-cell;}
 
@@ -62,7 +72,30 @@ a:hover{color:#404040;}
 .productPriceGrid table td a, .productContractGrid table td a{color:#47a0ed;}
 .productContractGrid table td a{margin:0 5px 0 5px;}
 
- @media (min-width: 1366px)  { 
+/***************Table grid Custom ******************/
+
+.productPriceGrid table{table-layout: fixed;}
+.tableDataDesc span{text-overflow: ellipsis; overflow: hidden;white-space: nowrap;display: block;}
+
+/***********************************************/
+
+.addCustomersModal .card-header{padding: .35rem 1.25rem;}
+.deleteCustomersModal h5.modal-title{font-size: 12pt;}
+.custSelectDisplay .alert{padding: .45rem .85rem; margin-bottom: .30rem;border:0px;font-size: 10pt;}
+.custSelectDisplay .alert-dismissible .close{padding: .45rem .85rem;color:#ff0000;}
+.custSelectDisplay .alert-secondary{background-color: #edeeef;}
+.custPriceEdit div{padding:0px 5px 0px 5px; }
+.custPriceEdit input{width:60px;}
+  
+  /*************Catalog page*************/
+  .catalogCol1 .form-group,.catalogCol2 .form-group,.catalogCol3 .form-group{margin-bottom: .6rem}
+  .catalogCol4 .form-row{margin-top: .4rem;}
+  .catalogCol4 .clearfix{height: 2.2rem;}
+  .catalogCol4 .form-control{width: 90%;height: calc(1.5rem + 2px);padding: 0rem .75rem;line-height: 1;}
+
+
+ /******************Responsive********************/
+  @media (min-width: 1366px)  { 
     .custTabCls ul.nav.nav-tabs {display: table;width: 100%;table-layout: fixed;
     }
  } 
@@ -73,19 +106,3 @@ a:hover{color:#404040;}
  @media (max-width: 990px) {
     .custTabCls ul.nav.nav-tabs{table-layout: auto;}
   }
-
-  button.calendar, button.calendar:active {
-    width: 2.75rem;
-    background-image: url(../images/calendar.png)!important;
-    background-repeat: no-repeat;
-    background-size: 23px;
-    background-position: center;
-  }
-  .addCustomersModal .card-header{padding: .35rem 1.25rem;}
-  .deleteCustomersModal h5.modal-title{font-size: 12pt;}
-  .custSelectDisplay .alert{padding: .45rem .85rem; margin-bottom: .30rem;border:0px;font-size: 10pt;}
-  .custSelectDisplay .alert-dismissible .close{padding: .45rem .85rem;color:#ff0000;}
-  .custSelectDisplay .alert-secondary{background-color: #edeeef;}
-  .custPriceEdit div{padding:0px 5px 0px 5px; }
-  .custPriceEdit input{width:60px;}
-  
