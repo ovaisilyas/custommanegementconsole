@@ -313,9 +313,18 @@
                       <label for="address2" class="col-sm-3 col-form-label">Address:</label>
                       <div class="col-sm-9">
                         <input type="text" class="form-control" id="address2"
-                               [(ngModel)]="orgDetail.address2" name="address2" #address2="ngModel">
+                               [(ngModel)]="orgDetail.address2" name="address2" #address2="ngModel" required>
                       </div>
                     </div>
+                    <input type="hidden" [(ngModel)]="orgDetail.bestCallingTime" name="bestCallingTime" #bestCallingTime="ngModel">
+
+                    <div class="form-group row">
+                        <label for="description" class="col-sm-3 col-form-label">Description:</label>
+                        <div class="col-sm-9">
+                          <input type="text" class="form-control" id="description"
+                                 [(ngModel)]="orgDetail.description" name="description" #description="ngModel" required>
+                        </div>
+                      </div>
 
                     <div class="form-group row">
                       <label for="city" class="col-sm-3 col-form-label">City:</label>

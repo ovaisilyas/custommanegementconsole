@@ -44,7 +44,7 @@ export class OrgService {
   editOrg(orgDetail: OrgDetailModel) {
     console.log('in editOrg function');
     console.log(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/orgAddUpdate/updateOrganization`);
-    return this.httpClient.post<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/orgAddUpdate/updateOrganization`, orgDetail,
+    return this.httpClient.put<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/orgAddUpdate/updateOrganization`, orgDetail,
       this.httpOptions);
   }
 }

@@ -150,14 +150,27 @@
          </div>
 
          <div class="form-group row">
-          <label for="productKeyword" class="col-sm-3 col-form-label">Keyword: <span class="text-danger">*</span></label>
+            <label for="productMfName" class="col-sm-3 col-form-label">Manufacture Name:</label>
+              <div class="col-sm-9">
+                <input type="text" id="productMfName" class="form-control" 
+                [(ngModel)]="productDetail.mfName" name="manufactureName" #mfName="ngModel">
+              </div>
+           </div>
+
+           <div class="form-group row">
+              <label for="productMfPartNumber" class="col-sm-3 col-form-label">Manufacture Part Number:</label>
+                <div class="col-sm-9">
+                  <input type="text" id="productMfPartNumber" class="form-control" 
+                  [(ngModel)]="productDetail.mfPartnumber" name="manufacturePartNumber" #mfPartnumber="ngModel">
+                </div>
+             </div>
+
+         <div class="form-group row">
+          <label for="productKeyword" class="col-sm-3 col-form-label">Keyword:</label>
             <div class="col-sm-9">
-              <input type="text" id="productKeyword" class="form-control" required
+              <input type="text" id="productKeyword" class="form-control"
               [(ngModel)]="productDetail.keyword" name="keyword" #keyword="ngModel"
               [ngClass]="{ 'is-invalid': newStoreProdForm.submitted && keyword.invalid }">
-              <div *ngIf="newStoreProdForm.submitted && keyword.invalid" class="invalid-feedback">
-                  <div *ngIf="!!keyword.errors.required">Keyword is required</div>
-                </div>
             </div>
          </div>
 
@@ -172,16 +185,18 @@
                 </div>
             </div>
          </div>
-  
+         <div class="form-group row">
+            <label for="productAvailable" class="col-sm-3 col-form-label">Buyable:</label>
+              <div class="col-sm-9">
+                  <input type="checkbox" id="productBuyable" class="form-check-label"
+                  [(ngModel)]="productDetail.buyable" name="buyable" #buyable="ngModel">
+              </div>
+           </div> 
           <div class="form-group row">
-          <label for="productAvailable" class="col-sm-3 col-form-label">Available: <span class="text-danger">*</span></label>
+          <label for="productAvailable" class="col-sm-3 col-form-label">Available:</label>
             <div class="col-sm-9">
-              <input type="text" id="productAvailable" class="form-control" required
-              [(ngModel)]="productDetail.available" name="available" #available="ngModel"
-              [ngClass]="{ 'is-invalid': newStoreProdForm.submitted && available.invalid }">
-              <div *ngIf="newStoreProdForm.submitted && available.invalid" class="invalid-feedback">
-                  <div *ngIf="!!available.errors.required">Availability is required</div>
-                </div>
+                <input type="checkbox" id="productAvailable" class="form-check-label"
+                [(ngModel)]="productDetail.available" name="available" #available="ngModel">
             </div>
          </div> 
          <div class="form-group row">
@@ -194,15 +209,15 @@
          <div class="form-group row">
               <label for="productTImage" class="col-sm-3 col-form-label">Image 1:</label>
               <div class="col-sm-9">
-                  <input type="file" id="productTImage" class="form-control"
-              [(ngModel)]="productDetail.tImage" name="tImage" #tImage="ngModel" ng2FileSelect [uploader]="uploader">
+                  <input type="text" id="productThumbImage" class="form-control"
+              [(ngModel)]="productDetail.tImage" name="tImage" #tImage="ngModel">
               </div>
            </div>
            <div class="form-group row">
               <label for="productFImage" class="col-sm-3 col-form-label">Image 2:</label>
                 <div class="col-sm-9">
-                  <input type="file" id="productFImage" class="form-control"
-              [(ngModel)]="productDetail.fImage" name="fImage" #fImage="ngModel">
+                    <input type="text" id="productFullImage" class="form-control"
+                    [(ngModel)]="productDetail.fImage" name="fImage" #fImage="ngModel">
                 </div>
              </div> 
                  

@@ -5,16 +5,16 @@ export class ProductModel {
     public lDesc: string;
     public keyword: string;
     public mfPartnumber: string;
-    public buyable: string;
+    public buyable: boolean;
     public catgroupId: string;
-    public available: string;
-    public published: string;
+    public available: boolean;
+    public published: boolean;
     public price: string;
     public tImage: string;
     public fImage: string;
 
     constructor(name: string, partnumber: string, sDesc: string, lDesc: string, keyword: string, mfPartnumber: string,
-        buyable: string, catgroupId: string, available: string, published: string, price: string, tImage: string, fImage: string) {
+        buyable: boolean, catgroupId: string, available: boolean, published: boolean, price: string, tImage: string, fImage: string) {
       this.name = name;
       this.partnumber = partnumber;
       this.sDesc = sDesc;

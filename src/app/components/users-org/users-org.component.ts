@@ -34,7 +34,7 @@ export class UsersOrgComponent implements OnInit {
   IdKey = 0;
   loading = true;
 
-  orgDetail = new OrgDetailModel('', '', '', '', '', '', '-2001', '', 'O', '');
+  orgDetail = new OrgDetailModel('', '', '', '', '', '', '-2001', '', 'O', '', '1', '');
 
   @ViewChild('closeBtn') closeBtn: ElementRef;
 
@@ -253,6 +253,7 @@ export class UsersOrgComponent implements OnInit {
 
   addCustomer() {
     this.spinner.show();
+    this.orgDetail.bestCallingTime = '1';
     this.orgDetail.orgEntityType = 'O';
     this.orgDetail.parentMemberId = '-2001';
     console.log(this.orgDetail);
@@ -278,6 +279,7 @@ export class UsersOrgComponent implements OnInit {
 
   editCustomer() {
     this.submitted = true;
+    this.orgDetail.bestCallingTime = '1';
     console.log(this.orgDetail);
     this.orgService.editOrg(this.orgDetail)
       .pipe(map(
@@ -288,7 +290,7 @@ export class UsersOrgComponent implements OnInit {
       .subscribe(
         data => {
           console.log(data);
-          this.alertService.success(data);
+          this.alertService.success('Customer details updated Successfully');
         },
         error => {
           console.log(error);

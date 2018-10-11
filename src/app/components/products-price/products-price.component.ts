@@ -24,7 +24,7 @@ const URL = 'http://localhost:3000/api/upload';
 export class ProductsPriceComponent implements OnInit {
   categoryList: CategoryListModel[];
   productList: ProductListModel[];
-  productDetail = new ProductModel('', '', '', '', '', '', '', '', '', '', '', '', '');
+  productDetail = new ProductModel('', '', '', '', '', '', false, '', false, false, '', '', '');
   loading = true;
   selectedId = '';
   IdKey = 0;
