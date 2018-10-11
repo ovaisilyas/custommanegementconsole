@@ -97,11 +97,11 @@ export class ContractListComponent implements OnInit {
 
   openContractDetail() {
     this.spinner.show();
-    /* this.searchService.searchContractDetail(this.selectedContractID)
+    this.searchService.searchContractDetail(this.selectedContractID)
       .pipe(map(
         (product) => {
-          const searchDetails = product['SearchDetails'];
-          const searchList = searchDetails['SearchList'];
+          const searchDetails = product['contractDetails'];
+          const searchList = searchDetails['productList'];
           return searchList;
         }
       ))
@@ -119,7 +119,7 @@ export class ContractListComponent implements OnInit {
             this.contractDetail.length = 0;
           }
           this.spinner.hide();
-        }); */
+        });
   }
 
   getContractId(value: any) {
@@ -128,6 +128,8 @@ export class ContractListComponent implements OnInit {
     });
     if (this.IdKey !== -1) {
       this.selectedContractID = this.contractList[this.IdKey].contractId;
+    } else if (this.IdKey === -1) {
+      this.selectedContractID = '';
     }
   }
 

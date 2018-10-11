@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { SearchService } from '../../services/search.service';
 import {map} from 'rxjs/operators';
+import {  FileUploader, FileSelectDirective } from 'ng2-file-upload/ng2-file-upload';
 import {UsersService} from '../../services/users.service';
 import { ProductService } from '../../services/product.service';
 import { ContractService } from '../../services/contract.service';
@@ -10,8 +11,10 @@ import {CategoryListModel} from '../../model/categorylist.model';
 import {AlertService} from '../../services/alert.service';
 import {ViewChild, ElementRef} from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { ProductListModel } from '../../model/productlist.modal';
+import { ProductListModel } from '../../model/productlist.model';
 import { ProductModel } from '../../model/product.model';
+
+const URL = 'http://localhost:3000/api/upload';
 
 @Component({
   selector: 'app-products-price',
@@ -26,6 +29,9 @@ export class ProductsPriceComponent implements OnInit {
   selectedId = '';
   IdKey = 0;
   searchTerm = '';
+
+
+  public uploader: FileUploader = new FileUploader({url: URL, itemAlias: 'photo'});
 
 
   constructor(
@@ -48,6 +54,11 @@ export class ProductsPriceComponent implements OnInit {
    pagedItems: any[];
 
   ngOnInit() {
+    this.uploader.onAfterAddingFile = (file) => { file.withCredentials = false; };
+    this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
+         console.log('ImageUpload:uploaded:', item, status, response);
+         alert('File uploaded successfully');
+     };
   }
 
   onEnter(value: string) {
@@ -127,7 +138,9 @@ export class ProductsPriceComponent implements OnInit {
           console.log('Product Saved');
         },
         error => {
+          this.spinner.hide();
           console.log(error);
+          this.alertService.error(error);
     });
 
   }

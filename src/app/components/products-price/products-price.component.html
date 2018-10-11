@@ -95,7 +95,7 @@
         <form #newStoreProdForm="ngForm">
         <div class="modal-body">
          <div class="form-group row">
-          <label for="category" class="col-sm-3 col-form-label">Category:</label>
+          <label for="category" class="col-sm-3 col-form-label">Category: <span class="text-danger">*</span></label>
             <div class="col-sm-9">
                 <img style="display:inline;" *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
                 <input type="text" list="categorylist" name="categoryList" *ngIf="!loading" class="form-control" [(ngModel)]="selectedId" required (change)="getCategoryId(selectedId)" placeholder="Select Category">
@@ -103,77 +103,113 @@
                     <option *ngFor="let item of categoryList" [value]="item.identifier">
                   </datalist>
                   <input type="hidden" [value]="productDetail.catgroupId" [(ngModel)]="productDetail.catgroupId" name="catgroupId" #catgroupIdtext="ngModel" />
-              <!-- <select class="form-control" id="customerSelectBox" required>
-                <option *ngFor="let item of categoryList" [value]="item.uniqueID">{{item.identifier}}</option>
-              </select> -->
-                  
             </div>
          </div>
   
          <div class="form-group row">
-          <label for="inputPassword" class="col-sm-3 col-form-label">Product Name:</label>
+          <label for="productName" class="col-sm-3 col-form-label">Product Name: <span class="text-danger">*</span></label>
             <div class="col-sm-9">
-              <input type="text" class="form-control">
+              <input type="text" id="productName" class="form-control" required
+              [(ngModel)]="productDetail.name" name="partname" #partname="ngModel"
+              [ngClass]="{ 'is-invalid': newStoreProdForm.submitted && partname.invalid }">
+              <div *ngIf="newStoreProdForm.submitted && partname.invalid" class="invalid-feedback">
+                  <div *ngIf="!!partname.errors.required">Product Name is required</div>
             </div>
+         </div>
          </div>
           <div class="form-group row">
-          <label for="inputPassword" class="col-sm-3 col-form-label">Product Number:</label>
+          <label for="productNumber" class="col-sm-3 col-form-label">Product Number: <span class="text-danger">*</span></label>
             <div class="col-sm-9">
-              <input type="text" class="form-control">
+              <input type="text" id="productNumber" class="form-control" required
+              [(ngModel)]="productDetail.partnumber" name="partnumber" #partnumber="ngModel"
+              [ngClass]="{ 'is-invalid': newStoreProdForm.submitted && partnumber.invalid }">
+              <div *ngIf="newStoreProdForm.submitted && partnumber.invalid" class="invalid-feedback">
+                  <div *ngIf="!!partnumber.errors.required">Product Number is required</div>
+            </div>
+         </div>
+         </div>
+
+         <div class="form-group row">
+          <label for="productShortDesc" class="col-sm-3 col-form-label">Short Description: <span class="text-danger">*</span></label>
+            <div class="col-sm-9">
+              <input type="text" id="productShortDesc" class="form-control" required
+              [(ngModel)]="productDetail.sDesc" name="shortdescription" #sDesc="ngModel"
+              [ngClass]="{ 'is-invalid': newStoreProdForm.submitted && shortdescription.invalid }">
+              <div *ngIf="newStoreProdForm.submitted && shortdescription.invalid" class="invalid-feedback">
+                  <div *ngIf="!!shortdescription.errors.required">Short Description is required</div>
+                </div>
             </div>
          </div>
 
          <div class="form-group row">
-          <label for="inputPassword" class="col-sm-3 col-form-label">Short Description:</label>
+          <label for="productLongDesc" class="col-sm-3 col-form-label">Long Description:</label>
             <div class="col-sm-9">
-              <input type="text" class="form-control">
+              <input type="text" id="productLongDesc" class="form-control" 
+              [(ngModel)]="productDetail.lDesc" name="longdescription" #lDesc="ngModel">
             </div>
          </div>
 
          <div class="form-group row">
-          <label for="inputPassword" class="col-sm-3 col-form-label">Long Description:</label>
+          <label for="productKeyword" class="col-sm-3 col-form-label">Keyword: <span class="text-danger">*</span></label>
             <div class="col-sm-9">
-              <input type="text" class="form-control">
+              <input type="text" id="productKeyword" class="form-control" required
+              [(ngModel)]="productDetail.keyword" name="keyword" #keyword="ngModel"
+              [ngClass]="{ 'is-invalid': newStoreProdForm.submitted && keyword.invalid }">
+              <div *ngIf="newStoreProdForm.submitted && keyword.invalid" class="invalid-feedback">
+                  <div *ngIf="!!keyword.errors.required">Keyword is required</div>
+                </div>
             </div>
          </div>
 
          <div class="form-group row">
-          <label for="inputPassword" class="col-sm-3 col-form-label">Keyword:</label>
+          <label for="productPrice" class="col-sm-3 col-form-label">Price: <span class="text-danger">*</span></label>
             <div class="col-sm-9">
-              <input type="text" class="form-control">
-            </div>
-         </div>
-
-         <div class="form-group row">
-          <label for="inputPassword" class="col-sm-3 col-form-label">Price:</label>
-            <div class="col-sm-9">
-              <input type="text" class="form-control">
+              <input type="text" id="productPrice" class="form-control" required
+              [(ngModel)]="productDetail.price" name="price" #price="ngModel"
+              [ngClass]="{ 'is-invalid': newStoreProdForm.submitted && price.invalid }">
+              <div *ngIf="newStoreProdForm.submitted && price.invalid" class="invalid-feedback">
+                  <div *ngIf="!!price.errors.required">Price is required</div>
+                </div>
             </div>
          </div>
   
           <div class="form-group row">
-          <label for="inputPassword" class="col-sm-3 col-form-label">Available:</label>
+          <label for="productAvailable" class="col-sm-3 col-form-label">Available: <span class="text-danger">*</span></label>
             <div class="col-sm-9">
-              <input type="text" class="form-control">
+              <input type="text" id="productAvailable" class="form-control" required
+              [(ngModel)]="productDetail.available" name="available" #available="ngModel"
+              [ngClass]="{ 'is-invalid': newStoreProdForm.submitted && available.invalid }">
+              <div *ngIf="newStoreProdForm.submitted && available.invalid" class="invalid-feedback">
+                  <div *ngIf="!!available.errors.required">Availability is required</div>
+                </div>
             </div>
          </div> 
          <div class="form-group row">
-            <label for="inputPassword" class="col-sm-3 col-form-label">Publish:</label>
+            <label for="productPublish" class="col-sm-3 col-form-label">Publish:</label>
+            <div class="col-sm-9">
+                <input type="checkbox" id="productPublish" class="form-check-label"
+              [(ngModel)]="productDetail.published" name="publish" #published="ngModel">
+            </div>
+         </div> 
+         <div class="form-group row">
+              <label for="productTImage" class="col-sm-3 col-form-label">Image 1:</label>
               <div class="col-sm-9">
-                <input type="checkbox" class="form-check-label">
+                  <input type="file" id="productTImage" class="form-control"
+              [(ngModel)]="productDetail.tImage" name="tImage" #tImage="ngModel" ng2FileSelect [uploader]="uploader">
               </div>
            </div>
            <div class="form-group row">
-              <label for="inputPassword" class="col-sm-3 col-form-label">Image:</label>
+              <label for="productFImage" class="col-sm-3 col-form-label">Image 2:</label>
                 <div class="col-sm-9">
-                  <input type="file" class="form-control">
+                  <input type="file" id="productFImage" class="form-control"
+              [(ngModel)]="productDetail.fImage" name="fImage" #fImage="ngModel">
                 </div>
              </div> 
                  
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-PrimaryModal" (click)="saveStoreProduct();">Save</button>
+          <button type="button" class="btn btn-PrimaryModal" [disabled]="!newStoreProdForm.form.valid" (click)="saveStoreProduct();uploader.uploadAll()">Save</button>
         </div>
       </form>
       </div>

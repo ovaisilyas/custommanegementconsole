@@ -38,5 +38,10 @@ export class SearchService {
 
   searchContractDetail(searchTerm: string) {
     console.log('Show contract details table');
+    const storeId = sessionStorage.getItem('storeId');
+    console.log(`${environment.apiUrl}/wcs/resources/store/${storeId}/cmccontractdetails/${searchTerm}`);
+
+    return this.httpClient.get<any>(`${environment.apiUrl}/wcs/resources/store/${storeId}/cmccontractdetails/${searchTerm}`,
+      httpOptions);
   }
 }

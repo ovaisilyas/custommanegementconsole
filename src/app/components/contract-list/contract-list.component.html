@@ -20,7 +20,7 @@
               </div>
   
               <div class="col-4 col-sm-3">
-                <input type="text" class="form-control searchIcon" id="searchTerm" #searchTerm (keyup.enter)="onEnter(searchTerm.value)"
+                <input type="text" [disabled]="showContractDetailTable === false" class="form-control searchIcon" id="searchTerm" #searchTerm (keyup.enter)="onEnter(searchTerm.value)"
                        appAutofocus placeholder="Search Code or Description">
               </div>
               
@@ -40,14 +40,14 @@
             <div class="productContractGrid">
               <div class="row">
               <div class="col col-md-3 float-left">
-                <div><label for="contractId" class="searchIconNew">Contract</label></div>
+                <div><label for="contractId" class="searchIconNew">Select Contract here</label></div>
                 <img style="display:inline;" *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-                <input type="text" list="contractDatalist" *ngIf="!loading" class="form-control" [(ngModel)]="selectedContractName" name="selectedID" placeholder="Select Contract" required (change)="getContractId(selectedContractName)">
+                <input type="text" list="contractDatalist" *ngIf="!loading" class="form-control" [(ngModel)]="selectedContractName" name="selectedID" placeholder="Select Contract" required (change)="getContractId(selectedContractName)" (keyup)="getContractId(selectedContractName)">
                   <datalist id="contractDatalist">
                     <option *ngFor="let item of contractList" [value]="item.contractName">
                   </datalist>
                   <input type="hidden" [value]="selectedContractID" [(ngModel)]="selectedContractID" name="contractId" #contractIdtext="ngModel" /><br/>
-                  <div class="text-right mt-2"><button type="button" class="btn btn-primary" (click)="openContractDetail()">Search Contract</button></div>
+                  <div class="text-right"><button type="button" [disabled]="selectedContractID === ''" class="btn btn-primary" (click)="openContractDetail()">Search Contract</button></div>
               </div>
               <div class="col col-md-9 float-left table-responsive" *ngIf="showContractDetailTable">
               <table class="table table-bordered table-striped">
@@ -70,7 +70,8 @@
                             <div><button type="submit" class="btn btn-danger">&#10006;</button></div>
                           </div>                       
                     </td>
-                    <td><a href="">Edit Price</a> 
+                    <td>
+                      <a href="">Edit Price</a> 
                       <a href="#" role="button" data-toggle="modal" data-target="#addCustomers">Customers</a>
                       <a href="#" role="button" data-toggle="modal" data-target="#deleteCustomers">Delete</a></td>
                   </tr>

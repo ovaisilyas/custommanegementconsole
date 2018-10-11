@@ -5,7 +5,7 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 import { NgxSpinnerModule } from 'ngx-spinner';
-
+import { FileSelectDirective } from 'ng2-file-upload';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { AlertService } from './services/alert.service';
@@ -33,6 +33,7 @@ import { AutofocusDirective } from './directives/autofocus.directive';
     LoginComponent,
     HomeComponent,
     AlertComponent,
+    FileSelectDirective,
     HeaderComponent,
     UsersOrgComponent,
     ProductsPriceComponent,
