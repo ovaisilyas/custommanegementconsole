@@ -71,6 +71,10 @@ a:hover{color:#404040;}
 .homePageCont .moreIcon span{width: 7px;height: 7px;background-color: #fff;display: inline-block; margin-left: 2px; margin-right: 2px;border-radius:50%;border:1px solid #6a6a6a;}
 .productPriceGrid table td a, .productContractGrid table td a{color:#47a0ed;}
 .productContractGrid table td a{margin:0 5px 0 5px;}
+.custPriceEdit .priceEditField { display: none;}
+.custPriceEdit .priceLabel { display: block;}
+.custPriceEdit.show .priceEditField { display: block;}
+.custPriceEdit.show .priceLabel { display: none;}
 
 /***************Table grid Custom ******************/
 

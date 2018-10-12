@@ -241,7 +241,6 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <form>
           <div class="modal-body">
             <div class="table-responsive">
               <table class="table table-bordered table-striped">
@@ -252,9 +251,9 @@
                    
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>Aboriginal Areas Protection Authority </td>
-                    <td>$ 99.00</td>
+                  <tr *ngFor="let item of itemContractList">
+                    <td>{{item.contractName}}</td>
+                    <td>{{item.contractPrice}}</td>
                   </tr>
   
                 </tbody>
@@ -263,9 +262,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-PrimaryModal">Save</button>
           </div>
-        </form>
         </div>
       </div>
     </div>

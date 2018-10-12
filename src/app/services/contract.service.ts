@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 import {UserDetailModel} from '../model/userdetail.model';
+import { ContractItemModel } from '../model/contractItem.model';
+import { ContractModel } from '../model/contract.model';
 
 
 @Injectable({
@@ -35,8 +37,34 @@ import {UserDetailModel} from '../model/userdetail.model';
         this.httpOptions);
     }
 
-    getContractDetail(value: string) {
-      console.log('Get Contract detail' + value);
+    getContractDetail(catEntryId: string) {
+      console.log('Get Contract detail' + catEntryId);
+      return this.httpClient.get<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcitemcontract/itemContractList/${catEntryId}`,
+      this.httpOptions);
+    }
+
+    addNewContract(contractDetail: ContractModel) {
+      console.log(contractDetail);
+      return this.httpClient.post<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmccontracts/addContract`, contractDetail,
+      this.httpOptions);
+    }
+
+    updateItemPrice(contractItemDetail: ContractItemModel) {
+      console.log(contractItemDetail);
+      return this.httpClient.post<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmccontracts/addEditContractItem`, contractItemDetail,
+      this.httpOptions);
+    }
+
+    deleteContractItem(contractItemDetail: ContractItemModel) {
+      console.log(contractItemDetail);
+      return this.httpClient.post<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmccontracts/addEditContractItem`, contractItemDetail,
+      this.httpOptions);
+    }
+
+    saveContractItem(contractItemDetail: ContractItemModel) {
+      console.log(contractItemDetail);
+      return this.httpClient.post<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmccontracts/addEditContractItem`, contractItemDetail,
+      this.httpOptions);
     }
 
   }

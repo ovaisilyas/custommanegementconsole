@@ -26,10 +26,10 @@
               
               <div class="col text-right">
                   <div>
-                    <button type="button" class="btn btn-PrimaryModal btn-default" data-toggle="modal" data-target="#addNewContract" (click)="contractForm.reset()">New Contract</button>
+                    <button type="button" class="btn btn-PrimaryModal btn-default" data-toggle="modal" data-target="#addNewContract" (click)="addContractForm.reset()">New Contract</button>
                     <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#addCustomer" (click)="orgDetailForm.reset()">Download to Excel</button>
                     <button type="button" class="btn btn-PrimaryModal btn-default" routerLink="/product-prices" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">View Pricing</button>
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addNewItem">Add Item</button>
+                    <button type="button" *ngIf="selectedContractID !== ''" class="btn btn-primary" data-toggle="modal" data-target="#addNewItem">Add Item</button>
                   </div>
                 </div>
             </div>
@@ -59,23 +59,23 @@
                     <th scope="col">Actions</th>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>4000587</td>
-                    <td>Initiative A4 Office</td>
+                  <tr *ngFor="let item of contractDetail; let i = index">
+                    <td>{{item.partnumber}}</td>
+                    <td>{{item.description}}</td>
                     <td>
-                        <div class="d-flex justify-content-center custPriceEdit">
-                            <div><label>$5.87</label></div>
-                            <div><input type="text" class="form-control" id="inlineFormInputName2"></div>
-                            <div><button type="submit" class="btn btn-primary">&#10004;</button></div>
-                            <div><button type="submit" class="btn btn-danger">&#10006;</button></div>
+                        <div class="d-flex justify-content-center custPriceEdit" [class.show]="i == showEdit">
+                            <div class="priceLabel"><label>${{item.price | number:'1.2-2'}}</label></div>
+                            <div class="priceEditField"><input type="text" class="form-control" class="editPriceInput" [(ngModel)]="newItemPrice" #newItemPric='ngModel'>
+                              <div><button type="submit" class="btn btn-primary" (click)="updateContractPrice(item.partnumber)">&#10004;</button></div>
+                              <div><button type="submit" class="btn btn-danger" (click)="cancelContractPriceEdit()">&#10006;</button></div>
+                            </div>
                           </div>                       
                     </td>
                     <td>
-                      <a href="">Edit Price</a> 
-                      <a href="#" role="button" data-toggle="modal" data-target="#addCustomers">Customers</a>
-                      <a href="#" role="button" data-toggle="modal" data-target="#deleteCustomers">Delete</a></td>
+                      <a (click)="showEditPrice(i,item.price)">Edit Price</a> 
+                      <a role="button" data-toggle="modal" data-target="#addCustomers">Customers</a>
+                      <a role="button" data-toggle="modal" data-target="#deleteCustomers" (click)="deletePartnumber = item.partnumber">Delete</a></td>
                   </tr>
-
                 </tbody>
               </table>
             </div>
@@ -96,32 +96,40 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <form #contractForm="ngForm" novalidate>
+        <form #addContractForm="ngForm" novalidate>
         <div class="modal-body">
          <div class="form-group row">
-          <label for="inputPassword" class="col-sm-3 col-form-label">Account Name:</label>
+          <label for="accountName" class="col-sm-3 col-form-label">Account Name:</label>
             <div class="col-sm-9">
-                <input list="browsers" name="browser" class="form-control">
-                <datalist id="browsers">
-                  <option value="Acc 1">
-                  <option value="Acc 2">
-                  <option value="Acc 3">
-                  <option value="Acc 4">
-                  <option value="Acc 5">
-                </datalist>
+                <input type="text" id="accountName" class="form-control" required
+                  [(ngModel)]="contract.accountName" name="accountName" #accountName="ngModel"
+                  [ngClass]="{ 'is-invalid': addContractForm.submitted && accountName.invalid }">
+                  <div *ngIf="addContractForm.submitted && accountName.invalid" class="invalid-feedback">
+                      <div *ngIf="!!accountName.errors.required">Account Name is required</div>
+                  </div>
             </div>
          </div>
   
          <div class="form-group row">
-          <label for="inputPassword" class="col-sm-3 col-form-label">Contract Name:</label>
+          <label for="contractName" class="col-sm-3 col-form-label">Contract Name:</label>
             <div class="col-sm-9">
-              <input type="text" class="form-control">
+                <input type="text" id="contractName" class="form-control" required
+                [(ngModel)]="contract.contractName" name="contractName" #contractName="ngModel"
+                [ngClass]="{ 'is-invalid': addContractForm.submitted && contractName.invalid }">
+                <div *ngIf="addContractForm.submitted && contractName.invalid" class="invalid-feedback">
+                    <div *ngIf="!!contractName.errors.required">Contract Name is required</div>
+                </div>
             </div>
          </div>
           <div class="form-group row">
-          <label for="inputPassword" class="col-sm-3 col-form-label">Charges by:</label>
+          <label for="chargeBy" class="col-sm-3 col-form-label">Charges by:</label>
             <div class="col-sm-9">
-              <input type="text" class="form-control">
+                <input type="text" id="chargeBy" class="form-control" required
+                [(ngModel)]="contract.chargeBy" name="chargeBy" #chargeBy="ngModel"
+                [ngClass]="{ 'is-invalid': addContractForm.submitted && chargeBy.invalid }">
+                <div *ngIf="addContractForm.submitted && chargeBy.invalid" class="invalid-feedback">
+                    <div *ngIf="!!chargeBy.errors.required">Charges By is required</div>
+                </div>
             </div>
          </div>
           <div class="form-group row">
@@ -131,7 +139,7 @@
                     <div class="form-group">
                       <div class="input-group">
                         <input class="form-control" placeholder="yyyy-mm-dd" required pattern="\d{1,2}/\d{1,2}/\d{4}" title="Enter a date in this format YYYY-MM-DD"
-                               name="startDate" [(ngModel)]="startDateModel" ngbDatepicker #startDate="ngbDatepicker">
+                               name="startDate" [(ngModel)]="contract.startDate" ngbDatepicker #startDate="ngbDatepicker">
                         <div class="input-group-append">
                           <button class="btn btn-outline-secondary calendar" (click)="startDate.toggle()" type="button"></button>
                         </div>
@@ -145,7 +153,7 @@
                     <div class="form-group">
                       <div class="input-group">
                         <input class="form-control" placeholder="yyyy-mm-dd" required pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])/(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])/(?:30))|(?:(?:0[13578]|1[02])-31))" title="Enter a date in this format YYYY-MM-DD"
-                               name="endDate" [(ngModel)]="endDateModel" ngbDatepicker #endDate="ngbDatepicker">
+                               name="endDate" [(ngModel)]="contract.endDate" ngbDatepicker #endDate="ngbDatepicker">
                         <div class="input-group-append">
                           <button class="btn btn-outline-secondary calendar" (click)="endDate.toggle()" type="button"></button>
                         </div>
@@ -156,35 +164,91 @@
          </div>
   
           <div class="form-group row">
-          <label for="inputPassword" class="col-sm-3 col-form-label">Long Description:</label>
+          <label for="longDescription" class="col-sm-3 col-form-label">Long Description:</label>
             <div class="col-sm-9">
-              <input type="text" class="form-control">
+                <input type="text" id="longDescription" class="form-control"
+                [(ngModel)]="contract.longDescription" name="longDescription" #longDescription="ngModel"
+                [ngClass]="{ 'is-invalid': addContractForm.submitted && longDescription.invalid }">
             </div>
          </div>
   
           <div class="form-group row">
-          <label for="inputPassword" class="col-sm-3 col-form-label">Min Order Amount:</label>
+          <label for="minOrdAmount" class="col-sm-3 col-form-label">Min Order Amount:</label>
             <div class="col-sm-9">
-              <input type="text" class="form-control">
+                <input type="text" id="minOrdAmount" class="form-control"
+                [(ngModel)]="contract.minOrdAmnt" name="minOrdAmnt" #minOrdAmnt="ngModel"
+                [ngClass]="{ 'is-invalid': addContractForm.submitted && minOrdAmnt.invalid }">
             </div>
          </div> 
          <div class="form-group row">
-            <label for="inputPassword" class="col-sm-3 col-form-label">Price Level:</label>
+            <label for="priceLevel" class="col-sm-3 col-form-label">Price Level:</label>
               <div class="col-sm-9">
-                <input type="text" class="form-control">
+                  <input type="text" id="priceLevel" class="form-control" required
+                  [(ngModel)]="contract.priceLevel" name="priceLevel" #priceLevel="ngModel"
+                  [ngClass]="{ 'is-invalid': addContractForm.submitted && priceLevel.invalid }">
+                  <div *ngIf="addContractForm.submitted && priceLevel.invalid" class="invalid-feedback">
+                      <div *ngIf="!!priceLevel.errors.required">Price level is required</div>
+                  </div>
               </div>
            </div>
            <div class="form-group row">
-              <label for="inputPassword" class="col-sm-3 col-form-label">Ship By:</label>
+              <label for="shipBy" class="col-sm-3 col-form-label">Ship By:</label>
                 <div class="col-sm-9">
-                  <input type="text" class="form-control">
+                    <input type="text" id="shipBy" class="form-control" required
+                    [(ngModel)]="contract.shipBy" name="shipBy" #shipBy="ngModel"
+                    [ngClass]="{ 'is-invalid': addContractForm.submitted && shipBy.invalid }">
+                    <div *ngIf="addContractForm.submitted && shipBy.invalid" class="invalid-feedback">
+                        <div *ngIf="!!shipBy.errors.required">Ship by is required</div>
+                    </div>
                 </div>
              </div> 
+             <div class="form-group row">
+                <label for="includeWholeCatalog" class="col-sm-3 col-form-label">Include Whole Catalog:</label>
+                  <div class="col-sm-9">
+                      <input type="checkbox" id="includeWholeCatalog" class="form-check-label"
+                      [(ngModel)]="contract.includeWholeCatalog" name="includeWholeCatalog" #includeWholeCatalog="ngModel"
+                      [ngClass]="{ 'is-invalid': addContractForm.submitted && includeWholeCatalog.invalid }">
+                  </div>
+               </div> 
+               <div class="form-group row">
+                  <label for="includeWholeCatalogAdjustment" class="col-sm-3 col-form-label">Include Whole Catalog Adjustment:</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="includeWholeCatalogAdjustment" class="form-control"
+                        [(ngModel)]="contract.includeWholeCatalogAdjustment" name="includeWholeCatalogAdjustment" #includeWholeCatalogAdjustment="ngModel"
+                        [ngClass]="{ 'is-invalid': addContractForm.submitted && includeWholeCatalogAdjustment.invalid }">
+                    </div>
+                 </div> 
+                 <div class="form-group row">
+                    <label for="includeWholeCatalogAdjType" class="col-sm-3 col-form-label">Include Whole Catalog Adjustment Type:</label>
+                      <div class="col-sm-9">
+                          <input type="text" id="includeWholeCatalogAdjType" class="form-control"
+                          [(ngModel)]="contract.includeWholeCatalogAdjType" name="includeWholeCatalogAdjType" #includeWholeCatalogAdjType="ngModel"
+                          [ngClass]="{ 'is-invalid': addContractForm.submitted && includeWholeCatalogAdjType.invalid }">
+                      </div>
+                   </div> 
+               <div class="form-group row">
+                  <label for="shortDescription" class="col-sm-3 col-form-label">Short Description:</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="shortDescription" class="form-control" required [(ngModel)]="contract.shortDescription" name="shortDescription" #shortDescription="ngModel"
+                        [ngClass]="{ 'is-invalid': addContractForm.submitted && shortDescription.invalid }">
+                        <div *ngIf="addContractForm.submitted && shortDescription.invalid" class="invalid-feedback">
+                            <div *ngIf="!!shortDescription.errors.required">Short Description is required</div>
+                        </div>
+                    </div>
+                 </div> 
+                 <div class="form-group row">
+                    <label for="contractRefrence" class="col-sm-3 col-form-label">Contract Reference:</label>
+                      <div class="col-sm-9">
+                          <input type="text" id="contractRefrence" class="form-control"
+                          [(ngModel)]="contract.contractRefrence" name="contractRefrence" #contractRefrence="ngModel"
+                          [ngClass]="{ 'is-invalid': addContractForm.submitted && contractRefrence.invalid }">
+                      </div>
+                   </div> 
                  
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-PrimaryModal">Save</button>
+          <button type="button" class="btn btn-PrimaryModal" (click)="addNewContract()">Save</button>
         </div>
       </form>
       </div>
@@ -244,15 +308,10 @@
                                     </button>
                                   </div>
                             </div>
-
                           </div>
-
-                               
                           </div>
                     </div>
                   </div>
-
-              
             </div>
          </div>
         </form>
@@ -279,7 +338,7 @@
          
           <div class="modal-footer">
             <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
-            <button type="button" class="btn btn-danger">Delete</button>
+            <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="deleteContractItem();">Delete</button>
           </div>
         </form>
         </div>
@@ -295,36 +354,81 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <form>
+          <form #addItemForm='ngForm'>
           <div class="modal-body">
            <div class="form-group row">
-            <label for="inputPassword" class="col-sm-3 col-form-label">Account Name:</label>
+            <label for="inputPassword" class="col-sm-3 col-form-label">Contract Name:</label>
               <div class="col-sm-9">
-                  <input type="text" class="form-control">
+                  <input type="text" list="contractDatalist" disabled class="form-control" [(ngModel)]="selectedContractName" name="selectedID" placeholder="Select Contract" required >
+                  <input type="hidden" [value]="selectedContractID" [(ngModel)]="selectedContractID" name="contractId" #contractIdtext="ngModel" />
               </div>
            </div>
     
            <div class="form-group row">
-            <label for="inputPassword" class="col-sm-3 col-form-label">Contract Name:</label>
+            <label for="productNumber" class="col-sm-3 col-form-label">Product Code:</label>
               <div class="col-sm-9">
-                <input type="text" class="form-control">
+                  <input type="text" class="form-control searchIcon" id="searchProductTerm" [(ngModel)]="contractItem.partNumber" name="partnumber" #partnumber="ngModel" #searchTerm (keyup.enter)="getProductList(searchTerm.value)"
+                       appAutofocus placeholder="Search Code or Description" required>
+                       <img style="display:inline;" *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+                  <button type="button" style="display:none;" id="openProductListButton" data-toggle="modal" data-target="#productListModal">productListModal</button>
+                 
+                  <div *ngIf="addItemForm.submitted && partnumber.invalid" class="invalid-feedback">
+                      <div *ngIf="!!partnumber.errors.required">Product code is required</div>
+                  </div>
               </div>
            </div>
             <div class="form-group row">
-            <label for="inputPassword" class="col-sm-3 col-form-label">Charges by:</label>
+            <label for="inputPassword" class="col-sm-3 col-form-label">Price:</label>
               <div class="col-sm-9">
-                <input type="text" class="form-control">
+                  <input type="text" id="productPrice" class="form-control" required
+                  [(ngModel)]="contractItem.itemFixedPrice" name="productPrice" #productPrice="ngModel"
+                  [ngClass]="{ 'is-invalid': addItemForm.submitted && productPrice.invalid }">
+                  <div *ngIf="addItemForm.submitted && productPrice.invalid" class="invalid-feedback">
+                      <div *ngIf="!!productPrice.errors.required">Price is required</div>
+                  </div>
               </div>
            </div>
-        
-             
-                   
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-PrimaryModal">Save</button>
+            <button type="button" id="addContractItemClose" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-PrimaryModal" (click)="saveAddItem();">Save</button>
           </div>
         </form>
         </div>
       </div>
     </div>
+
+    <!-- Search Product List popup -->
+    <div class="modal fade productListModal" id="productListModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered model-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalCenterTitle"><span>Product List</span></h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="table-responsive">
+                <table class="table table-bordered table-striped">
+                  <thead>
+                    <tr>
+                      <th scope="col">Product Number</th>
+                      <th scope="col">Short Description</th>
+
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of productList" (click)="selectFromProductList(item.partnumber)">
+                        <td scope="col"> {{item.partnumber}}</td>
+                        <td scope="col" class="tableDataDesc"><span title="{{item.shortdescription}}">{{item.shortdescription}}</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" id="prodListClose" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>

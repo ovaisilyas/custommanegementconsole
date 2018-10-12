@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 
 import { SearchService } from '../../services/search.service';
 import {map} from 'rxjs/operators';
-import {  FileUploader, FileSelectDirective } from 'ng2-file-upload/ng2-file-upload';
 import {UsersService} from '../../services/users.service';
 import { ProductService } from '../../services/product.service';
 import { ContractService } from '../../services/contract.service';
@@ -13,8 +12,8 @@ import {ViewChild, ElementRef} from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ProductListModel } from '../../model/productlist.model';
 import { ProductModel } from '../../model/product.model';
+import { ItemContractListModel } from '../../model/itemcontractlist.model';
 
-const URL = 'http://localhost:3000/api/upload';
 
 @Component({
   selector: 'app-products-price',
@@ -24,15 +23,12 @@ const URL = 'http://localhost:3000/api/upload';
 export class ProductsPriceComponent implements OnInit {
   categoryList: CategoryListModel[];
   productList: ProductListModel[];
+  itemContractList: ItemContractListModel[];
   productDetail = new ProductModel('', '', '', '', '', '', false, '', false, false, '', '', '');
   loading = true;
   selectedId = '';
   IdKey = 0;
   searchTerm = '';
-
-
-  public uploader: FileUploader = new FileUploader({url: URL, itemAlias: 'photo'});
-
 
   constructor(
     private productService: ProductService,
@@ -54,11 +50,6 @@ export class ProductsPriceComponent implements OnInit {
    pagedItems: any[];
 
   ngOnInit() {
-    this.uploader.onAfterAddingFile = (file) => { file.withCredentials = false; };
-    this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
-         console.log('ImageUpload:uploaded:', item, status, response);
-         alert('File uploaded successfully');
-     };
   }
 
   onEnter(value: string) {
@@ -119,7 +110,24 @@ export class ProductsPriceComponent implements OnInit {
   }
 
   openContract(value: any) {
-    this.contractService.getContractDetail(value);
+    this.contractService.getContractDetail(value)
+    .pipe(map(
+      (contract) => {
+        const contractDetail = contract['Contract Details'];
+        const contractList = contractDetail['contractValues'];
+        console.log(contractList);
+        return contractList;
+      }
+    ))
+    .subscribe(
+      data => {
+        this.itemContractList = data;
+        console.log(data);
+      },
+      error => {
+        console.log(error);
+      }
+    );
   }
 
   saveStoreProduct() {
