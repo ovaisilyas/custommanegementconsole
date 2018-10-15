@@ -3,13 +3,16 @@ import { SearchService } from '../../services/search.service';
 import {map} from 'rxjs/operators';
 import {UserlistModel} from '../../model/userlist.model';
 import { ProductListModel } from '../../model/productlist.model';
+import {UserDetailModel} from '../../model/userdetail.model';
 import {ContractService} from '../../services/contract.service';
+import {UsersService} from '../../services/users.service';
 import {CustomerlistModel} from '../../model/customerlist.model';
 import {ContractListModel} from '../../model/contractlist.model';
 import {ContractDetailModel} from '../../model/contractdetail.model';
 import {ContractModel} from '../../model/contract.model';
 import {ContractItemModel} from '../../model/contractitem.model';
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
+import {PagerService} from '../../services/pager.service';
 import {AlertService} from '../../services/alert.service';
 import {ViewChild, ElementRef} from '@angular/core';
 
@@ -29,9 +32,12 @@ export class ContractListComponent implements OnInit {
   contractItem = new ContractItemModel('', '', '', '', 0);
   contract = new ContractModel('', '', '', '', '', '', '', '', '', false, '', '', '', '');
   submitted = false;
+  userDetail = new UserDetailModel('', '', '', '', '', '', '', '', '', '', '', 'AU'
+    , true, false, false, false, '');
 
   searchTerm = '';
   selectedContractID = '';
+  selectedId = '';
   selectedContractName = '';
   showContractDetailTable = false;
   IdKey = 0;
@@ -39,24 +45,30 @@ export class ContractListComponent implements OnInit {
   showEdit = Number;
   newItemPrice = 0;
   deletePartnumber = '';
-  showEditPrice: Function;
+  selectedCustomer = [];
 
   constructor(
     private searchService: SearchService,
     private formBuilder: FormBuilder,
+    private usersService: UsersService,
+    private pagerService: PagerService,
     private contractService: ContractService,
     private alertService: AlertService,
     private spinner: NgxSpinnerService,
-  ) {
-    this.showEditPrice = function(index, price) {
-      this.showEdit = index;
-      this.newItemPrice = price;
-    };
+  ) {}
 
-  }
+  // array of all items to be paged
+  private allItems: any[];
+
+  // pager object
+  pager: any = {};
+
+  // paged items
+  pagedItems: any[];
 
   ngOnInit() {
     this.getContractList();
+    this.getCustomers();
   }
 
   onEnter(value: string) {
@@ -86,6 +98,37 @@ export class ContractListComponent implements OnInit {
         }); */
   }
 
+  getCustomers() {
+    this.usersService.getCustomers()
+      .pipe(map(
+        (customers) => {
+          const organizationList = customers['organizationList'];
+          console.log(organizationList);
+          return organizationList;
+        }
+      ))
+      .subscribe(
+        data => {
+          this.customerList = data;
+          this.loading = false;
+        },
+        error => {
+          console.log('Unable to Fetch Customers');
+        });
+  }
+
+  setPage(page: number) {
+    // get pager object from service
+    this.pager = this.pagerService.getPager(this.contractDetail.length, page);
+
+    // get current page of items
+    this.pagedItems = this.contractDetail.slice(this.pager.startIndex, this.pager.endIndex + 1);
+  }
+
+  showEditPrice(index, price) {
+    this.showEdit = index;
+    this.newItemPrice = price;
+  }
 
   getContractList() {
     this.contractService.getContractList()
@@ -134,6 +177,8 @@ export class ContractListComponent implements OnInit {
           this.contractDetail = data;
           this.alertService.clear();
           this.spinner.hide();
+          // initialize to page 1
+          this.setPage(1);
           this.showContractDetailTable = true;
         },
         error => {
@@ -245,6 +290,40 @@ export class ContractListComponent implements OnInit {
     selectFromProductList(value: string) {
       this.contractItem.partNumber = value;
       document.getElementById('prodListClose').click();
+    }
+
+    getOrgEntryId(value: any) {
+      this.IdKey = this.customerList.findIndex(function(item, i) {
+        return item.orgEntityName === value;
+      });
+      if (this.IdKey !== -1) {
+        this.userDetail.parentMemberId = this.customerList[this.IdKey].orgEntityId;
+        const list = {
+          'orgEntityName' : this.selectedId,
+          'orgEntityId' : this.userDetail.parentMemberId,
+        };
+        this.selectedCustomer.push(list);
+      }
+    }
+
+    sendSeletedCustomers() {
+      document.getElementById('selectCustomerPopupClose').click();
+      this.contractService.saveSelectedCustomers(this.selectedCustomer)
+      .subscribe(
+        data => {
+          this.alertService.success('Customers added to Contract');
+        },
+        error => {
+          this.alertService.error(error);
+        }
+
+      );
+    }
+
+    removeSelectedCustomers(value: any) {
+      this.selectedCustomer = this.selectedCustomer.filter(function( obj ) {
+        return obj.orgEntityId !== value;
+    });
     }
 
 }

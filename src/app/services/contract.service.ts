@@ -67,4 +67,11 @@ import { ContractModel } from '../model/contract.model';
       this.httpOptions);
     }
 
+    saveSelectedCustomers(selectCustomer: any) {
+      console.log(selectCustomer);
+      return this.httpClient.post<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmccontracts/saveCustomers`, selectCustomer,
+      this.httpOptions);
+    }
+
+
   }

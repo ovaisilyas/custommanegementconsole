@@ -24,7 +24,7 @@ export class ProductsPriceComponent implements OnInit {
   categoryList: CategoryListModel[];
   productList: ProductListModel[];
   itemContractList: ItemContractListModel[];
-  productDetail = new ProductModel('', '', '', '', '', '', false, '', false, false, '', '', '');
+  productDetail = new ProductModel('', '', '', '', '', '', '', false, '', false, false, '', '', '');
   loading = true;
   selectedId = '';
   IdKey = 0;

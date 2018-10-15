@@ -29,8 +29,8 @@
             </div>
             <div class="col text-right">
                 <div>
-                  <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#addCustomer" (click)="orgDetailForm.reset(); this.orgDetail.orgEntityId = ''">Add Customer</button>
-                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#adduser" (click)="userForm.reset(); this.userDetail.userId = ''">Add User</button>
+                  <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#addCustomer" (click)="resetForm(); this.orgDetail.orgEntityId = '';">Add Customer</button>
+                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#adduser" (click)="resetForm(); this.userDetail.userId = ''">Add User</button>
                 </div>
               </div>
           </div>
@@ -227,8 +227,8 @@
                           <label for="country" class="col-sm-3 col-form-label">Country:</label>
                           <div class="col-sm-9">
                             <select class="form-control" id="userCountry"
-                                    [(ngModel)]="userDetail.country" name="country" #country="ngModel">
-                              <option [value]="Australia" selected="selected">Australia</option>
+                                    [(ngModel)]="userDetail.country" [value]="userDetail.country" name="country" #country="ngModel">
+                              <option value="AU" selected="selected">Australia</option>
                             </select>
                           </div>
                         </div>
@@ -269,7 +269,7 @@
 
                   </div>
                   <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" id="closeUserModal" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
                     <button type="submit" *ngIf="!userDetail.userId" class="btn btn-PrimaryModal" [disabled]="!(userForm.form.valid && (buyer.value || approver.value || admin.value))" (click)="onSaveUser()">Save changes</button>
                     <button type="submit" *ngIf="userDetail.userId" class="btn btn-PrimaryModal" [disabled]="!(userForm.form.valid && (buyer.value || approver.value || admin.value))" (click)="editUser()">Save Edit changes</button>
                   </div>
@@ -365,8 +365,8 @@
                       <label for="country" class="col-sm-3 col-form-label">Country:</label>
                       <div class="col-sm-9">
                         <select class="form-control" id="country"
-                                [(ngModel)]="orgDetail.country" name="country" #country="ngModel">
-                          <option value="Australia" selected="selected">Australia</option>
+                                [(ngModel)]="orgDetail.country" [value]="orgDetail.country" name="country" #country="ngModel">
+                          <option value="AU" selected="selected">Australia</option>
                         </select>
                       </div>
                     </div>
@@ -386,7 +386,7 @@
 
                   </div>
                   <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" id="closeCustomerModal" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
                     <button type="submit" *ngIf="!orgDetail.orgEntityId" class="btn btn-PrimaryModal" [disabled]="!orgDetailForm.form.valid" (click)="addCustomer()">Save changes</button>
                     <button type="submit" *ngIf="orgDetail.orgEntityId" class="btn btn-PrimaryModal" [disabled]="!orgDetailForm.form.valid" (click)="editCustomer()">Save Edit changes</button>
                   </div>

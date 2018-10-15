@@ -24,7 +24,7 @@ export class UsersOrgComponent implements OnInit {
   customerList: CustomerlistModel[];
   itemList: UserlistModel[];
 
-  userDetail = new UserDetailModel('', '', '', '', '', '', '', '', '', '', '', ''
+  userDetail = new UserDetailModel('', '', '', '', '', '', '', '', '', '', '', 'AU'
     , true, false, false, false, '');
   submitted = false;
   resetPassModel: ResetPasswordModel;
@@ -34,9 +34,7 @@ export class UsersOrgComponent implements OnInit {
   IdKey = 0;
   loading = true;
 
-  orgDetail = new OrgDetailModel('', '', '', '', '', '', '-2001', '', 'O', '', '1', '');
-
-  @ViewChild('closeBtn') closeBtn: ElementRef;
+  orgDetail = new OrgDetailModel('', '', '', '', '', 'AU', '-2001', '', 'O', '', '1', '');
 
   constructor(
     private searchService: SearchService,
@@ -97,10 +95,6 @@ export class UsersOrgComponent implements OnInit {
         });
   }
 
-  private closeModal(): void {
-    this.closeBtn.nativeElement.click();
-  }
-
   getUser(userId: string) {
     this.spinner.show();
     this.usersService.getUser(userId)
@@ -146,9 +140,8 @@ export class UsersOrgComponent implements OnInit {
         data => {
           this.spinner.hide();
           console.log(data);
-          this.closeModal();
+          document.getElementById('closeUserModal').click();
           this.alertService.success('User Added Successfully');
-          this.onEnter(this.searchTerm);
         },
         error => {
           this.spinner.hide();
@@ -221,12 +214,20 @@ export class UsersOrgComponent implements OnInit {
         data => {
           console.log(data);
           this.alertService.success('User has been updated successfully');
+          document.getElementById('closeUserModal').click();
           this.onEnter(this.searchTerm);
         },
         error => {
           console.log(error);
           this.alertService.error(error);
         });
+  }
+
+  resetForm() {
+    this.userDetail = new UserDetailModel('', '', '', '', '', '', '', '', '', '', '', 'AU'
+    , true, false, false, false, '');
+    this.selectedId = '';
+    this.orgDetail = new OrgDetailModel('', '', '', '', '', 'AU', '-2001', '', 'O', '', '1', '');
   }
 
   getOrg(orgId: string) {
@@ -267,7 +268,7 @@ export class UsersOrgComponent implements OnInit {
         data => {
           this.spinner.hide();
           console.log(data);
-          this.closeModal();
+          document.getElementById('closeCustomerModal').click();
           this.alertService.success('Customer Added Successfully');
         },
         error => {
@@ -290,6 +291,7 @@ export class UsersOrgComponent implements OnInit {
       .subscribe(
         data => {
           console.log(data);
+          document.getElementById('closeCustomerModal').click();
           this.alertService.success('Customer details updated Successfully');
         },
         error => {

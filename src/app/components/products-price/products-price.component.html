@@ -26,7 +26,7 @@
               
               <div class="col text-right">
                   <div>
-                    <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#addCustomer" (click)="orgDetailForm.reset()">Download to Excel</button>
+                    <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#addCustomer">Download to Excel</button>
                     <button type="button" class="btn btn-PrimaryModal btn-default" routerLink="/product-prices/contract-list" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">All Contracts</button>
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addNewStoreProduct" (click)="newStoreProdForm.reset(); getCategory();">Add Store Product</button>
                   </div>
@@ -224,7 +224,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-PrimaryModal" [disabled]="!newStoreProdForm.form.valid" (click)="saveStoreProduct();uploader.uploadAll()">Save</button>
+          <button type="button" class="btn btn-PrimaryModal" [disabled]="!newStoreProdForm.form.valid" (click)="saveStoreProduct();">Save</button>
         </div>
       </form>
       </div>
