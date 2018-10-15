@@ -28,7 +28,7 @@
                   <div>
                     <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#addCustomer">Download to Excel</button>
                     <button type="button" class="btn btn-PrimaryModal btn-default" routerLink="/product-prices/contract-list" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">All Contracts</button>
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addNewStoreProduct" (click)="newStoreProdForm.reset(); getCategory();">Add Store Product</button>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addNewStoreProduct" (click)="resetForm(); getCategory();">Add Store Product</button>
                   </div>
                 </div>
             </div>

@@ -63,7 +63,7 @@ a:hover{color:#404040;}
 .userDataGrid .form-check-input{margin-left: 10px;margin-right: 0rem;}
 .userDataGrid table td a, .productPriceGrid table td a, .productContractGrid table a{text-decoration: underline !important; cursor: pointer;}
 
-.userSearchRow #searchTerm, .userSearchRow .searchIcon, .searchIconNew{background:url(../images/search.png) left no-repeat; background-position-x: 5px; padding-left: 25px;}
+.userSearchRow #searchTerm, .userSearchRow .searchIcon, .searchIconNew, #addNewItem .searchIcon {background:url(../images/search.png) left no-repeat; background-position-x: 5px; padding-left: 25px;}
 .custTabCls ul.nav.nav-tabs > li {float: none;display: table-cell;}
 
 .homePageCont {padding-top: 10px;}

@@ -153,6 +153,10 @@ export class ProductsPriceComponent implements OnInit {
 
   }
 
+  resetForm() {
+    this.productDetail = new ProductModel('', '', '', '', '', '', '', false, '', false, false, '', '', '');
+  }
+
   getCategoryId(value: any) {
     this.IdKey = this.categoryList.findIndex(function(item, i) {
       return item.identifier === value;

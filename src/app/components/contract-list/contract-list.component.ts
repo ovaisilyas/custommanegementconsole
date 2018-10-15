@@ -68,7 +68,6 @@ export class ContractListComponent implements OnInit {
 
   ngOnInit() {
     this.getContractList();
-    this.getCustomers();
   }
 
   onEnter(value: string) {
@@ -127,7 +126,7 @@ export class ContractListComponent implements OnInit {
 
   showEditPrice(index, price) {
     this.showEdit = index;
-    this.newItemPrice = price;
+    this.newItemPrice = Number(parseFloat(price).toFixed(2));
   }
 
   getContractList() {
@@ -180,6 +179,7 @@ export class ContractListComponent implements OnInit {
           // initialize to page 1
           this.setPage(1);
           this.showContractDetailTable = true;
+          this.getCustomers();
         },
         error => {
           console.log(error);
@@ -214,6 +214,20 @@ export class ContractListComponent implements OnInit {
   cancelContractPriceEdit() {
     this.showEdit = null;
   }
+
+  getCustomerforItem(partNumber: string, contractId: string) {
+    this.contractService.getCustomersforItem(partNumber, contractId)
+    .subscribe(
+      data => {
+        this.selectedCustomer = data;
+      },
+      error => {
+        this.alertService.error(error);
+      }
+
+    );
+  }
+
 
   deleteContractItem() {
     this.contractItem.flag = 'deleteItem';
@@ -296,13 +310,21 @@ export class ContractListComponent implements OnInit {
       this.IdKey = this.customerList.findIndex(function(item, i) {
         return item.orgEntityName === value;
       });
+
       if (this.IdKey !== -1) {
         this.userDetail.parentMemberId = this.customerList[this.IdKey].orgEntityId;
-        const list = {
-          'orgEntityName' : this.selectedId,
-          'orgEntityId' : this.userDetail.parentMemberId,
-        };
-        this.selectedCustomer.push(list);
+        const parentMemberId = this.userDetail.parentMemberId;
+        const isDupicate = this.selectedCustomer.findIndex(function(item, i) {
+          return item.orgEntityId === parentMemberId;
+        });
+        if (isDupicate === -1) {
+          const list = {
+            'orgEntityName' : this.selectedId,
+            'orgEntityId' : this.userDetail.parentMemberId,
+          };
+          this.selectedCustomer.push(list);
+        }
+        this.selectedId = '';
       }
     }
 
@@ -323,7 +345,11 @@ export class ContractListComponent implements OnInit {
     removeSelectedCustomers(value: any) {
       this.selectedCustomer = this.selectedCustomer.filter(function( obj ) {
         return obj.orgEntityId !== value;
-    });
+      });
+    }
+
+    resetForm() {
+      this.contract = new ContractModel('', '', '', '', '', '', '', '', '', false, '', '', '', '');
     }
 
 }

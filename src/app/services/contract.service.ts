@@ -49,6 +49,12 @@ import { ContractModel } from '../model/contract.model';
       this.httpOptions);
     }
 
+    getCustomersforItem(partnumber: any, contractid: any) {
+      console.log(partnumber + '----' + contractid);
+      return this.httpClient.post<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmccontracts/getCustomerforItem/?part=${partnumber}&contractid=${contractid}`,
+      this.httpOptions);
+    }
+
     updateItemPrice(contractItemDetail: ContractItemModel) {
       console.log(contractItemDetail);
       return this.httpClient.post<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmccontracts/addEditContractItem`, contractItemDetail,

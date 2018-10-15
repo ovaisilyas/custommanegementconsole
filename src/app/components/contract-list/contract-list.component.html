@@ -26,7 +26,7 @@
               
               <div class="col text-right">
                   <div>
-                    <button type="button" class="btn btn-PrimaryModal btn-default" data-toggle="modal" data-target="#addNewContract" (click)="addContractForm.reset()">New Contract</button>
+                    <button type="button" class="btn btn-PrimaryModal btn-default" data-toggle="modal" data-target="#addNewContract" (click)="resetForm()">New Contract</button>
                     <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#addCustomer">Download to Excel</button>
                     <button type="button" class="btn btn-PrimaryModal btn-default" routerLink="/product-prices" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">View Pricing</button>
                     <button type="button" *ngIf="selectedContractID !== ''" class="btn btn-primary" data-toggle="modal" data-target="#addNewItem">Add Item</button>
@@ -67,7 +67,7 @@
                             <div class="priceLabel"><label>${{item.price | number:'1.2-2'}}</label></div>
                             <div class="priceEditField">
                               <div>
-                                <input type="text" class="form-control" class="editPriceInput" [(ngModel)]="newItemPrice" #newItemPric='ngModel'>
+                                <input type="number" class="form-control" class="editPriceInput" [(ngModel)]="newItemPrice" #newItemPric='ngModel'>
                                 <button type="submit" class="btn btn-primary" (click)="updateContractPrice(item.partnumber)">&#10004;</button>
                                 <button type="submit" class="btn btn-danger" (click)="cancelContractPriceEdit()">&#10006;</button>
                               </div>
@@ -76,7 +76,7 @@
                     </td>
                     <td>
                       <a (click)="showEditPrice(i,item.price)">Edit Price</a> 
-                      <a role="button" data-toggle="modal" data-target="#addCustomers">Customers</a>
+                      <a role="button" data-toggle="modal" data-target="#addCustomers" (click)="getCustomerforItem(item.partnumber,selectedContractID);">Customers</a>
                       <a role="button" data-toggle="modal" data-target="#deleteCustomers" (click)="deletePartnumber = item.partnumber">Delete</a></td>
                   </tr>
                 </tbody>
@@ -196,22 +196,11 @@
           <div class="form-group row">
           <label for="minOrdAmount" class="col-sm-3 col-form-label">Min Order Amount:</label>
             <div class="col-sm-9">
-                <input type="text" id="minOrdAmount" class="form-control"
+                <input type="number" id="minOrdAmount" class="form-control"
                 [(ngModel)]="contract.minOrdAmnt" name="minOrdAmnt" #minOrdAmnt="ngModel"
                 [ngClass]="{ 'is-invalid': addContractForm.submitted && minOrdAmnt.invalid }">
             </div>
          </div> 
-         <div class="form-group row">
-            <label for="priceLevel" class="col-sm-3 col-form-label">Price Level:</label>
-              <div class="col-sm-9">
-                  <input type="text" id="priceLevel" class="form-control" required
-                  [(ngModel)]="contract.priceLevel" name="priceLevel" #priceLevel="ngModel"
-                  [ngClass]="{ 'is-invalid': addContractForm.submitted && priceLevel.invalid }">
-                  <div *ngIf="addContractForm.submitted && priceLevel.invalid" class="invalid-feedback">
-                      <div *ngIf="!!priceLevel.errors.required">Price level is required</div>
-                  </div>
-              </div>
-           </div>
            <div class="form-group row">
               <label for="shipBy" class="col-sm-3 col-form-label">Ship By:</label>
                 <div class="col-sm-9">
@@ -231,7 +220,7 @@
                       [ngClass]="{ 'is-invalid': addContractForm.submitted && includeWholeCatalog.invalid }">
                   </div>
                </div> 
-               <div class="form-group row">
+               <div class="form-group row" *ngIf="contract.includeWholeCatalog == true">
                   <label for="includeWholeCatalogAdjustment" class="col-sm-3 col-form-label">Include Whole Catalog Adjustment:</label>
                     <div class="col-sm-9">
                         <input type="text" id="includeWholeCatalogAdjustment" class="form-control"
@@ -239,7 +228,7 @@
                         [ngClass]="{ 'is-invalid': addContractForm.submitted && includeWholeCatalogAdjustment.invalid }">
                     </div>
                  </div> 
-                 <div class="form-group row">
+                 <div class="form-group row" *ngIf="contract.includeWholeCatalog == true">
                     <label for="includeWholeCatalogAdjType" class="col-sm-3 col-form-label">Include Whole Catalog Adjustment Type:</label>
                       <div class="col-sm-9">
                           <input type="text" id="includeWholeCatalogAdjType" class="form-control"
@@ -258,9 +247,20 @@
                     </div>
                  </div> 
                  <div class="form-group row">
+                    <label for="priceLevel" class="col-sm-3 col-form-label">Price Level:</label>
+                      <div class="col-sm-9">
+                          <input type="text" id="priceLevel" [disabled]="contract.contractRefrence != '' && contract.contractRefrence != null" class="form-control" [required]="!contract.contractRefrence"
+                          [(ngModel)]="contract.priceLevel" name="priceLevel" #priceLevel="ngModel"
+                          [ngClass]="{ 'is-invalid': addContractForm.submitted && priceLevel.invalid }">
+                          <div *ngIf="addContractForm.submitted && priceLevel.invalid" class="invalid-feedback">
+                              <div *ngIf="!!priceLevel.errors.required">Price level is required</div>
+                          </div>
+                      </div>
+                   </div>
+                 <div class="form-group row">
                     <label for="contractRefrence" class="col-sm-3 col-form-label">Contract Reference:</label>
                       <div class="col-sm-9">
-                          <input type="text" id="contractRefrence" class="form-control"
+                          <input type="text" id="contractRefrence" [disabled]="contract.priceLevel != '' && contract.priceLevel != null" class="form-control"
                           [(ngModel)]="contract.contractRefrence" name="contractRefrence" #contractRefrence="ngModel"
                           [ngClass]="{ 'is-invalid': addContractForm.submitted && contractRefrence.invalid }">
                       </div>
@@ -378,7 +378,7 @@
             <label for="productNumber" class="col-sm-3 col-form-label">Product Code:</label>
               <div class="col-sm-9">
                   <input type="text" class="form-control searchIcon" id="searchProductTerm" [(ngModel)]="contractItem.partNumber" name="partnumber" #partnumber="ngModel" #searchTerm (keyup.enter)="getProductList(searchTerm.value)"
-                       appAutofocus placeholder="Search Code or Description" required>
+                       appAutofocus placeholder="Enter Code or Description and Press Enter" required>
                        <img style="display:inline;" *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
                   <button type="button" style="display:none;" id="openProductListButton" data-toggle="modal" data-target="#productListModal">productListModal</button>
                  
