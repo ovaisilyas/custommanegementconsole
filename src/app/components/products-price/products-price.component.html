@@ -184,28 +184,7 @@
                   <div *ngIf="!!price.errors.required">Price is required</div>
                 </div>
             </div>
-         </div>
-         <div class="form-group row">
-            <label for="productAvailable" class="col-sm-3 col-form-label">Buyable:</label>
-              <div class="col-sm-9">
-                  <input type="checkbox" id="productBuyable" class="form-check-label"
-                  [(ngModel)]="productDetail.buyable" name="buyable" #buyable="ngModel">
-              </div>
-           </div> 
-          <div class="form-group row">
-          <label for="productAvailable" class="col-sm-3 col-form-label">Available:</label>
-            <div class="col-sm-9">
-                <input type="checkbox" id="productAvailable" class="form-check-label"
-                [(ngModel)]="productDetail.available" name="available" #available="ngModel">
-            </div>
-         </div> 
-         <div class="form-group row">
-            <label for="productPublish" class="col-sm-3 col-form-label">Publish:</label>
-            <div class="col-sm-9">
-                <input type="checkbox" id="productPublish" class="form-check-label"
-              [(ngModel)]="productDetail.published" name="publish" #published="ngModel">
-            </div>
-         </div> 
+         </div>      
          <div class="form-group row">
               <label for="productTImage" class="col-sm-3 col-form-label">Image 1:</label>
               <div class="col-sm-9">
@@ -220,6 +199,25 @@
                     [(ngModel)]="productDetail.fImage" name="fImage" #fImage="ngModel">
                 </div>
              </div> 
+             <div class="form-group row lblRgtMar">
+                <div class="col-sm-12">
+              <div class="form-check form-check-inline">
+                 <label for="productAvailable" class="form-check-label">Buyable:</label>
+                 <input type="checkbox" id="productBuyable" class="form-check-label"
+                 [(ngModel)]="productDetail.buyable" name="buyable" #buyable="ngModel">
+              </div>
+              <div class="form-check form-check-inline">
+                 <label for="productAvailable" class="form-check-label">Available:</label>
+                 <input type="checkbox" id="productAvailable" class="form-check-label"
+                 [(ngModel)]="productDetail.available" name="available" #available="ngModel">
+             </div>
+             <div class="form-check form-check-inline">
+                 <label for="productPublish" class="form-check-label">Publish:</label>
+                 <input type="checkbox" id="productPublish" class="form-check-label"
+                 [(ngModel)]="productDetail.published" name="publish" #published="ngModel">
+             </div>
+             </div>
+             </div>
                  
         </div>
         <div class="modal-footer">
