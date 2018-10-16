@@ -157,7 +157,7 @@ export class ProductsPriceComponent implements OnInit {
           console.log(error);
           this.alertService.error(error);
     });
-
+    document.getElementById('addStoreProductClose').click();
   }
 
   resetForm() {

@@ -191,6 +191,7 @@ export class ContractListComponent implements OnInit {
         this.contract.endDate = '';
       }
     );
+    document.getElementById('addNewContractModalClose').click();
   }
 
   openContractDetail() {
@@ -313,12 +314,12 @@ export class ContractListComponent implements OnInit {
     .subscribe(
       data => {
         this.alertService.success('Item Added');
-        document.getElementById('addContractItemClose').click();
       },
       error => {
         this.alertService.error(error);
       }
     );
+    document.getElementById('addContractItemClose').click();
   }
 
   getContractId(value: any) {
