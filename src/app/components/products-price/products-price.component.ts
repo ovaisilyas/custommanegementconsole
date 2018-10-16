@@ -26,6 +26,7 @@ export class ProductsPriceComponent implements OnInit {
   itemContractList: ItemContractListModel[];
   productDetail = new ProductModel('', '', '', '', '', '', '', false, '', false, false, '', '', '');
   loading = true;
+  showPagination = false;
   selectedId = '';
   IdKey = 0;
   searchTerm = '';
@@ -88,6 +89,12 @@ export class ProductsPriceComponent implements OnInit {
 
     // get current page of items
     this.pagedItems = this.productList.slice(this.pager.startIndex, this.pager.endIndex + 1);
+
+    if (this.productList.length > 20) {
+      this.showPagination = true;
+    } else {
+      this.showPagination = false;
+    }
 }
 
   getCategory() {

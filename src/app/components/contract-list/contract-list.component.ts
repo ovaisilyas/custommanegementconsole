@@ -42,6 +42,7 @@ export class ContractListComponent implements OnInit {
   selectedItemNumber = '';
   selectedItemPrice = '';
   showContractDetailTable = false;
+  showPagination = false;
   IdKey = 0;
   loading = true;
   showEdit = Number;
@@ -127,6 +128,12 @@ export class ContractListComponent implements OnInit {
 
     // get current page of items
     this.pagedItems = this.contractDetail.slice(this.pager.startIndex, this.pager.endIndex + 1);
+
+    if (this.contractDetail.length > 20) {
+      this.showPagination = true;
+    } else {
+      this.showPagination = false;
+    }
   }
 
   showEditPrice(index, price) {

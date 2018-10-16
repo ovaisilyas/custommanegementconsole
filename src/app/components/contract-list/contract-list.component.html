@@ -82,7 +82,7 @@
                 </tbody>
               </table>
                <!-- Pagination -->
-               <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+               <ul *ngIf="showPagination" class="pagination">
                   <li [ngClass]="{disabled:pager.currentPage === 1}" class="page-item">
                     <a (click)="setPage(1)" class="page-link">First</a>
                    </li>
