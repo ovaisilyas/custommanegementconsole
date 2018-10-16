@@ -120,7 +120,7 @@
         <form #addContractForm="ngForm" novalidate>
         <div class="modal-body">
          <div class="form-group row">
-          <label for="accountName" class="col-sm-3 col-form-label">Account Name:</label>
+          <label for="accountName" class="col-sm-3 col-form-label">Account Name: <span class="text-danger">*</span></label>
             <div class="col-sm-9">
 
                   <input type="text" list="customerDatalist" *ngIf="!loading" class="form-control" required
@@ -136,7 +136,7 @@
          </div>
   
          <div class="form-group row">
-          <label for="contractName" class="col-sm-3 col-form-label">Contract Name:</label>
+          <label for="contractName" class="col-sm-3 col-form-label">Contract Name: <span class="text-danger">*</span></label>
             <div class="col-sm-9">
                 <input type="text" id="contractName" class="form-control" required
                 [(ngModel)]="contract.contractName" name="contractName" #contractName="ngModel"
@@ -147,7 +147,7 @@
             </div>
          </div>
           <div class="form-group row">
-          <label for="chargeBy" class="col-sm-3 col-form-label">Charges by:</label>
+          <label for="chargeBy" class="col-sm-3 col-form-label">Charges by: <span class="text-danger">*</span></label>
             <div class="col-sm-9">
                 <input type="text" id="chargeBy" class="form-control" required
                 [(ngModel)]="contract.chargeBy" name="chargeBy" #chargeBy="ngModel"
@@ -200,7 +200,7 @@
             </div>
          </div> 
            <div class="form-group row">
-              <label for="shipBy" class="col-sm-3 col-form-label">Ship By:</label>
+              <label for="shipBy" class="col-sm-3 col-form-label">Ship By: <span class="text-danger">*</span></label>
                 <div class="col-sm-9">
                     <input type="text" id="shipBy" class="form-control" required
                     [(ngModel)]="contract.shipBy" name="shipBy" #shipBy="ngModel"
@@ -219,7 +219,7 @@
                   </div>
                </div> 
                <div class="form-group row" *ngIf="showWholeCatalog">
-                  <label for="includeWholeCatalogAdjustment" class="col-sm-3 col-form-label">Include Whole Catalog Adjustment:</label>
+                  <label for="includeWholeCatalogAdjustment" class="col-sm-3 col-form-label">Include Whole Catalog Adjustment: <span class="text-danger">*</span></label>
                     <div class="col-sm-9">
                         <input type="text" id="includeWholeCatalogAdjustment" class="form-control"
                         [(ngModel)]="contract.includeWholeCatalogAdjustment" name="includeWholeCatalogAdjustment" #includeWholeCatalogAdjustment="ngModel"
@@ -227,7 +227,7 @@
                     </div>
                  </div> 
                  <div class="form-group row" *ngIf="showWholeCatalog">
-                    <label for="includeWholeCatalogAdjType" class="col-sm-3 col-form-label">Include Whole Catalog Adjustment Type:</label>
+                    <label for="includeWholeCatalogAdjType" class="col-sm-3 col-form-label">Include Whole Catalog Adjustment Type: <span class="text-danger">*</span></label>
                       <div class="col-sm-9">
                           <input type="text" id="includeWholeCatalogAdjType" class="form-control"
                           [(ngModel)]="contract.includeWholeCatalogAdjType" name="includeWholeCatalogAdjType" #includeWholeCatalogAdjType="ngModel"
@@ -235,7 +235,7 @@
                       </div>
                    </div> 
                <div class="form-group row">
-                  <label for="shortDescription" class="col-sm-3 col-form-label">Short Description:</label>
+                  <label for="shortDescription" class="col-sm-3 col-form-label">Short Description: <span class="text-danger">*</span></label>
                     <div class="col-sm-9">
                         <input type="text" id="shortDescription" class="form-control" required [(ngModel)]="contract.shortDescription" name="shortDescription" #shortDescription="ngModel"
                         [ngClass]="{ 'is-invalid': addContractForm.submitted && shortDescription.invalid }">
@@ -287,7 +287,7 @@
         <div class="modal-body">
           <form>
            <div class="form-group row">
-          <label for="inputPassword" class="col-sm-3 col-form-label">Search Customers</label>
+          <label for="inputPassword" class="col-sm-3 col-form-label">Search Customers <span class="text-danger">*</span></label>
             <div class="col-sm-9">
                 <input type="text" list="customerDatalist" *ngIf="!loading" class="form-control" required
                         [(ngModel)]="selectedId" name="selectedId" (change)="getItemCustomerAccountId(selectedId)" placeholder="Select Customer">
@@ -365,7 +365,7 @@
           <form #addItemForm='ngForm'>
           <div class="modal-body">
            <div class="form-group row">
-            <label for="inputPassword" class="col-sm-3 col-form-label">Contract Name:</label>
+            <label for="inputPassword" class="col-sm-3 col-form-label">Contract Name: <span class="text-danger">*</span></label>
               <div class="col-sm-9">
                   <input type="text" list="contractDatalist" disabled class="form-control" [(ngModel)]="selectedContractName" name="selectedID" placeholder="Select Contract" required >
                   <input type="hidden" [value]="selectedContractID" [(ngModel)]="selectedContractID" name="contractId" #contractIdtext="ngModel" />
@@ -373,7 +373,7 @@
            </div>
     
            <div class="form-group row">
-            <label for="productNumber" class="col-sm-3 col-form-label">Product Code:</label>
+            <label for="productNumber" class="col-sm-3 col-form-label">Product Code: <span class="text-danger">*</span></label>
               <div class="col-sm-9">
                   <input type="text" class="form-control searchIcon" id="searchProductTerm" [(ngModel)]="contractItem.partNumber" name="partnumber" #partnumber="ngModel" #searchTerm (keyup.enter)="getProductList(searchTerm.value)"
                        appAutofocus placeholder="Enter Code or Description and Press Enter" required>
@@ -386,7 +386,7 @@
               </div>
            </div>
             <div class="form-group row">
-            <label for="inputPassword" class="col-sm-3 col-form-label">Price:</label>
+            <label for="inputPassword" class="col-sm-3 col-form-label">Price: <span class="text-danger">*</span></label>
               <div class="col-sm-9">
                   <input type="text" id="productPrice" class="form-control" required
                   [(ngModel)]="contractItem.itemFixedPrice" name="productPrice" #productPrice="ngModel"
