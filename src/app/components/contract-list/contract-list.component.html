@@ -76,7 +76,7 @@
                     </td>
                     <td>
                       <a (click)="showEditPrice(i,item.price)">Edit Price</a> 
-                      <a role="button" data-toggle="modal" data-target="#addCustomers" (click)="getCustomerforItem(item.partnumber,selectedContractID);">Customers</a>
+                      <a role="button" data-toggle="modal" data-target="#addCustomers" (click)="getCustomerforItem(item.partnumber, item.price);">Customers</a>
                       <a role="button" data-toggle="modal" data-target="#deleteCustomers" (click)="deletePartnumber = item.partnumber">Delete</a></td>
                   </tr>
                 </tbody>
@@ -122,9 +122,13 @@
          <div class="form-group row">
           <label for="accountName" class="col-sm-3 col-form-label">Account Name:</label>
             <div class="col-sm-9">
-                <input type="text" id="accountName" class="form-control" required
-                  [(ngModel)]="contract.accountName" name="accountName" #accountName="ngModel"
-                  [ngClass]="{ 'is-invalid': addContractForm.submitted && accountName.invalid }">
+
+                  <input type="text" list="customerDatalist" *ngIf="!loading" class="form-control" required
+                  [(ngModel)]="contract.accountName" name="accountName" placeholder="Select Account">
+                  <datalist id="customerDatalist">
+                    <option *ngFor="let item of ItemCustomerList" [value]="item.customerName">
+                  </datalist>
+
                   <div *ngIf="addContractForm.submitted && accountName.invalid" class="invalid-feedback">
                       <div *ngIf="!!accountName.errors.required">Account Name is required</div>
                   </div>
@@ -159,11 +163,8 @@
                 <form class="form-inline">
                     <div class="form-group">
                       <div class="input-group">
-                        <input class="form-control" placeholder="yyyy-mm-dd" required pattern="\d{1,2}/\d{1,2}/\d{4}" title="Enter a date in this format YYYY-MM-DD"
-                               name="startDate" [(ngModel)]="contract.startDate" ngbDatepicker #startDate="ngbDatepicker">
-                        <div class="input-group-append">
-                          <button class="btn btn-outline-secondary calendar" (click)="startDate.toggle()" type="button"></button>
-                        </div>
+                        <input class="form-control startDate" placeholder="yyyy-mm-dd" type="date"
+                               name="startDate" [(ngModel)]="contract.startDate" #startDate="ngModel">
                       </div>
                     </div>
                   </form>
@@ -173,11 +174,8 @@
                 <form class="form-inline">
                     <div class="form-group">
                       <div class="input-group">
-                        <input class="form-control" placeholder="yyyy-mm-dd" required pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])/(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])/(?:30))|(?:(?:0[13578]|1[02])-31))" title="Enter a date in this format YYYY-MM-DD"
-                               name="endDate" [(ngModel)]="contract.endDate" ngbDatepicker #endDate="ngbDatepicker">
-                        <div class="input-group-append">
-                          <button class="btn btn-outline-secondary calendar" (click)="endDate.toggle()" type="button"></button>
-                        </div>
+                        <input class="form-control endDate" placeholder="yyyy-mm-dd" type="date"
+                        name="endDate" [(ngModel)]="contract.endDate" #endDate="ngModel">
                       </div>
                     </div>
                   </form>
@@ -196,7 +194,7 @@
           <div class="form-group row">
           <label for="minOrdAmount" class="col-sm-3 col-form-label">Min Order Amount:</label>
             <div class="col-sm-9">
-                <input type="number" id="minOrdAmount" class="form-control"
+                <input type="text" id="minOrdAmount" class="form-control"
                 [(ngModel)]="contract.minOrdAmnt" name="minOrdAmnt" #minOrdAmnt="ngModel"
                 [ngClass]="{ 'is-invalid': addContractForm.submitted && minOrdAmnt.invalid }">
             </div>
@@ -215,12 +213,12 @@
              <div class="form-group row">
                 <label for="includeWholeCatalog" class="col-sm-3 col-form-label">Include Whole Catalog:</label>
                   <div class="col-sm-9">
-                      <input type="checkbox" id="includeWholeCatalog" class="form-check-label"
-                      [(ngModel)]="contract.includeWholeCatalog" name="includeWholeCatalog" #includeWholeCatalog="ngModel"
+                      <input type="checkbox" id="includeWholeCatalog" class="form-check-label" (change)="switchWholeCatalog($event)"
+                      name="includeWholeCatalog"
                       [ngClass]="{ 'is-invalid': addContractForm.submitted && includeWholeCatalog.invalid }">
                   </div>
                </div> 
-               <div class="form-group row" *ngIf="contract.includeWholeCatalog == true">
+               <div class="form-group row" *ngIf="showWholeCatalog">
                   <label for="includeWholeCatalogAdjustment" class="col-sm-3 col-form-label">Include Whole Catalog Adjustment:</label>
                     <div class="col-sm-9">
                         <input type="text" id="includeWholeCatalogAdjustment" class="form-control"
@@ -228,7 +226,7 @@
                         [ngClass]="{ 'is-invalid': addContractForm.submitted && includeWholeCatalogAdjustment.invalid }">
                     </div>
                  </div> 
-                 <div class="form-group row" *ngIf="contract.includeWholeCatalog == true">
+                 <div class="form-group row" *ngIf="showWholeCatalog">
                     <label for="includeWholeCatalogAdjType" class="col-sm-3 col-form-label">Include Whole Catalog Adjustment Type:</label>
                       <div class="col-sm-9">
                           <input type="text" id="includeWholeCatalogAdjType" class="form-control"
@@ -291,10 +289,10 @@
            <div class="form-group row">
           <label for="inputPassword" class="col-sm-3 col-form-label">Search Customers</label>
             <div class="col-sm-9">
-                <input type="text" list="customerDatalist" *ngIf="!userDetail.userId && !loading" class="form-control" required
-                        [(ngModel)]="selectedId" name="selectedId" (change)="getOrgEntryId(selectedId)" placeholder="Select Customer">
+                <input type="text" list="customerDatalist" *ngIf="!loading" class="form-control" required
+                        [(ngModel)]="selectedId" name="selectedId" (change)="getItemCustomerAccountId(selectedId)" placeholder="Select Customer">
                         <datalist id="customerDatalist">
-                          <option *ngFor="let item of customerList" [value]="item.orgEntityName">
+                          <option *ngFor="let item of ItemCustomerList" [value]="item.customerName">
                         </datalist>
                         <input type="hidden" [value]="userDetail.parentMemberId" [(ngModel)]="userDetail.parentMemberId" name="parentMemberId" #parentMemberIdtext="ngModel" />
             </div>
@@ -311,9 +309,9 @@
                           <div class="row">
                             <div *ngFor="let item of selectedCustomer">
                                 <div class="alert alert-secondary alert-dismissible fade show" role="alert">
-                                    {{item.orgEntityName}}
-                                    <input hidden [value]="item.orgEntityId" />
-                                    <button type="button" class="close" aria-label="Close" (click)="removeSelectedCustomers(item.orgEntityId)">
+                                    {{item.customerName}}
+                                    <input hidden [value]="item.accountId" />
+                                    <button type="button" class="close" aria-label="Close" (click)="removeSelectedCustomers(item.accountId)">
                                       <span aria-hidden="true">&times;</span>
                                     </button>
                                   </div>

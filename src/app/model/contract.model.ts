@@ -8,14 +8,14 @@ export class ContractModel {
     public minOrdAmnt: string;
     public priceLevel: string;
     public shipBy: string;
-    public includeWholeCatalog: boolean;
+    public includeWholeCatalog: string;
     public includeWholeCatalogAdjustment: string;
     public includeWholeCatalogAdjType: string;
     public shortDescription: string;
     public contractRefrence: string;
 
     constructor(accountName: string, contractName: string, chargeBy: string, endDate: string, startDate: string, longDescription: string,
-        minOrdAmnt: string, priceLevel: string, shipBy: string, includeWholeCatalog: boolean, includeWholeCatalogAdjustment: string,
+        minOrdAmnt: string, priceLevel: string, shipBy: string, includeWholeCatalog: string, includeWholeCatalogAdjustment: string,
         includeWholeCatalogAdjType: string, shortDescription: string, contractRefrence: string) {
       this.accountName = accountName;
       this.contractName = contractName;

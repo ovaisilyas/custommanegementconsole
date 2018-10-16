@@ -30,7 +30,7 @@ export class ContractListComponent implements OnInit {
   contractList: ContractListModel[];
   contractDetail: ContractDetailModel[];
   contractItem = new ContractItemModel('', '', '', '', 0);
-  contract = new ContractModel('', '', '', '', '', '', '', '', '', false, '', '', '', '');
+  contract = new ContractModel('', '', '', '', '', '', '', '', '', 'no', '', '', '', '');
   submitted = false;
   userDetail = new UserDetailModel('', '', '', '', '', '', '', '', '', '', '', 'AU'
     , true, false, false, false, '');
@@ -39,17 +39,21 @@ export class ContractListComponent implements OnInit {
   selectedContractID = '';
   selectedId = '';
   selectedContractName = '';
+  selectedItemNumber = '';
+  selectedItemPrice = '';
   showContractDetailTable = false;
   IdKey = 0;
   loading = true;
   showEdit = Number;
+  showWholeCatalog = false;
   newItemPrice = 0;
   deletePartnumber = '';
+  ItemCustomerList = [];
   selectedCustomer = [];
 
   constructor(
     private searchService: SearchService,
-    private formBuilder: FormBuilder,
+    private form: FormBuilder,
     private usersService: UsersService,
     private pagerService: PagerService,
     private contractService: ContractService,
@@ -68,6 +72,7 @@ export class ContractListComponent implements OnInit {
 
   ngOnInit() {
     this.getContractList();
+    this.getCustomerListforContract();
   }
 
   onEnter(value: string) {
@@ -149,14 +154,34 @@ export class ContractListComponent implements OnInit {
         });
   }
 
+  switchWholeCatalog(event) {
+    if ( event.target.checked ) {
+      this.showWholeCatalog = true;
+      this.contract.includeWholeCatalog = 'yes';
+    } else {
+      this.showWholeCatalog = false;
+      this.contract.includeWholeCatalog = 'no';
+      this.contract.includeWholeCatalogAdjType = '';
+      this.contract.includeWholeCatalogAdjustment = '';
+    }
+  }
+
   addNewContract() {
+    const currentTime = new Date();
+    if (this.contract.startDate !== '') { this.contract.startDate = this.contract.startDate + 'T' + currentTime.getHours() + ':' + currentTime.getMinutes() + ':' + currentTime.getSeconds(); } else { this.contract.startDate = this.contract.startDate; }
+    if (this.contract.endDate !== '') { this.contract.endDate = this.contract.endDate + 'T' + currentTime.getHours() + ':' + currentTime.getMinutes() + ':' + currentTime.getSeconds(); } else { this.contract.endDate = this.contract.endDate; }
+
     this.contractService.addNewContract(this.contract)
     .subscribe(
       data => {
         this.alertService.success('New Contract Created');
+        this.contract.startDate = '';
+        this.contract.endDate = '';
       },
       error => {
         this.alertService.error(error);
+        this.contract.startDate = '';
+        this.contract.endDate = '';
       }
     );
   }
@@ -179,7 +204,6 @@ export class ContractListComponent implements OnInit {
           // initialize to page 1
           this.setPage(1);
           this.showContractDetailTable = true;
-          this.getCustomers();
         },
         error => {
           console.log(error);
@@ -215,11 +239,38 @@ export class ContractListComponent implements OnInit {
     this.showEdit = null;
   }
 
-  getCustomerforItem(partNumber: string, contractId: string) {
-    this.contractService.getCustomersforItem(partNumber, contractId)
+  getCustomerforItem(code: any, price: any) {
+    this.selectedItemNumber = code;
+    this.selectedItemPrice = price;
+    /* this.contractService.getCustomersforItem()
+    .pipe(map(
+      (list) => {
+        const customerList = list['accountCustomerList'];
+        return customerList;
+      }
+    ))
     .subscribe(
       data => {
-        this.selectedCustomer = data;
+        this.ItemCustomerList = data;
+      },
+      error => {
+        this.alertService.error(error);
+      }
+
+    ); */
+  }
+
+  getCustomerListforContract() {
+    this.contractService.getCustomersforItem()
+    .pipe(map(
+      (list) => {
+        const customerList = list['accountCustomerList'];
+        return customerList;
+      }
+    ))
+    .subscribe(
+      data => {
+        this.ItemCustomerList = data;
       },
       error => {
         this.alertService.error(error);
@@ -306,21 +357,24 @@ export class ContractListComponent implements OnInit {
       document.getElementById('prodListClose').click();
     }
 
-    getOrgEntryId(value: any) {
-      this.IdKey = this.customerList.findIndex(function(item, i) {
-        return item.orgEntityName === value;
+    getItemCustomerAccountId(value: any) {
+      this.IdKey = this.ItemCustomerList.findIndex(function(item, i) {
+        return item.customerName === value;
       });
 
       if (this.IdKey !== -1) {
-        this.userDetail.parentMemberId = this.customerList[this.IdKey].orgEntityId;
+        this.userDetail.parentMemberId = this.ItemCustomerList[this.IdKey].accountId;
         const parentMemberId = this.userDetail.parentMemberId;
         const isDupicate = this.selectedCustomer.findIndex(function(item, i) {
-          return item.orgEntityId === parentMemberId;
+          return item.accountId === parentMemberId;
         });
         if (isDupicate === -1) {
           const list = {
-            'orgEntityName' : this.selectedId,
-            'orgEntityId' : this.userDetail.parentMemberId,
+            'customerName' : this.selectedId,
+            'accountId' : this.userDetail.parentMemberId,
+            'partNumber' : this.selectedItemNumber,
+            'flag' : 'additem',
+            'itemFixedPrice' : this.selectedItemPrice,
           };
           this.selectedCustomer.push(list);
         }
@@ -344,12 +398,12 @@ export class ContractListComponent implements OnInit {
 
     removeSelectedCustomers(value: any) {
       this.selectedCustomer = this.selectedCustomer.filter(function( obj ) {
-        return obj.orgEntityId !== value;
+        return obj.accountId !== value;
       });
     }
 
     resetForm() {
-      this.contract = new ContractModel('', '', '', '', '', '', '', '', '', false, '', '', '', '');
+      this.contract = new ContractModel('', '', '', '', '', '', '', '', '', 'no', '', '', '', '');
     }
 
 }

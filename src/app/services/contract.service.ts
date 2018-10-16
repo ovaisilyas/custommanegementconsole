@@ -49,9 +49,9 @@ import { ContractModel } from '../model/contract.model';
       this.httpOptions);
     }
 
-    getCustomersforItem(partnumber: any, contractid: any) {
-      console.log(partnumber + '----' + contractid);
-      return this.httpClient.post<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmccontracts/getCustomerforItem/?part=${partnumber}&contractid=${contractid}`,
+    getCustomersforItem() {
+      console.log('Get customer list for item');
+      return this.httpClient.get<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcaccount/customerlist`,
       this.httpOptions);
     }
 
@@ -75,7 +75,7 @@ import { ContractModel } from '../model/contract.model';
 
     saveSelectedCustomers(selectCustomer: any) {
       console.log(selectCustomer);
-      return this.httpClient.post<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmccontracts/saveCustomers`, selectCustomer,
+      return this.httpClient.post<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcaccount/addcontractitem`, selectCustomer,
       this.httpOptions);
     }
 
