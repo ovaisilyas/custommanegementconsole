@@ -25,7 +25,8 @@ import { ContractModel } from '../model/contract.model';
         'userId': this.userId,
         'WCToken': this.WCToken,
         'WCTrustedToken': this.WCTrustedToken,
-        'personalizationID': this.personalizationID
+        'personalizationID': this.personalizationID,
+        'storeId': this.storeId
       })
     };
 
@@ -34,6 +35,14 @@ import { ContractModel } from '../model/contract.model';
       console.log(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmccontract/activeContractList`);
 
       return this.httpClient.get<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmccontract/activeContractList`,
+        this.httpOptions);
+    }
+
+    getBaseContract() {
+      console.log('To get Base contract list');
+      console.log(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmccontracts/getBaseContract`);
+
+      return this.httpClient.get<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmccontracts/getBaseContract`,
         this.httpOptions);
     }
 

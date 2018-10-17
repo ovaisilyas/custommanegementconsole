@@ -20,8 +20,8 @@
               </div>
   
               <div class="col-4 col-sm-3">
-                <input type="text" [disabled]="showContractDetailTable === false" class="form-control searchIcon" id="searchTerm" #searchTerm (keyup.enter)="onEnter(searchTerm.value)"
-                       appAutofocus placeholder="Search Code or Description">
+                <input type="text" [disabled]="showContractDetailTable === false" class="form-control searchIcon" id="searchTerm" #searchTerm (keyup.enter)="searchOnEnter(searchTerm.value)"
+                  placeholder="Search Code or Description">
               </div>
               
               <div class="col text-right">
@@ -29,7 +29,7 @@
                     <button type="button" class="btn btn-PrimaryModal btn-default" data-toggle="modal" data-target="#addNewContract" (click)="resetForm()">New Contract</button>
                     <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#addCustomer">Download to Excel</button>
                     <button type="button" class="btn btn-PrimaryModal btn-default" routerLink="/product-prices" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">View Pricing</button>
-                    <button type="button" *ngIf="selectedContractID !== ''" class="btn btn-primary" data-toggle="modal" data-target="#addNewItem">Add Item</button>
+                    <button type="button" *ngIf="selectedContractID !== ''" class="btn btn-primary" data-toggle="modal" data-target="#addNewItem" (click)="resetForm()">Add Item</button>
                   </div>
                 </div>
             </div>
@@ -255,6 +255,7 @@
                       <div class="col-sm-9">
                           <select id="priceLevel" class="form-control" [disabled]="contract.contractReference != '' && contract.contractReference != null" [required]="!contract.contractReference" [(ngModel)]="contract.priceLevel" name="priceLevel" #priceLevel="ngModel"
                           [ngClass]="{ 'is-invalid': addContractForm.submitted && priceLevel.invalid }">
+                            <option value="">Select Price Level</option>
                             <option (value)="1">1</option>
                             <option (value)="2">2</option>
                             <option (value)="s1">S1</option>
@@ -270,10 +271,8 @@
                       <div class="col-sm-9">
                           <select id="contractReference" class="form-control" [disabled]="contract.priceLevel != '' && contract.priceLevel != null" [required]="!contract.priceLevel" [(ngModel)]="contract.contractReference" name="contractReference" #contractReference="ngModel"
                           [ngClass]="{ 'is-invalid': addContractForm.submitted && contractReference.invalid }">
-                            <option (value)="1">Contract 1</option>
-                            <option (value)="2">Contract 2</option>
-                            <option (value)="3">Contract 3</option>
-                            <option (value)="4">Contract 4</option>
+                            <option value="">Select Contract Reference</option>
+                            <option *ngFor="let item of baseContractList" (value)="item">{{item}}</option>
                           </select>
                       </div>
                    </div> 
@@ -389,7 +388,7 @@
            <div class="form-group row">
             <label for="productNumber" class="col-sm-3 col-form-label">Product Code: <span class="text-danger">*</span></label>
               <div class="col-sm-9">
-                  <input type="text" class="form-control searchIcon" id="searchProductTerm" [(ngModel)]="contractItem.partNumber" name="partnumber" #partnumber="ngModel" #searchTerm (keyup.enter)="getProductList(searchTerm.value)"
+                  <input type="text" class="form-control searchIcon" id="searchProductTerm" [(ngModel)]="contractItem.partNumber" name="partnumber" #partnumber="ngModel" #searchProductTerm (keyup.enter)="getProductList(searchProductTerm.value)"
                        appAutofocus placeholder="Enter Code or Description and Press Enter" required>
                        <img style="display:inline;" *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
                   <button type="button" style="display:none;" id="openProductListButton" data-toggle="modal" data-target="#productListModal">productListModal</button>

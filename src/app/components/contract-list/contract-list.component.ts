@@ -30,7 +30,7 @@ export class ContractListComponent implements OnInit {
   contractList: ContractListModel[];
   contractDetail: ContractDetailModel[];
   today = new Date();
-  todayDate = this.today.getMonth() + '-' + this.today.getDate() + '-' + this.today.getFullYear() ;
+  todayDate = (this.today.getMonth() + 1) + '-' + this.today.getDate() + '-' + this.today.getFullYear() ;
   contractItem = new ContractItemModel('', '', '', '', 0);
   contract = new ContractModel('', '', 'seller', '', this.todayDate, '', '', '', '', 'yes', '', '', '', '');
   submitted = false;
@@ -38,6 +38,7 @@ export class ContractListComponent implements OnInit {
     , true, false, false, false, '');
 
   searchTerm = '';
+  searchProductTerm = '';
   selectedContractID = '';
   selectedId = '';
   selectedContractName = '';
@@ -52,6 +53,7 @@ export class ContractListComponent implements OnInit {
   newItemPrice = 0;
   deletePartnumber = '';
   ItemCustomerList = [];
+  baseContractList = [];
   selectedCustomer = [];
 
   constructor(
@@ -76,33 +78,41 @@ export class ContractListComponent implements OnInit {
   ngOnInit() {
     this.getContractList();
     this.getCustomerListforContract();
+    this.getBaseContracts();
   }
 
-  onEnter(value: string) {
-    /* this.spinner.show();
+  searchOnEnter(value: string) {
+    this.spinner.show();
     this.searchTerm = value;
-    this.searchService.searchProductOnContract(value, this.selectedContractID)
-      .pipe(map(
-        (product) => {
-          const searchDetails = product['SearchDetails'];
-          const searchList = searchDetails['SearchList'];
-          return searchList;
-        }
-      ))
-      .subscribe(
-        data => {
-          this.contractDetail = data;
-          this.alertService.clear();
-          this.spinner.hide();
-        },
-        error => {
-          console.log(error);
-          this.alertService.error(error);
-          if (this.contractDetail !== undefined) {
-            this.contractDetail.length = 0;
+    if (value !== '') {
+      this.searchService.searchProductOnContract(value, this.selectedContractID)
+        .pipe(map(
+          (product) => {
+            const searchDetails = product['SearchDetails'];
+            const searchList = searchDetails['SearchList'];
+            return searchList;
           }
-          this.spinner.hide();
-        }); */
+        ))
+        .subscribe(
+          data => {
+            this.contractDetail = data;
+            this.alertService.clear();
+            this.spinner.hide();
+            // initialize to page 1
+            this.setPage(1);
+            this.showContractDetailTable = true;
+          },
+          error => {
+            console.log(error);
+            this.alertService.error(error);
+            if (this.contractDetail !== undefined) {
+              this.contractDetail.length = 0;
+            }
+            this.spinner.hide();
+          });
+        } else {
+          this.openContractDetail();
+        }
   }
 
   getCustomers() {
@@ -163,6 +173,24 @@ export class ContractListComponent implements OnInit {
         });
   }
 
+  getBaseContracts() {
+    this.contractService.getBaseContract()
+    .pipe(map(
+      (baseContract) => {
+        const baseContractList = baseContract['BaseContracts'];
+        return baseContractList;
+      }
+    ))
+    .subscribe (
+      data => {
+        this.baseContractList = data;
+      },
+      error => {
+        console.log(error);
+      });
+  }
+
+
   switchWholeCatalog(event) {
     if ( event.target.checked ) {
       this.showWholeCatalog = true;
@@ -211,6 +239,7 @@ export class ContractListComponent implements OnInit {
         data => {
           this.contractDetail = data;
           this.alertService.clear();
+          this.searchTerm = '';
           this.spinner.hide();
           // initialize to page 1
           this.setPage(1);
@@ -237,7 +266,11 @@ export class ContractListComponent implements OnInit {
       data => {
         this.alertService.success('Price updated successfully');
         this.showEdit = null;
-        this.openContractDetail();
+        if (this.searchTerm === '') {
+          this.openContractDetail();
+        } else {
+          this.searchOnEnter(this.searchTerm);
+        }
       },
       error => {
         this.alertService.error(error);
@@ -301,7 +334,11 @@ export class ContractListComponent implements OnInit {
     .subscribe(
       data => {
         this.alertService.success('Item Deleted successfully');
-        this.openContractDetail();
+        if (this.searchTerm === '') {
+          this.openContractDetail();
+        } else {
+          this.searchOnEnter(this.searchTerm);
+        }
       },
       error => {
         this.alertService.error(error);
@@ -338,7 +375,7 @@ export class ContractListComponent implements OnInit {
 
   getProductList(value: string) {
       this.loading = true;
-      this.searchTerm = value;
+      this.searchProductTerm = value;
       this.searchService.searchProduct(value)
         .pipe(map(
           (product) => {
@@ -415,6 +452,7 @@ export class ContractListComponent implements OnInit {
 
     resetForm() {
       this.contract = new ContractModel('', '', 'seller', '', this.todayDate, '', '', '', '', 'yes', '', '', '', '');
+      this.contractItem = new ContractItemModel('', '', '', '', 0);
     }
 
 }
