@@ -149,9 +149,11 @@
           <div class="form-group row">
           <label for="chargeBy" class="col-sm-3 col-form-label">Charges by: <span class="text-danger">*</span></label>
             <div class="col-sm-9">
-                <input type="text" id="chargeBy" class="form-control" required
-                [(ngModel)]="contract.chargeBy" name="chargeBy" #chargeBy="ngModel"
+                <select id="chargeBy" class="form-control" required [(ngModel)]="contract.chargeBy" name="chargeBy" #chargeBy="ngModel"
                 [ngClass]="{ 'is-invalid': addContractForm.submitted && chargeBy.invalid }">
+                  <option (value)="seller">Seller</option>
+                  <option (value)="buyer">Buyer</option>
+                </select>
                 <div *ngIf="addContractForm.submitted && chargeBy.invalid" class="invalid-feedback">
                     <div *ngIf="!!chargeBy.errors.required">Charges By is required</div>
                 </div>
@@ -163,7 +165,7 @@
                 <form class="form-inline">
                     <div class="form-group">
                       <div class="input-group">
-                        <input class="form-control startDate" placeholder="yyyy-mm-dd" type="date"
+                        <input class="form-control startDate" placeholder="MM-DD-YYYY" type="text"
                                name="startDate" [(ngModel)]="contract.startDate" #startDate="ngModel">
                       </div>
                     </div>
@@ -174,14 +176,23 @@
                 <form class="form-inline">
                     <div class="form-group">
                       <div class="input-group">
-                        <input class="form-control endDate" placeholder="yyyy-mm-dd" type="date"
+                        <input class="form-control endDate" placeholder="No expiry" type="text"
                         name="endDate" [(ngModel)]="contract.endDate" #endDate="ngModel">
                       </div>
                     </div>
                   </form>
             </div>
          </div>
-  
+         <div class="form-group row">
+            <label for="shortDescription" class="col-sm-3 col-form-label">Short Description: <span class="text-danger">*</span></label>
+              <div class="col-sm-9">
+                  <input type="text" id="shortDescription" class="form-control" required [(ngModel)]="contract.shortDescription" name="shortDescription" #shortDescription="ngModel"
+                  [ngClass]="{ 'is-invalid': addContractForm.submitted && shortDescription.invalid }">
+                  <div *ngIf="addContractForm.submitted && shortDescription.invalid" class="invalid-feedback">
+                      <div *ngIf="!!shortDescription.errors.required">Short Description is required</div>
+                  </div>
+              </div>
+           </div> 
           <div class="form-group row">
           <label for="longDescription" class="col-sm-3 col-form-label">Long Description:</label>
             <div class="col-sm-9">
@@ -202,9 +213,11 @@
            <div class="form-group row">
               <label for="shipBy" class="col-sm-3 col-form-label">Ship By: <span class="text-danger">*</span></label>
                 <div class="col-sm-9">
-                    <input type="text" id="shipBy" class="form-control" required
-                    [(ngModel)]="contract.shipBy" name="shipBy" #shipBy="ngModel"
+                    <select id="shipBy" class="form-control" required [(ngModel)]="contract.shipBy" name="shipBy" #shipBy="ngModel"
                     [ngClass]="{ 'is-invalid': addContractForm.submitted && shipBy.invalid }">
+                      <option (value)="courier">Courier</option>
+                      <option (value)="pickup">Pick Up</option>
+                    </select>
                     <div *ngIf="addContractForm.submitted && shipBy.invalid" class="invalid-feedback">
                         <div *ngIf="!!shipBy.errors.required">Ship by is required</div>
                     </div>
@@ -214,10 +227,20 @@
                 <label for="includeWholeCatalog" class="col-sm-3 col-form-label">Include Whole Catalog:</label>
                   <div class="col-sm-9">
                       <input type="checkbox" id="includeWholeCatalog" class="form-check-label" (change)="switchWholeCatalog($event)"
-                      name="includeWholeCatalog"
+                      name="includeWholeCatalog" checked
                       [ngClass]="{ 'is-invalid': addContractForm.submitted && includeWholeCatalog.invalid }">
                   </div>
                </div> 
+               <div class="form-group row" *ngIf="showWholeCatalog">
+                  <label for="includeWholeCatalogAdjType" class="col-sm-3 col-form-label">Include Whole Catalog Adjustment Type: <span class="text-danger">*</span></label>
+                    <div class="col-sm-9">
+                        <select id="includeWholeCatalogAdjType" class="form-control" [(ngModel)]="contract.includeWholeCatalogAdjType" name="includeWholeCatalogAdjType" #includeWholeCatalogAdjType="ngModel"
+                        [ngClass]="{ 'is-invalid': addContractForm.submitted && includeWholeCatalogAdjType.invalid }">
+                          <option (value)="m">Mark Up</option>
+                          <option (value)="d">Mark Down</option>
+                        </select>
+                    </div>
+                 </div> 
                <div class="form-group row" *ngIf="showWholeCatalog">
                   <label for="includeWholeCatalogAdjustment" class="col-sm-3 col-form-label">Include Whole Catalog Adjustment: <span class="text-danger">*</span></label>
                     <div class="col-sm-9">
@@ -226,30 +249,17 @@
                         [ngClass]="{ 'is-invalid': addContractForm.submitted && includeWholeCatalogAdjustment.invalid }">
                     </div>
                  </div> 
-                 <div class="form-group row" *ngIf="showWholeCatalog">
-                    <label for="includeWholeCatalogAdjType" class="col-sm-3 col-form-label">Include Whole Catalog Adjustment Type: <span class="text-danger">*</span></label>
-                      <div class="col-sm-9">
-                          <input type="text" id="includeWholeCatalogAdjType" class="form-control"
-                          [(ngModel)]="contract.includeWholeCatalogAdjType" name="includeWholeCatalogAdjType" #includeWholeCatalogAdjType="ngModel"
-                          [ngClass]="{ 'is-invalid': addContractForm.submitted && includeWholeCatalogAdjType.invalid }">
-                      </div>
-                   </div> 
-               <div class="form-group row">
-                  <label for="shortDescription" class="col-sm-3 col-form-label">Short Description: <span class="text-danger">*</span></label>
-                    <div class="col-sm-9">
-                        <input type="text" id="shortDescription" class="form-control" required [(ngModel)]="contract.shortDescription" name="shortDescription" #shortDescription="ngModel"
-                        [ngClass]="{ 'is-invalid': addContractForm.submitted && shortDescription.invalid }">
-                        <div *ngIf="addContractForm.submitted && shortDescription.invalid" class="invalid-feedback">
-                            <div *ngIf="!!shortDescription.errors.required">Short Description is required</div>
-                        </div>
-                    </div>
-                 </div> 
+                 
                  <div class="form-group row">
                     <label for="priceLevel" class="col-sm-3 col-form-label">Price Level:</label>
                       <div class="col-sm-9">
-                          <input type="text" id="priceLevel" [disabled]="contract.contractRefrence != '' && contract.contractRefrence != null" class="form-control" [required]="!contract.contractRefrence"
-                          [(ngModel)]="contract.priceLevel" name="priceLevel" #priceLevel="ngModel"
+                          <select id="priceLevel" class="form-control" [disabled]="contract.contractReference != '' && contract.contractReference != null" [required]="!contract.contractReference" [(ngModel)]="contract.priceLevel" name="priceLevel" #priceLevel="ngModel"
                           [ngClass]="{ 'is-invalid': addContractForm.submitted && priceLevel.invalid }">
+                            <option (value)="1">1</option>
+                            <option (value)="2">2</option>
+                            <option (value)="s1">S1</option>
+                            <option (value)="s2">S2</option>
+                          </select>
                           <div *ngIf="addContractForm.submitted && priceLevel.invalid" class="invalid-feedback">
                               <div *ngIf="!!priceLevel.errors.required">Price level is required</div>
                           </div>
@@ -258,9 +268,13 @@
                  <div class="form-group row">
                     <label for="contractRefrence" class="col-sm-3 col-form-label">Contract Reference:</label>
                       <div class="col-sm-9">
-                          <input type="text" id="contractRefrence" [disabled]="contract.priceLevel != '' && contract.priceLevel != null" class="form-control"
-                          [(ngModel)]="contract.contractRefrence" name="contractRefrence" #contractRefrence="ngModel"
-                          [ngClass]="{ 'is-invalid': addContractForm.submitted && contractRefrence.invalid }">
+                          <select id="contractReference" class="form-control" [disabled]="contract.priceLevel != '' && contract.priceLevel != null" [required]="!contract.priceLevel" [(ngModel)]="contract.contractReference" name="contractReference" #contractReference="ngModel"
+                          [ngClass]="{ 'is-invalid': addContractForm.submitted && contractReference.invalid }">
+                            <option (value)="1">Contract 1</option>
+                            <option (value)="2">Contract 2</option>
+                            <option (value)="3">Contract 3</option>
+                            <option (value)="4">Contract 4</option>
+                          </select>
                       </div>
                    </div> 
                  

@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
   })
 
 export class PagerService {
-    getPager(totalItems: number, currentPage: number = 1, pageSize: number = 20) {
+    getPager(totalItems: number, currentPage: number = 1, pageSize: number = 50) {
         // calculate total pages
         const totalPages = Math.ceil(totalItems / pageSize);
 

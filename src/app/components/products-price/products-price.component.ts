@@ -90,7 +90,7 @@ export class ProductsPriceComponent implements OnInit {
     // get current page of items
     this.pagedItems = this.productList.slice(this.pager.startIndex, this.pager.endIndex + 1);
 
-    if (this.productList.length > 20) {
+    if (this.productList.length > 50) {
       this.showPagination = true;
     } else {
       this.showPagination = false;

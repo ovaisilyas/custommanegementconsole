@@ -29,8 +29,10 @@ export class ContractListComponent implements OnInit {
   productList: ProductListModel[];
   contractList: ContractListModel[];
   contractDetail: ContractDetailModel[];
+  today = new Date();
+  todayDate = this.today.getMonth() + '-' + this.today.getDate() + '-' + this.today.getFullYear() ;
   contractItem = new ContractItemModel('', '', '', '', 0);
-  contract = new ContractModel('', '', '', '', '', '', '', '', '', 'no', '', '', '', '');
+  contract = new ContractModel('', '', 'seller', '', this.todayDate, '', '', '', '', 'yes', '', '', '', '');
   submitted = false;
   userDetail = new UserDetailModel('', '', '', '', '', '', '', '', '', '', '', 'AU'
     , true, false, false, false, '');
@@ -46,7 +48,7 @@ export class ContractListComponent implements OnInit {
   IdKey = 0;
   loading = true;
   showEdit = Number;
-  showWholeCatalog = false;
+  showWholeCatalog = true;
   newItemPrice = 0;
   deletePartnumber = '';
   ItemCustomerList = [];
@@ -129,7 +131,7 @@ export class ContractListComponent implements OnInit {
     // get current page of items
     this.pagedItems = this.contractDetail.slice(this.pager.startIndex, this.pager.endIndex + 1);
 
-    if (this.contractDetail.length > 20) {
+    if (this.contractDetail.length > 50) {
       this.showPagination = true;
     } else {
       this.showPagination = false;
@@ -184,6 +186,7 @@ export class ContractListComponent implements OnInit {
         this.alertService.success('New Contract Created');
         this.contract.startDate = '';
         this.contract.endDate = '';
+        this.getContractList();
       },
       error => {
         this.alertService.error(error);
@@ -411,7 +414,7 @@ export class ContractListComponent implements OnInit {
     }
 
     resetForm() {
-      this.contract = new ContractModel('', '', '', '', '', '', '', '', '', 'no', '', '', '', '');
+      this.contract = new ContractModel('', '', 'seller', '', this.todayDate, '', '', '', '', 'yes', '', '', '', '');
     }
 
 }
