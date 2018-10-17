@@ -78,6 +78,7 @@ a:hover{color:#404040;}
 .custPriceEdit .priceEditField .btn{margin:0 0 0 5px;border-radius: 50%;padding: .10rem .50rem;}
 .productListGrid .table-hover tbody tr:hover {background-color: rgba(96,125,139,.4); cursor: pointer;}
 .productListGrid .table th:first-child{width: 33%}
+.editContractView .card-header{padding: .30rem 1em;}
 .lblRgtMar label{margin-right:.75rem;}
 
 /***************Table grid Custom ******************/
@@ -101,8 +102,11 @@ a:hover{color:#404040;}
   .catalogCol4 .clearfix{height: 2.2rem;}
   .catalogCol4 .form-control{width: 90%;height: calc(1.5rem + 2px);padding: 0rem .75rem;line-height: 1;}
 
+ /**************Filter page***********/
+ .filterTab .nav-pills .nav-link{border-radius: 1.25rem;}
+ .filterTab .nav-pills .nav-link.active{background-color: #e0e0e0; color: #000;}
 
- /******************Responsive********************/
+ /*************Responsive************/
   @media (min-width: 1366px)  { 
     .custTabCls ul.nav.nav-tabs {display: table;width: 100%;table-layout: fixed;
     }

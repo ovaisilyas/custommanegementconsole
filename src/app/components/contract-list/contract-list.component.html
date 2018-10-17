@@ -48,6 +48,25 @@
                   </datalist>
                   <input type="hidden" [value]="selectedContractID" [(ngModel)]="selectedContractID" name="contractId" #contractIdtext="ngModel" />
                   <div class="text-right mt-3"><button type="button" [disabled]="selectedContractID === ''" class="btn btn-primary" (click)="openContractDetail()">Search Contract</button></div>
+                  <!-- <div class="mt-3 editContractView">
+                      <div class="card bg-light mb-3">
+                          <div class="card-header">Contracts</div>
+                          <div class="card-body">
+                            <div class="row">
+                            <div class="col-sm-4 col-md-4"><span>Account</span></div>
+                            <div class="col-sm-8"><span>Charles Darwin Universtiy</span></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4"><span>Description</span></div>
+                                <div class="col-sm-8"><span>Charles Darwin Universtiy</span></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4"><span>Price</span></div>
+                                <div class="col-sm-8"><span>Charles Darwin Universtiy</span></div>
+                            </div>
+                          </div>
+                        </div>
+                  </div> -->
               </div>
               <div class="col col-md-9 float-left table-responsive" *ngIf="showContractDetailTable">
               <table class="table table-bordered table-striped">
@@ -148,7 +167,7 @@
          </div>
           <div class="form-group row">
           <label for="chargeBy" class="col-sm-3 col-form-label">Charges by: <span class="text-danger">*</span></label>
-            <div class="col-sm-9">
+            <div class="col-sm-3">
                 <select id="chargeBy" class="form-control" required [(ngModel)]="contract.chargeBy" name="chargeBy" #chargeBy="ngModel"
                 [ngClass]="{ 'is-invalid': addContractForm.submitted && chargeBy.invalid }">
                   <option (value)="seller">Seller</option>
@@ -158,31 +177,34 @@
                     <div *ngIf="!!chargeBy.errors.required">Charges By is required</div>
                 </div>
             </div>
-         </div>
-          <div class="form-group row">
-          <label for="inputPassword" class="col-sm-3 col-form-label">Start Date:</label>
-            <div class="col col-xs-9">
-                <form class="form-inline">
-                    <div class="form-group">
-                      <div class="input-group">
-                        <input class="form-control startDate" placeholder="MM-DD-YYYY" type="text"
-                               name="startDate" [(ngModel)]="contract.startDate" #startDate="ngModel">
-                      </div>
+            <label for="shipBy" class="col-sm-3 col-form-label text-right">Ship By: <span class="text-danger">*</span></label>
+                <div class="col-sm-3">
+                    <select id="shipBy" class="form-control" required [(ngModel)]="contract.shipBy" name="shipBy" #shipBy="ngModel"
+                    [ngClass]="{ 'is-invalid': addContractForm.submitted && shipBy.invalid }">
+                      <option (value)="courier">Courier</option>
+                      <option (value)="pickup">Pick Up</option>
+                    </select>
+                    <div *ngIf="addContractForm.submitted && shipBy.invalid" class="invalid-feedback">
+                        <div *ngIf="!!shipBy.errors.required">Ship by is required</div>
                     </div>
-                  </form>
+                </div>
+         </div>
+          
+         <div class="form-group row">
+            <label for="inputPassword" class="col-sm-3 col-form-label">Start Date:</label>
+            <div class="col-sm-3">
+                <input class="form-control startDate" placeholder="MM-DD-YYYY" type="text"
+                name="startDate" [(ngModel)]="contract.startDate" #startDate="ngModel">
             </div>
-            <label for="inputPassword" class="col-xs-6 col-form-label">End Date:</label>
-            <div class="col col-xs-6">
-                <form class="form-inline">
-                    <div class="form-group">
-                      <div class="input-group">
-                        <input class="form-control endDate" placeholder="No expiry" type="text"
-                        name="endDate" [(ngModel)]="contract.endDate" #endDate="ngModel">
-                      </div>
-                    </div>
-                  </form>
+            <label for="inputPassword" class="col-sm-3 col-form-label text-right">End Date:</label>
+            <div class="col-sm-3">
+                <input class="form-control endDate" placeholder="No expiry" type="text"
+                name="endDate" [(ngModel)]="contract.endDate" #endDate="ngModel">
             </div>
          </div>
+
+
+
          <div class="form-group row">
             <label for="shortDescription" class="col-sm-3 col-form-label">Short Description: <span class="text-danger">*</span></label>
               <div class="col-sm-9">
@@ -210,19 +232,7 @@
                 [ngClass]="{ 'is-invalid': addContractForm.submitted && minOrdAmnt.invalid }">
             </div>
          </div> 
-           <div class="form-group row">
-              <label for="shipBy" class="col-sm-3 col-form-label">Ship By: <span class="text-danger">*</span></label>
-                <div class="col-sm-9">
-                    <select id="shipBy" class="form-control" required [(ngModel)]="contract.shipBy" name="shipBy" #shipBy="ngModel"
-                    [ngClass]="{ 'is-invalid': addContractForm.submitted && shipBy.invalid }">
-                      <option (value)="courier">Courier</option>
-                      <option (value)="pickup">Pick Up</option>
-                    </select>
-                    <div *ngIf="addContractForm.submitted && shipBy.invalid" class="invalid-feedback">
-                        <div *ngIf="!!shipBy.errors.required">Ship by is required</div>
-                    </div>
-                </div>
-             </div> 
+             
              <div class="form-group row">
                 <label for="includeWholeCatalog" class="col-sm-3 col-form-label">Include Whole Catalog:</label>
                   <div class="col-sm-9">
@@ -231,25 +241,34 @@
                       [ngClass]="{ 'is-invalid': addContractForm.submitted && includeWholeCatalog.invalid }">
                   </div>
                </div> 
-               <div class="form-group row" *ngIf="showWholeCatalog">
-                  <label for="includeWholeCatalogAdjType" class="col-sm-3 col-form-label">Include Whole Catalog Adjustment Type: <span class="text-danger">*</span></label>
-                    <div class="col-sm-9">
-                        <select id="includeWholeCatalogAdjType" class="form-control" [(ngModel)]="contract.includeWholeCatalogAdjType" name="includeWholeCatalogAdjType" #includeWholeCatalogAdjType="ngModel"
-                        [ngClass]="{ 'is-invalid': addContractForm.submitted && includeWholeCatalogAdjType.invalid }">
-                          <option (value)="m">Mark Up</option>
-                          <option (value)="d">Mark Down</option>
-                        </select>
+               <div class="card bg-light mb-3" *ngIf="showWholeCatalog">
+                  <div class="card-body"> 
+                    <div class="form-row mb-3">
+                        <label for="includeWholeCatalogAdjType" class="col-sm-6 col-form-label">Include Whole Catalog Adjustment Type: <span class="text-danger">*</span></label>
+                        <div class="col-sm-6">
+                            <select id="includeWholeCatalogAdjType" class="form-control" [(ngModel)]="contract.includeWholeCatalogAdjType" name="includeWholeCatalogAdjType" #includeWholeCatalogAdjType="ngModel"
+                            [ngClass]="{ 'is-invalid': addContractForm.submitted && includeWholeCatalogAdjType.invalid }">
+                              <option (value)="m">Mark Up</option>
+                              <option (value)="d">Mark Down</option>
+                            </select>
+                        </div>
                     </div>
-                 </div> 
-               <div class="form-group row" *ngIf="showWholeCatalog">
-                  <label for="includeWholeCatalogAdjustment" class="col-sm-3 col-form-label">Include Whole Catalog Adjustment: <span class="text-danger">*</span></label>
-                    <div class="col-sm-9">
-                        <input type="text" id="includeWholeCatalogAdjustment" class="form-control"
-                        [(ngModel)]="contract.includeWholeCatalogAdjustment" name="includeWholeCatalogAdjustment" #includeWholeCatalogAdjustment="ngModel"
-                        [ngClass]="{ 'is-invalid': addContractForm.submitted && includeWholeCatalogAdjustment.invalid }">
+                        <div class="form-row">
+                        <label for="includeWholeCatalogAdjustment" class="col-sm-6 col-form-label">Include Whole Catalog Adjustment: <span class="text-danger">*</span></label>
+                        <div class="col-sm-6">
+                            <input type="text" id="includeWholeCatalogAdjustment" class="form-control"
+                            [(ngModel)]="contract.includeWholeCatalogAdjustment" name="includeWholeCatalogAdjustment" #includeWholeCatalogAdjustment="ngModel"
+                            [ngClass]="{ 'is-invalid': addContractForm.submitted && includeWholeCatalogAdjustment.invalid }">
+                        </div>
+                      </div>
                     </div>
-                 </div> 
-                 
+                </div>
+                <div class="row">
+                  <div class="col-12">
+                      <span><small class="text-danger">Select a price level or contract reference from below fields</small></span>
+                  </div>
+                   
+                  </div>
                  <div class="form-group row">
                     <label for="priceLevel" class="col-sm-3 col-form-label">Price Level:</label>
                       <div class="col-sm-9">
