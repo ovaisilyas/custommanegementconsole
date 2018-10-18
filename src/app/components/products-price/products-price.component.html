@@ -87,7 +87,7 @@
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalCenterTitle"><span>Add New Store Product</span></h5>
+          <h5 class="modal-title" id="addStoreProductCenterTitle"><span>Add New Store Product</span></h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -95,7 +95,7 @@
         <form #newStoreProdForm="ngForm">
         <div class="modal-body">
          <div class="form-group row">
-          <label for="category" class="col-sm-3 col-form-label">Category: <span class="text-danger">*</span></label>
+          <label class="col-sm-3 col-form-label">Category: <span class="text-danger">*</span></label>
             <div class="col-sm-9">
                 <img style="display:inline;" *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
                 <input type="text" list="categorylist" name="categoryList" *ngIf="!loading" class="form-control" [(ngModel)]="selectedId" required (change)="getCategoryId(selectedId)" placeholder="Select Category">
@@ -134,9 +134,9 @@
             <div class="col-sm-9">
               <input type="text" id="productShortDesc" class="form-control" required
               [(ngModel)]="productDetail.sDesc" name="shortdescription" #sDesc="ngModel"
-              [ngClass]="{ 'is-invalid': newStoreProdForm.submitted && shortdescription.invalid }">
-              <div *ngIf="newStoreProdForm.submitted && !!shortdescription.invalid" class="invalid-feedback">
-                  <div *ngIf="!!shortdescription.errors.required">Short Description is required</div>
+              [ngClass]="{ 'is-invalid': newStoreProdForm.submitted && sDesc.invalid }">
+              <div *ngIf="newStoreProdForm.submitted && !!sDesc.invalid" class="invalid-feedback">
+                  <div *ngIf="!!sDesc.errors.required">Short Description is required</div>
                 </div>
             </div>
          </div>
@@ -186,14 +186,14 @@
             </div>
          </div>      
          <div class="form-group row">
-              <label for="productTImage" class="col-sm-3 col-form-label">Image 1:</label>
+              <label for="productThumbImage" class="col-sm-3 col-form-label">Image 1:</label>
               <div class="col-sm-9">
                   <input type="text" id="productThumbImage" class="form-control"
               [(ngModel)]="productDetail.tImage" name="tImage" #tImage="ngModel">
               </div>
            </div>
            <div class="form-group row">
-              <label for="productFImage" class="col-sm-3 col-form-label">Image 2:</label>
+              <label for="productFullImage" class="col-sm-3 col-form-label">Image 2:</label>
                 <div class="col-sm-9">
                     <input type="text" id="productFullImage" class="form-control"
                     [(ngModel)]="productDetail.fImage" name="fImage" #fImage="ngModel">

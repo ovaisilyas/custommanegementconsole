@@ -5,7 +5,6 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 import { NgxSpinnerModule } from 'ngx-spinner';
-import { FileSelectDirective } from 'ng2-file-upload';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { AlertService } from './services/alert.service';
@@ -25,6 +24,8 @@ import { CataloguesComponent } from './components/catalogues/catalogues.componen
 import { FiltersComponent } from './components/filters/filters.component';
 import { StoreRegionComponent } from './components/store-region/store-region.component';
 import { AutofocusDirective } from './directives/autofocus.directive';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 
 @NgModule({
@@ -33,7 +34,6 @@ import { AutofocusDirective } from './directives/autofocus.directive';
     LoginComponent,
     HomeComponent,
     AlertComponent,
-    FileSelectDirective,
     HeaderComponent,
     UsersOrgComponent,
     ProductsPriceComponent,
@@ -51,7 +51,8 @@ import { AutofocusDirective } from './directives/autofocus.directive';
     FormsModule,
     NgbModule,
     NgxSpinnerModule,
-    routing
+    routing,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
     AuthGuard,
