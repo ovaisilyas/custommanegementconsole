@@ -48,6 +48,9 @@
                   </datalist>
                   <input type="hidden" [value]="selectedContractID" [(ngModel)]="selectedContractID" name="contractId" #contractIdtext="ngModel" />
                   <div class="text-right mt-3"><button type="button" [disabled]="selectedContractID === ''" class="btn btn-primary" (click)="openContractDetail()">Search Contract</button></div>
+
+                  <div><span>{{priceList}}</span></div>
+                  <div><span>{{catalogFilter}}</span></div>
                   <!-- <div class="mt-3 editContractView">
                       <div class="card bg-light mb-3">
                           <div class="card-header">Contracts</div>
@@ -389,7 +392,7 @@
       <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalCenterTitle"><span>Add New Item</span></h5>
+            <h5 class="modal-title" id="addNewItemTitle"><span>Add New Item</span></h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -397,7 +400,7 @@
           <form #addItemForm='ngForm'>
           <div class="modal-body">
            <div class="form-group row">
-            <label for="inputPassword" class="col-sm-3 col-form-label">Contract Name: <span class="text-danger">*</span></label>
+            <label class="col-sm-3 col-form-label">Contract Name: <span class="text-danger">*</span></label>
               <div class="col-sm-9">
                   <input type="text" list="contractDatalist" disabled class="form-control" [(ngModel)]="selectedContractName" name="selectedID" placeholder="Select Contract" required >
                   <input type="hidden" [value]="selectedContractID" [(ngModel)]="selectedContractID" name="contractId" #contractIdtext="ngModel" />
@@ -405,7 +408,7 @@
            </div>
     
            <div class="form-group row">
-            <label for="productNumber" class="col-sm-3 col-form-label">Product Code: <span class="text-danger">*</span></label>
+            <label class="col-sm-3 col-form-label">Product Code: <span class="text-danger">*</span></label>
               <div class="col-sm-9">
                   <input type="text" class="form-control searchIcon" id="searchProductTerm" [(ngModel)]="contractItem.partNumber" name="partnumber" #partnumber="ngModel" #searchProductTerm (keyup.enter)="getProductList(searchProductTerm.value)"
                        appAutofocus placeholder="Enter Code or Description and Press Enter" required>
@@ -418,7 +421,7 @@
               </div>
            </div>
             <div class="form-group row">
-            <label for="inputPassword" class="col-sm-3 col-form-label">Price: <span class="text-danger">*</span></label>
+            <label class="col-sm-3 col-form-label">Price: <span class="text-danger">*</span></label>
               <div class="col-sm-9">
                   <input type="text" id="productPrice" class="form-control" required
                   [(ngModel)]="contractItem.itemFixedPrice" name="productPrice" #productPrice="ngModel"
@@ -443,7 +446,7 @@
         <div class="modal-dialog modal-dialog-centered model-lg" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalCenterTitle"><span>Product List</span></h5>
+              <h5 class="modal-title" id="productListCenterTitle"><span>Product List</span></h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -460,7 +463,7 @@
                   <tbody>
                     <tr *ngFor="let item of productList" (click)="selectFromProductList(item.partnumber)">
                         <td scope="col"> {{item.partnumber}}</td>
-                        <td scope="col" class="tableDataDesc"><span title="{{item.shortdescription}}">{{item.shortdescription}}</span></td>
+                        <td scope="col" class="tableDataDesc"><span title="{{item.description}}">{{item.description}}</span></td>
                     </tr>
                   </tbody>
                 </table>

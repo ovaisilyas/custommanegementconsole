@@ -56,6 +56,9 @@ export class ContractListComponent implements OnInit {
   baseContractList = [];
   selectedCustomer = [];
 
+  catalogFilter = '';
+  priceList = '';
+
   constructor(
     private searchService: SearchService,
     private form: FormBuilder,
@@ -231,6 +234,11 @@ export class ContractListComponent implements OnInit {
       .pipe(map(
         (product) => {
           const searchDetails = product['contractDetails'];
+          console.log(searchDetails);
+          this.catalogFilter = searchDetails['catalogFitler'];
+          console.log(this.catalogFilter);
+          this.priceList = searchDetails['priceList'];
+          console.log(this.priceList);
           const searchList = searchDetails['productList'];
           return searchList;
         }
