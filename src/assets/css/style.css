@@ -80,6 +80,7 @@ a:hover{color:#404040;}
 .productListGrid .table th:first-child{width: 33%}
 .editContractView .card-header{padding: .30rem 1em;}
 .editContractView .row{border-bottom: 1px dotted #ddd;}
+.editContractView .card-body{padding: 1rem; font-size: 10pt;}
 .lblRgtMar label{margin-right:.75rem;}
 
 /***************Table grid Custom ******************/
@@ -127,6 +128,8 @@ a:hover{color:#404040;}
 .filterBtnArwLeft:before{background-position-x: 124px;}
 .filterTabContent .btn-outline-dark:hover, .filterTabContent .btn-outline-dark:not(:disabled):not(.disabled):active{background-color: #d5d8db;}
 .filterTabContent .btn-outline-dark:focus{box-shadow: 0 0 0 0;}
+.filterTabContent select{min-height: 220px;}
+.filterTabContent option{padding:5px 0px 5px 5px;}
 
 
  /*************Responsive************/
