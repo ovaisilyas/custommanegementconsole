@@ -29,10 +29,11 @@ export class ContractListComponent implements OnInit {
   productList: ProductListModel[];
   contractList: ContractListModel[];
   contractDetail: ContractDetailModel[];
+  editContractDetail: ContractModel[];
   today = new Date();
   todayDate = (this.today.getMonth() + 1) + '-' + this.today.getDate() + '-' + this.today.getFullYear() ;
   contractItem = new ContractItemModel('', '', '', '', 0);
-  contract = new ContractModel('', '', 'seller', '', this.todayDate, '', '', '', '', 'yes', '', '', '', '');
+  contract = new ContractModel('', '', 'Seller', '', this.todayDate, '', '', '', '', 'yes', '', '', '', '');
   submitted = false;
   userDetail = new UserDetailModel('', '', '', '', '', '', '', '', '', '', '', 'AU'
     , true, false, false, false, '');
@@ -41,11 +42,13 @@ export class ContractListComponent implements OnInit {
   searchProductTerm = '';
   selectedContractID = '';
   selectedId = '';
+  shippingModes = ['Courier'];
   selectedContractName = '';
   selectedItemNumber = '';
   selectedItemPrice = '';
   showContractDetailTable = false;
   showPagination = false;
+  editContract = false;
   IdKey = 0;
   loading = true;
   showEdit = Number;
@@ -82,6 +85,7 @@ export class ContractListComponent implements OnInit {
     this.getContractList();
     this.getCustomerListforContract();
     this.getBaseContracts();
+    this.getStoreShippingModes();
   }
 
   searchOnEnter(value: string) {
@@ -176,6 +180,27 @@ export class ContractListComponent implements OnInit {
         });
   }
 
+  getStoreShippingModes() {
+    this.contractService.getShippingModes()
+    .pipe(map(
+      (shipModes) => {
+        const shippingModes = shipModes['Ship Modes'];
+        return shippingModes;
+      }
+    ))
+    .subscribe (
+      data => {
+        if (data.length === 0) {
+          this.shippingModes = ['Courier'];
+        } else {
+          this.shippingModes = data;
+        }
+      },
+      error => {
+        console.log(error);
+      });
+  }
+
   getBaseContracts() {
     this.contractService.getBaseContract()
     .pipe(map(
@@ -214,7 +239,7 @@ export class ContractListComponent implements OnInit {
     this.contractService.addNewContract(this.contract)
     .subscribe(
       data => {
-        this.alertService.success('New Contract Created');
+        // this.alertService.success('New Contract Created');
         this.contract.startDate = '';
         this.contract.endDate = '';
         this.getContractList();
@@ -228,7 +253,7 @@ export class ContractListComponent implements OnInit {
     document.getElementById('addNewContractModalClose').click();
   }
 
-  openContractDetail() {
+  getContractDetail() {
     this.spinner.show();
     this.searchService.searchContractDetail(this.selectedContractID)
       .pipe(map(
@@ -251,6 +276,7 @@ export class ContractListComponent implements OnInit {
           this.spinner.hide();
           // initialize to page 1
           this.setPage(1);
+          this.openContractDetail();
           this.showContractDetailTable = true;
         },
         error => {
@@ -258,6 +284,33 @@ export class ContractListComponent implements OnInit {
           this.alertService.error(error);
           if (this.contractDetail !== undefined) {
             this.contractDetail.length = 0;
+          }
+          this.spinner.hide();
+        });
+  }
+
+  openContractDetail() {
+    this.contractService.openContractDetail(this.selectedContractID)
+      .pipe(map(
+        (contract) => {
+          const contractDetails = contract['ContractDetails'];
+          console.log(contractDetails);
+          return contractDetails;
+        }
+      ))
+      .subscribe(
+        data => {
+          this.editContractDetail = data;
+          this.contract = data;
+          this.editContract = true;
+          this.alertService.clear();
+          this.spinner.hide();
+        },
+        error => {
+          console.log(error);
+          this.alertService.error(error);
+          if (this.editContractDetail !== undefined) {
+            this.editContractDetail.length = 0;
           }
           this.spinner.hide();
         });
@@ -459,8 +512,9 @@ export class ContractListComponent implements OnInit {
     }
 
     resetForm() {
-      this.contract = new ContractModel('', '', 'seller', '', this.todayDate, '', '', '', '', 'yes', '', '', '', '');
+      this.contract = new ContractModel('', '', 'Seller', '', this.todayDate, '', '', '', '', 'yes', '', '', '', '');
       this.contractItem = new ContractItemModel('', '', '', '', 0);
+      this.editContract = false;
     }
 
 }
