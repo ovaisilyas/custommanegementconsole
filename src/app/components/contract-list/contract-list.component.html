@@ -27,7 +27,7 @@
               <div class="col text-right">
                   <div>
                     <button type="button" class="btn btn-PrimaryModal btn-default" data-toggle="modal" data-target="#addNewContract" (click)="resetForm()">New Contract</button>
-                    <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#addCustomer">Download to Excel</button>
+                    <button type="button" class="btn btn-secondary" [disabled]="showContractDetailTable === false" (click)="downloadContractCSV(searchTerm.value,selectedContractID)">Download to Excel</button>
                     <button type="button" class="btn btn-PrimaryModal btn-default" routerLink="/product-prices" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">View Pricing</button>
                     <button type="button" *ngIf="selectedContractID !== ''" class="btn btn-primary" data-toggle="modal" data-target="#addNewItem" (click)="resetForm()">Add Item</button>
                   </div>

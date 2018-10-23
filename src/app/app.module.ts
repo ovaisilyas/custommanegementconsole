@@ -5,7 +5,6 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 import { NgxSpinnerModule } from 'ngx-spinner';
-import { FileSelectDirective } from 'ng2-file-upload';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { AlertService } from './services/alert.service';
@@ -26,14 +25,12 @@ import { FiltersComponent } from './components/filters/filters.component';
 import { StoreRegionComponent } from './components/store-region/store-region.component';
 import { AutofocusDirective } from './directives/autofocus.directive';
 
-
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     HomeComponent,
     AlertComponent,
-    FileSelectDirective,
     HeaderComponent,
     UsersOrgComponent,
     ProductsPriceComponent,

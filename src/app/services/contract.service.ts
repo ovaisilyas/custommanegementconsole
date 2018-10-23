@@ -100,5 +100,16 @@ import { ContractModel } from '../model/contract.model';
       this.httpOptions);
     }
 
+    getDownloadProductCSV(searchTerm: any) {
+      console.log(searchTerm);
+      return this.httpClient.get<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcexport/byProductSearchTerm/${searchTerm}`,
+      this.httpOptions);
+    }
+
+    getDownloadContractCSV(searchTerm: any) {
+      console.log(searchTerm);
+      return this.httpClient.post<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcexport/byContractProduct`, searchTerm,
+      this.httpOptions);
+    }
 
   }

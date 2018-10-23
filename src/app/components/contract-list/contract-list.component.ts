@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import {environment} from '../../../environments/environment';
 import { SearchService } from '../../services/search.service';
 import {map} from 'rxjs/operators';
+import {saveAs} from 'file-saver';
 import {UserlistModel} from '../../model/userlist.model';
 import { ProductListModel } from '../../model/productlist.model';
 import {UserDetailModel} from '../../model/userdetail.model';
@@ -17,6 +19,8 @@ import {AlertService} from '../../services/alert.service';
 import {ViewChild, ElementRef} from '@angular/core';
 
 import { NgxSpinnerService } from 'ngx-spinner';
+
+declare var require: any;
 
 @Component({
   selector: 'app-contract-list',
@@ -58,6 +62,7 @@ export class ContractListComponent implements OnInit {
   ItemCustomerList = [];
   baseContractList = [];
   selectedCustomer = [];
+  downloadLink = '';
 
   catalogFilter = '';
   priceList = '';
@@ -84,8 +89,6 @@ export class ContractListComponent implements OnInit {
   ngOnInit() {
     this.getContractList();
     this.getCustomerListforContract();
-    this.getBaseContracts();
-    this.getStoreShippingModes();
   }
 
   searchOnEnter(value: string) {
@@ -116,6 +119,7 @@ export class ContractListComponent implements OnInit {
               this.contractDetail.length = 0;
             }
             this.spinner.hide();
+            this.showContractDetailTable = false;
           });
         } else {
           this.openContractDetail();
@@ -278,6 +282,8 @@ export class ContractListComponent implements OnInit {
           this.setPage(1);
           this.openContractDetail();
           this.showContractDetailTable = true;
+          this.getBaseContracts();
+          this.getStoreShippingModes();
         },
         error => {
           console.log(error);
@@ -286,6 +292,7 @@ export class ContractListComponent implements OnInit {
             this.contractDetail.length = 0;
           }
           this.spinner.hide();
+          this.showContractDetailTable = false;
         });
   }
 
@@ -515,6 +522,30 @@ export class ContractListComponent implements OnInit {
       this.contract = new ContractModel('', '', 'Seller', '', this.todayDate, '', '', '', '', 'yes', '', '', '', '');
       this.contractItem = new ContractItemModel('', '', '', '', 0);
       this.editContract = false;
+    }
+
+    downloadContractCSV(searchTerm: any, contractId: any) {
+      this.spinner.show();
+      const contractDownloadObj = {
+        'searchKeyWord' : searchTerm,
+        'contractId' : contractId,
+        'exportType' : 'catalog'
+      };
+      this.contractService.getDownloadContractCSV(contractDownloadObj)
+      .subscribe(
+        data => {
+          const FileSaver = require('file-saver');
+          console.log(data.filePath.substr(data.filePath.lastIndexOf('/') + 1));
+          FileSaver.saveAs(`${environment.apiUrl}` + data.filePath, data.filePath.substr(data.filePath.lastIndexOf('/') + 1));
+          this.spinner.hide();
+          this.alertService.clear();
+        },
+        error => {
+          this.alertService.error(error);
+          this.spinner.hide();
+        }
+
+      );
     }
 
 }
