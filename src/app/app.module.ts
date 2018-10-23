@@ -27,7 +27,6 @@ import { AutofocusDirective } from './directives/autofocus.directive';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 
-
 @NgModule({
   declarations: [
     AppComponent,

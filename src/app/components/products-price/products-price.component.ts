@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-
+import {environment} from '../../../environments/environment';
+import {saveAs} from 'file-saver';
 import { SearchService } from '../../services/search.service';
 import {map} from 'rxjs/operators';
 import {UsersService} from '../../services/users.service';
@@ -14,6 +15,7 @@ import { ProductListModel } from '../../model/productlist.model';
 import { ProductModel } from '../../model/product.model';
 import { ItemContractListModel } from '../../model/itemcontractlist.model';
 
+declare var require: any;
 
 @Component({
   selector: 'app-products-price',
@@ -30,6 +32,7 @@ export class ProductsPriceComponent implements OnInit {
   selectedId = '';
   IdKey = 0;
   searchTerm = '';
+  showProductListTable = false;
 
   constructor(
     private productService: ProductService,
@@ -72,6 +75,7 @@ export class ProductsPriceComponent implements OnInit {
           // this.allItems = data;
           // initialize to page 1
           this.setPage(1);
+          this.showProductListTable = true;
         },
         error => {
           console.log(error);
@@ -80,6 +84,7 @@ export class ProductsPriceComponent implements OnInit {
             this.productList.length = 0;
           }
           this.spinner.hide();
+          this.showProductListTable = false;
         });
   }
 
@@ -173,13 +178,24 @@ export class ProductsPriceComponent implements OnInit {
     }
   }
 
-  /* getOrgEntryName(value: any) {
-    this.IdKey = this.categoryList.findIndex(function(item, i) {
-      return item.uniqueID === value;
-    });
-    if (this.IdKey !== -1) {
-      return this.selectedId = this.categoryList[this.IdKey].identifier;
-    }
-  } */
+  downloadProductCSV(searchTerm: any) {
+    this.spinner.show();
+    this.contractService.getDownloadProductCSV(searchTerm)
+    .subscribe(
+      data => {
+        const FileSaver = require('file-saver');
+       // window.location.href = `${environment.apiUrl}` + data.filePath;
+       console.log(data.filePath.substr(data.filePath.lastIndexOf('/') + 1));
+        FileSaver.saveAs(`${environment.apiUrl}` + data.filePath, data.filePath.substr(data.filePath.lastIndexOf('/') + 1));
+        this.spinner.hide();
+        this.alertService.clear();
+      },
+      error => {
+        this.alertService.error(error);
+        this.spinner.hide();
+      }
+
+    );
+  }
 
 }

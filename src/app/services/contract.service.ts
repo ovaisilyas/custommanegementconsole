@@ -46,6 +46,18 @@ import { ContractModel } from '../model/contract.model';
         this.httpOptions);
     }
 
+    openContractDetail(catEntryId: string) {
+      console.log('Open edit Contract' + catEntryId);
+      return this.httpClient.get<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmccontracts/getContract?contractId=${catEntryId}`,
+      this.httpOptions);
+    }
+
+    getShippingModes() {
+      console.log('Get shipping Modes');
+      return this.httpClient.get<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmccontracts/getStoreShipModes`,
+      this.httpOptions);
+    }
+
     getContractDetail(catEntryId: string) {
       console.log('Get Contract detail' + catEntryId);
       return this.httpClient.get<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcitemcontract/itemContractList/${catEntryId}`,
@@ -88,5 +100,16 @@ import { ContractModel } from '../model/contract.model';
       this.httpOptions);
     }
 
+    getDownloadProductCSV(searchTerm: any) {
+      console.log(searchTerm);
+      return this.httpClient.get<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcexport/byProductSearchTerm/${searchTerm}`,
+      this.httpOptions);
+    }
+
+    getDownloadContractCSV(searchTerm: any) {
+      console.log(searchTerm);
+      return this.httpClient.post<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcexport/byContractProduct`, searchTerm,
+      this.httpOptions);
+    }
 
   }

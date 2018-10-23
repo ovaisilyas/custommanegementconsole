@@ -79,6 +79,8 @@ a:hover{color:#404040;}
 .productListGrid .table-hover tbody tr:hover {background-color: rgba(96,125,139,.4); cursor: pointer;}
 .productListGrid .table th:first-child{width: 33%}
 .editContractView .card-header{padding: .30rem 1em;}
+.editContractView .row{border-bottom: 1px dotted #ddd;}
+.editContractView .card-body{padding: 1rem; font-size: 10pt;}
 .lblRgtMar label{margin-right:.75rem;}
 
 /***************Table grid Custom ******************/
@@ -105,6 +107,30 @@ a:hover{color:#404040;}
  /**************Filter page***********/
  .filterTab .nav-pills .nav-link{border-radius: 1.25rem;}
  .filterTab .nav-pills .nav-link.active{background-color: #e0e0e0; color: #000;}
+
+ .filterTabContent fieldset {border: 1px solid #ddd !important;margin: 0;padding: 10px;position: relative;border-radius:4px;padding-left:10px!important;}	
+ .filterTabContent legend{font-size:1rem;font-weight:bold;margin-bottom: 0px; width: auto; border: 1px solid #ddd;border-radius: 4px; padding: 5px 10px 5px 10px; background-color: #ffffff;}
+ .filterBtnArrow:before {
+  content: "";
+  width: 35px;
+  height: 32px;
+  display: inline-block;
+  margin-right: 5px;
+  vertical-align: text-top;
+  background-color: transparent;
+  background-position : center center;
+  /*background-repeat:no-repeat;*/
+  background-image : url(../images/filter-arrows.png);
+}
+.filterBtnArwRight:before{background-position-x: 38px;}
+.filterBtnArwRightAll:before{background-position-x: 78px;}
+.filterBtnArwLeftAll:before{background-position-x: 170px;}
+.filterBtnArwLeft:before{background-position-x: 124px;}
+.filterTabContent .btn-outline-dark:hover, .filterTabContent .btn-outline-dark:not(:disabled):not(.disabled):active{background-color: #d5d8db;}
+.filterTabContent .btn-outline-dark:focus{box-shadow: 0 0 0 0;}
+.filterTabContent select{min-height: 220px;}
+.filterTabContent option{padding:5px 0px 5px 5px;}
+
 
  /*************Responsive************/
   @media (min-width: 1366px)  { 
