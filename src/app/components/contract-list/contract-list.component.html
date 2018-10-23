@@ -160,7 +160,7 @@
           <label for="accountName" class="col-sm-3 col-form-label">Account Name: <span class="text-danger">*</span></label>
             <div class="col-sm-9">
 
-                  <input type="text" list="customerDatalist" *ngIf="!loading" class="form-control" required
+                  <input type="text" list="customerDatalist" *ngIf="!loading" class="form-control" required [disabled]="editContract"
                   [(ngModel)]="contract.accountName" name="accountName" placeholder="Select Account">
                   <datalist id="customerDatalist">
                     <option *ngFor="let item of ItemCustomerList" [value]="item.customerName">
@@ -336,7 +336,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" id="addNewContractModalClose" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-PrimaryModal" (click)="addNewContract()">Save</button>
+          <button type="button" class="btn btn-PrimaryModal" [disabled]="!(addContractForm.form.valid)" (click)="addNewContract()">Save</button>
         </div>
       </form>
       </div>

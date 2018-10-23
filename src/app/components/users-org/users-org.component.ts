@@ -12,6 +12,7 @@ import {AlertService} from '../../services/alert.service';
 import {OrgDetailModel} from '../../model/orgdetail.model';
 import {OrgService} from '../../services/org.service';
 import {ViewChild, ElementRef} from '@angular/core';
+import {Router} from '@angular/router';
 
 import { NgxSpinnerService } from 'ngx-spinner';
 
@@ -43,9 +44,13 @@ export class UsersOrgComponent implements OnInit {
     private alertService: AlertService,
     private orgService: OrgService,
     private spinner: NgxSpinnerService,
+    private router: Router,
   ) {}
 
   ngOnInit() {
+    if (sessionStorage.getItem('WCToken').length === 0) {
+      this.router.navigate(['/login']);
+    }
     this.getCustomers();
   }
 

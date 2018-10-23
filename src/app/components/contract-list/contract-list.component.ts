@@ -17,6 +17,7 @@ import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {PagerService} from '../../services/pager.service';
 import {AlertService} from '../../services/alert.service';
 import {ViewChild, ElementRef} from '@angular/core';
+import {Router} from '@angular/router';
 
 import { NgxSpinnerService } from 'ngx-spinner';
 
@@ -75,6 +76,7 @@ export class ContractListComponent implements OnInit {
     private contractService: ContractService,
     private alertService: AlertService,
     private spinner: NgxSpinnerService,
+    private router: Router,
   ) {}
 
   // array of all items to be paged
@@ -87,8 +89,13 @@ export class ContractListComponent implements OnInit {
   pagedItems: any[];
 
   ngOnInit() {
+    if (sessionStorage.getItem('WCToken').length === 0) {
+      this.router.navigate(['/login']);
+    }
     this.getContractList();
     this.getCustomerListforContract();
+    this.getBaseContracts();
+    this.getStoreShippingModes();
   }
 
   searchOnEnter(value: string) {
@@ -165,6 +172,7 @@ export class ContractListComponent implements OnInit {
   }
 
   getContractList() {
+    this.loading = true;
     this.contractService.getContractList()
       .pipe(map(
         (contract) => {
@@ -243,7 +251,7 @@ export class ContractListComponent implements OnInit {
     this.contractService.addNewContract(this.contract)
     .subscribe(
       data => {
-        // this.alertService.success('New Contract Created');
+        this.alertService.success(data.message);
         this.contract.startDate = '';
         this.contract.endDate = '';
         this.getContractList();
@@ -282,8 +290,6 @@ export class ContractListComponent implements OnInit {
           this.setPage(1);
           this.openContractDetail();
           this.showContractDetailTable = true;
-          this.getBaseContracts();
-          this.getStoreShippingModes();
         },
         error => {
           console.log(error);
