@@ -33,11 +33,11 @@ export class ContractListComponent implements OnInit {
   productList: ProductListModel[];
   contractList: ContractListModel[];
   contractDetail: ContractDetailModel[];
-  editContractDetail: ContractModel[];
   today = new Date();
   todayDate = (this.today.getMonth() + 1) + '-' + this.today.getDate() + '-' + this.today.getFullYear() ;
   contractItem = new ContractItemModel('', '', '', '', 0);
   contract = new ContractModel('', '', 'Seller', '', this.todayDate, '', '', '', '', 'yes', '', '', '', '');
+  editContractDetail = new ContractModel('', '', '', '', '', '', '', '', '', '', '', '', '', '');
   submitted = false;
   userDetail = new UserDetailModel('', '', '', '', '', '', '', '', '', '', '', 'AU'
     , true, false, false, false, '');
@@ -237,9 +237,9 @@ export class ContractListComponent implements OnInit {
 
   addNewContract() {
     const currentTime = new Date();
-    if (this.contract.startDate !== '') { this.contract.startDate = this.contract.startDate + 'T' + currentTime.getHours() + ':' + currentTime.getMinutes() + ':' + currentTime.getSeconds(); } else { this.contract.startDate = this.contract.startDate; }
-    if (this.contract.endDate !== '') { this.contract.endDate = this.contract.endDate + 'T' + currentTime.getHours() + ':' + currentTime.getMinutes() + ':' + currentTime.getSeconds(); } else { this.contract.endDate = this.contract.endDate; }
-
+    if (this.contract.startDate !== '') { this.contract.startDate = this.contract.startDate + 'T' + '00:00:00.0'; } else { this.contract.startDate = this.contract.startDate; }
+    if (this.contract.endDate !== '') { this.contract.endDate = this.contract.endDate + 'T' + '00:00:00.0'; } else { this.contract.endDate = this.contract.endDate; }
+    if (this.contract.contractRefrence === 'Does not refer to a contract') { this.contract.contractRefrence = ''; }
     this.contractService.addNewContract(this.contract)
     .subscribe(
       data => {
@@ -310,15 +310,16 @@ export class ContractListComponent implements OnInit {
           this.editContractDetail = data;
           this.contract = data;
           this.editContract = true;
+          this.editContractDetail.startDate = this.editContractDetail.startDate.split('T')[0];
+          this.editContractDetail.endDate = this.editContractDetail.endDate.split('T')[0];
+          this.contract.startDate = this.contract.startDate.split('T')[0];
+          this.contract.endDate = this.contract.endDate.split('T')[0];
           this.alertService.clear();
           this.spinner.hide();
         },
         error => {
           console.log(error);
           this.alertService.error(error);
-          if (this.editContractDetail !== undefined) {
-            this.editContractDetail.length = 0;
-          }
           this.spinner.hide();
         });
   }
@@ -415,6 +416,7 @@ export class ContractListComponent implements OnInit {
   }
 
   saveAddItem() {
+    this.spinner.show();
     this.contractItem.flag = 'addItem';
     this.contractItem.contractId = this.selectedContractID;
     this.contractItem.contractName = this.selectedContractName;
@@ -422,9 +424,11 @@ export class ContractListComponent implements OnInit {
     .subscribe(
       data => {
         this.alertService.success('Item Added');
+        this.spinner.hide();
       },
       error => {
         this.alertService.error(error);
+        this.spinner.hide();
       }
     );
     document.getElementById('addContractItemClose').click();
@@ -487,10 +491,7 @@ export class ContractListComponent implements OnInit {
         if (isDupicate === -1) {
           const list = {
             'customerName' : this.selectedId,
-            'accountId' : this.userDetail.parentMemberId,
-            'partNumber' : this.selectedItemNumber,
-            'flag' : 'additem',
-            'itemFixedPrice' : this.selectedItemPrice,
+            'accountId' : this.userDetail.parentMemberId
           };
           this.selectedCustomer.push(list);
         }
@@ -500,7 +501,13 @@ export class ContractListComponent implements OnInit {
 
     sendSeletedCustomers() {
       document.getElementById('selectCustomerPopupClose').click();
-      this.contractService.saveSelectedCustomers(this.selectedCustomer)
+      const list = {
+        'partNumber' : this.selectedItemNumber,
+        'flag' : 'additem',
+        'itemFixedPrice' : this.selectedItemPrice,
+        'accountCustomerList' : this.selectedCustomer
+      };
+      this.contractService.saveSelectedCustomers(list)
       .subscribe(
         data => {
           this.alertService.success('Customers added to Contract');
@@ -526,10 +533,16 @@ export class ContractListComponent implements OnInit {
 
     downloadContractCSV(searchTerm: any, contractId: any) {
       this.spinner.show();
+      let exportType = '';
+      if (searchTerm === '') {
+        exportType = 'contract';
+      } else {
+        exportType = 'catalog';
+      }
       const contractDownloadObj = {
         'searchKeyWord' : searchTerm,
         'contractId' : contractId,
-        'exportType' : 'catalog'
+        'exportType' : exportType
       };
       this.contractService.getDownloadContractCSV(contractDownloadObj)
       .subscribe(

@@ -26,7 +26,7 @@
               
               <div class="col text-right">
                   <div>
-                    <button type="button" class="btn btn-PrimaryModal btn-default" data-toggle="modal" data-target="#addNewContract" (click)="resetForm()">New Contract</button>
+                    <button type="button" class="btn btn-PrimaryModal btn-default" data-toggle="modal" data-target="#addNewContract" (click)="resetForm();">New Contract</button>
                     <button type="button" class="btn btn-secondary" [disabled]="showContractDetailTable === false" (click)="downloadContractCSV(searchTerm.value,selectedContractID)">Download to Excel</button>
                     <button type="button" class="btn btn-PrimaryModal btn-default" routerLink="/product-prices" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">View Pricing</button>
                     <button type="button" *ngIf="selectedContractID !== ''" class="btn btn-primary" data-toggle="modal" data-target="#addNewItem" (click)="resetForm()">Add Item</button>
@@ -290,32 +290,32 @@
                  <div class="form-group row">
                     <label for="priceLevel" class="col-sm-3 col-form-label">Price Level:</label>
                       <div class="col-sm-9">
-                          <select id="priceLevel" class="form-control" [disabled]="contract.contractReference != '' && contract.contractReference != null" [required]="!contract.contractReference" [(ngModel)]="contract.priceLevel" name="priceLevel" #priceLevel="ngModel"
+                          <select id="priceLevel" class="form-control" [disabled]="contract.contractRefrence != '' && contract.contractRefrence != null && contract.contractRefrence !='Does not refer to a contract'" [required]="!contract.contractRefrence" [(ngModel)]="contract.priceLevel" name="priceLevel" #priceLevel="ngModel"
                           [ngClass]="{ 'is-invalid': addContractForm.submitted && priceLevel.invalid }">
                             <option value="">Select Price Level</option>
-                            <option (value)="1">List</option>
-                            <option (value)="2">Cost</option>
-                            <option (value)="3">MinSell</option>
-                            <option (value)="4">Govt</option>
-                            <option (value)="5">AvgCost</option>
-                            <option (value)="b1">Bulk1</option>
-                            <option (value)="b2">Bulk2</option>
-                            <option (value)="b3">ListNonePromo</option>
-                            <option (value)="b4">GovtNonePromo</option>
-                            <option (value)="b5">Bulk5</option>
-                            <option (value)="b6">Bulk6</option>
-                            <option (value)="b7">Bulk7</option>
-                            <option (value)="b8">Bulk8</option>
-                            <option (value)="b9">Bulk9</option>
-                            <option (value)="s1">Sell1</option>
-                            <option (value)="s2">Sell2</option>
-                            <option (value)="s3">Sell3</option>
-                            <option (value)="s4">Sell4</option>
-                            <option (value)="s5">Sell5</option>
-                            <option (value)="s6">Sell6</option>
-                            <option (value)="s7">Sell7</option>
-                            <option (value)="s8">Sell8</option>
-                            <option (value)="nm">Natmed</option>
+                            <option value="1">List</option>
+                            <option value="2">Cost</option>
+                            <option value="3">MinSell</option>
+                            <option value="4">Govt</option>
+                            <option value="5">AvgCost</option>
+                            <option value="b1">Bulk1</option>
+                            <option value="b2">Bulk2</option>
+                            <option value="b3">ListNonePromo</option>
+                            <option value="b4">GovtNonePromo</option>
+                            <option value="b5">Bulk5</option>
+                            <option value="b6">Bulk6</option>
+                            <option value="b7">Bulk7</option>
+                            <option value="b8">Bulk8</option>
+                            <option value="b9">Bulk9</option>
+                            <option value="s1">Sell1</option>
+                            <option value="s2">Sell2</option>
+                            <option value="s3">Sell3</option>
+                            <option value="s4">Sell4</option>
+                            <option value="s5">Sell5</option>
+                            <option value="s6">Sell6</option>
+                            <option value="s7">Sell7</option>
+                            <option value="s8">Sell8</option>
+                            <option value="nm">Natmed</option>
                           </select>
                           <div *ngIf="addContractForm.submitted && priceLevel.invalid" class="invalid-feedback">
                               <div *ngIf="!!priceLevel.errors.required">Price level is required</div>
@@ -325,8 +325,8 @@
                  <div class="form-group row">
                     <label for="contractRefrence" class="col-sm-3 col-form-label">Contract Reference:</label>
                       <div class="col-sm-9">
-                          <select id="contractReference" class="form-control" [disabled]="contract.priceLevel != '' && contract.priceLevel != null" [required]="!contract.priceLevel" [(ngModel)]="contract.contractReference" name="contractReference" #contractReference="ngModel"
-                          [ngClass]="{ 'is-invalid': addContractForm.submitted && contractReference.invalid }">
+                          <select id="contractReference" class="form-control" [disabled]="contract.priceLevel != '' && contract.priceLevel != null" [required]="!contract.priceLevel" [(ngModel)]="contract.contractRefrence" name="contractRefrence" #contractRefrence="ngModel"
+                          [ngClass]="{ 'is-invalid': addContractForm.submitted && contractRefrence.invalid }">
                             <option value="">Select Contract Reference</option>
                             <option *ngFor="let item of baseContractList" (value)="item">{{item}}</option>
                           </select>
