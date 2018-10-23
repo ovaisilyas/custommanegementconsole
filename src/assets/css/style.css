@@ -1,5 +1,4 @@
 /**************Global Css**************/
-
 input.form-control,select.form-control,textarea.form-control{border:1px solid #6a6a6a;border-radius: 0rem;}
 a{color:#282828;}
 a:hover{color:#404040;}
@@ -12,7 +11,7 @@ a:hover{color:#404040;}
 .btn-primary.focus, .btn-primary:focus {box-shadow: 0 0 0 0.2rem rgba(40,167,69,.5);}
 .btn-primary.disabled, .btn-primary:disabled{background-color: #9fefb1;border-color: #9fefb1;}
 .btn-secondary {color: #fff;background-color: #9e9e9e;border-color: #9e9e9e;}
-.btn-primary.btn, .btn-secondary.btn, .btn-default{border-radius: 0rem;} 
+.btn-primary.btn, .btn-secondary.btn, .btn-default, .filterCateOne .btn, .filterCateTwo .btn{border-radius: 0rem;} 
 .btn-PrimaryModal{background-color: #337ab7; color:#fff;}
 .btn-PrimaryModal:hover{background-color: #1562a3;border-color: #1562a3;}
 .btn-PrimaryModal:not(:disabled):not(.disabled).active, .btn-PrimaryModal:not(:disabled):not(.disabled):active, .show>.btn-PrimaryModal.dropdown-toggle {color: #fff;
@@ -40,9 +39,11 @@ a:hover{color:#404040;}
 .loginBtns{padding-bottom:20px; float: none;}
 .loginBtns > div{padding-left:0px; padding-right:0px;}
 .loginBtns .btn, .loginExtLinkBtns .btn{border-radius: 0rem;padding: .75rem 2.2rem;}
+.loginBtns .btn-outline-dark:hover{color:#fff;}
 .loginExtLinkBtns{margin-top: 20px;}
 .loginExtLinkBtns .btn-secondary{background-color: #e0e0e0; margin-bottom: 10px;color:#545b62;font-size:12pt;font-weight: 600;}
 .loginExtLinkBtns .btn-secondary:hover{background-color:#545b62; color:#fff;}
+.loginBtns .btn-outline-dark:hover{color:#fff !important;}
 
 /********Tabs/user page css**********/
 .navbarCont .navbar-brand img{width:200px; height: auto;}
@@ -130,6 +131,7 @@ a:hover{color:#404040;}
 .filterTabContent .btn-outline-dark:focus{box-shadow: 0 0 0 0;}
 .filterTabContent select{min-height: 220px;}
 .filterTabContent option{padding:5px 0px 5px 5px;}
+.filterCateTwo select{min-height: 450px;}
 
 
  /*************Responsive************/

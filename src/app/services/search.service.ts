@@ -22,42 +22,39 @@ export class SearchService {
       'userId': this.userId,
       'WCToken': this.WCToken,
       'WCTrustedToken': this.WCTrustedToken,
-      'personalizationID': this.personalizationID
+      'personalizationID': this.personalizationID,
+      'storeId': this.storeId
     })
   };
 
   searchData(searchTerm: string) {
     console.log('in search function');
-    const storeId = sessionStorage.getItem('storeId');
-    console.log(`${environment.apiUrl}/wcs/resources/store/${storeId}/cmcusersearch/findUser/${searchTerm}`);
-    return this.httpClient.get<any>(`${environment.apiUrl}/wcs/resources/store/${storeId}/cmcusersearch/findUser/${searchTerm}`,
+    console.log(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcusersearch/findUser/${searchTerm}`);
+    return this.httpClient.get<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcusersearch/findUser/${searchTerm}`,
       this.httpOptions);
   }
 
   searchProduct(searchTerm: string) {
     console.log('in search product function');
-    const storeId = sessionStorage.getItem('storeId');
-    console.log(`${environment.apiUrl}/wcs/resources/store/${storeId}/cmcproductsearch/findProduct/${searchTerm}`);
+    console.log(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcproductsearch/findProduct/${searchTerm}`);
 
-    return this.httpClient.get<any>(`${environment.apiUrl}/wcs/resources/store/${storeId}/cmcproductsearch/findProduct/${searchTerm}`,
+    return this.httpClient.get<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcproductsearch/findProduct/${searchTerm}`,
       this.httpOptions);
   }
 
   searchProductOnContract(searchTerm: string, contractId: string) {
     console.log('in search product function');
-    const storeId = sessionStorage.getItem('storeId');
-    console.log(`${environment.apiUrl}/wcs/resources/store/${storeId}/cmcproductsearch/findContractProduct/${contractId}/${searchTerm}`);
+    console.log(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcproductsearch/findContractProduct/${contractId}/${searchTerm}`);
 
-    return this.httpClient.get<any>(`${environment.apiUrl}/wcs/resources/store/${storeId}/cmcproductsearch/findContractProduct/${contractId}/${searchTerm}`,
+    return this.httpClient.get<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcproductsearch/findContractProduct/${contractId}/${searchTerm}`,
       this.httpOptions);
   }
 
   searchContractDetail(searchTerm: string) {
     console.log('Show contract details table');
-    const storeId = sessionStorage.getItem('storeId');
-    console.log(`${environment.apiUrl}/wcs/resources/store/${storeId}/cmccontractdetails/${searchTerm}`);
+    console.log(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmccontractdetails/${searchTerm}`);
 
-    return this.httpClient.get<any>(`${environment.apiUrl}/wcs/resources/store/${storeId}/cmccontractdetails/${searchTerm}`,
+    return this.httpClient.get<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmccontractdetails/${searchTerm}`,
       this.httpOptions);
   }
 }
