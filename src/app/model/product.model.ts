@@ -11,11 +11,13 @@ export class ProductModel {
     public available: boolean;
     public published: boolean;
     public price: string;
+    public govtPrice: string;
+    public costPrice: string;
     public tImage: string;
     public fImage: string;
 
     constructor(name: string, partnumber: string, sDesc: string, lDesc: string, keyword: string, mfPartnumber: string, mfName: string,
-        buyable: boolean, catgroupId: string, available: boolean, published: boolean, price: string, tImage: string, fImage: string) {
+        buyable: boolean, catgroupId: string, available: boolean, published: boolean, price: string, govtPrice: string, costPrice: string, tImage: string, fImage: string) {
       this.name = name;
       this.partnumber = partnumber;
       this.sDesc = sDesc;
@@ -28,6 +30,8 @@ export class ProductModel {
       this.available = available;
       this.published = published;
       this.price = price;
+      this.govtPrice = govtPrice;
+      this.costPrice = costPrice;
       this.tImage = tImage;
       this.fImage = fImage;
     }

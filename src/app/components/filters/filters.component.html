@@ -3,8 +3,7 @@
   <div class="row">
     <div class="col-lg-12">
       <div class="tab-content" id="nav-tabContent">
-        Coming Soon 
-        <!-- <div class="row mt-2 filterTab">
+         <div class="row mt-2 filterTab">
           <div class="col-lg-6 col-xl-5 col-md-12">
           <ul class="nav nav-pills mb-3" id="filterTab" role="tablist">
                 <li class="nav-item">
@@ -16,24 +15,22 @@
               </ul>
             </div>  
             <div class="col-xl-7 col-lg-6 col-md-12">
-              <textarea class="form-control" id="filterWarning" rows="2">Warning: Use advanced filters by category or Brand with Caution. Select the fileter type and use the arrows to turn on or off Categories and brands.</textarea>
+              <div class="text-danger border border-dark p-1 filterWarningTxt"><small> Warning: Use advanced filters by category or Brand with Caution. Select the filter type and use the arrows to turn on or off Categories and brands.</small></div>
             </div>
           </div>
                 <div class="tab-content filterTabContent" id="filterTabContent">
-                    <div class="tab-pane fade active show" id="filterCategory" role="tabpanel" aria-labelledby="filterTabOne">
+                    <div class="tab-pane fade active show filterCateOne" id="filterCategory" role="tabpanel" aria-labelledby="filterTabOne">
                           <form>
+                            <div class="filterSupplierCont">
                               <fieldset>
                                 <legend>Office Supplies</legend>
                                 <div class="row">
                                 <div class="col-4">
                                   <div class="form-group">
-                                    <div class="text-center"><label for="exampleFormControlSelect2">On</label></div>
-                                    <select multiple class="form-control" id="exampleFormControlSelect2">
-                                      <option>1</option>
-                                      <option>2</option>
-                                      <option>3</option>
-                                      <option>4</option>
-                                      <option>5</option>
+                                    <div class="text-center font-weight-bold"><span>On</span></div>
+                                    <select multiple class="form-control" id="" multiple>
+                                      <option>Adhesives glues & tapes</option>
+                                      <option>Books, pads & self adhesive notes</option>                             
                                     </select>
                                   </div>
                                 </div>
@@ -43,16 +40,102 @@
                                   <button type="button" class="btn btn-outline-dark btn-block mt-4 filterBtnArrow filterBtnArwLeftAll"></button>
                                   <button type="button" class="btn btn-outline-dark btn-block filterBtnArrow filterBtnArwLeft"></button>
                                 </div>
-                                <div class="col-4">sdsd</div>
-                                <div class="col-2"></div>
+                                <div class="col-4">
+                                    <div class="form-group">
+                                      <div class="text-center font-weight-bold"><span>Off</span></div>
+                                      <select multiple class="form-control" id="" multiple>
+                                        <option>Books, pads & self adhesive notes</option>                             
+                                      </select>
+                                    </div>
+                                  </div>
+                                <div class="col-2">
+                                  <div class="pt-4"><span>Store Products Included</span></div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="radioStoreProduct" id="radioStoreProductYes" value="option1" checked>
+                                        <label class="form-check-label" for="radioStoreProductYes">Yes</label>
+                                      </div>
+                                      <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="radioStoreProduct" id="radioStoreProductNo" value="option2">
+                                        <label class="form-check-label" for="radioStoreProductNo">No</label>
+                                      </div>
+                                      <div class="pt-4"><span>Core Products Included</span></div>
+                                      <div class="form-check">
+                                          <input class="form-check-input" type="radio" name="radioCoreProduct" id="radioCoreProductYes" value="option1" checked>
+                                          <label class="form-check-label" for="radioCoreProductYes"> Yes</label>
+                                        </div>
+                                        <div class="form-check">
+                                          <input class="form-check-input" type="radio" name="radioCoreProduct" id="radioCoreProductNo" value="option2">
+                                          <label class="form-check-label" for="radioCoreProductNo"> No</label>
+                                        </div>
+                                </div>
                               </div>
+                              <div class="row">
+                                  <div class="col-sm-1 offset-sm-11"><button class="btn btn-primary btn-block" type="button">Save</button></div>
+                            </div>
                               </fieldset>
+                            </div>
                             </form>
                     </div>
-                    <div class="tab-pane fade" id="filterSupplier" role="tabpanel" aria-labelledby="filterTabTwo">
-                      <p>Ad pariatur nostrud pariatur exercitation ipsum ipsum culpa mollit commodo mollit ex. Aute sunt incididunt amet commodo est sint nisi deserunt pariatur do. Aliquip ex eiusmod voluptate exercitation cillum id incididunt elit sunt. Qui minim sit magna Lorem id et dolore velit Lorem amet exercitation duis deserunt. Anim id labore elit adipisicing ut in id occaecat pariatur ut ullamco ea tempor duis.</p>
+                    <div class="tab-pane fade filterCateTwo" id="filterSupplier" role="tabpanel" aria-labelledby="filterTabTwo">
+                        <form>
+                            <div class="filterBrandCont">
+                              <fieldset>
+                                <legend>Brands</legend>
+                                <div class="row">
+                                <div class="col-4">
+                                  <div class="form-group">
+                                    <div class="text-center font-weight-bold"><span>On</span></div>
+                                    <select multiple class="form-control" id="" multiple>
+                                      <option>Initiative (House brand)</option>
+                                      <option>Nice Day (House Brand)</option>
+                                      <option>Office National (House Brand)</option>
+                                      <option>Artline</option>
+                                    </select>
+                                  </div>
+                                </div>
+                                <div class="col-2 pt-4">
+                                  <button type="button" class="btn btn-outline-dark btn-block filterBtnArrow filterBtnArwRight"></button>
+                                  <button type="button" class="btn btn-outline-dark btn-block filterBtnArrow filterBtnArwRightAll"></button>
+                                  <button type="button" class="btn btn-outline-dark btn-block mt-4 filterBtnArrow filterBtnArwLeftAll"></button>
+                                  <button type="button" class="btn btn-outline-dark btn-block filterBtnArrow filterBtnArwLeft"></button>
+                                </div>
+                                <div class="col-4">
+                                    <div class="form-group">
+                                      <div class="text-center font-weight-bold"><span>Off</span></div>
+                                      <select multiple class="form-control" id="" multiple>
+                                        <option>Books, pads & self adhesive notes</option>                             
+                                      </select>
+                                    </div>
+                                  </div>
+                                <div class="col-2">
+                                  <div class="pt-4"><span>Store Products Included</span></div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="radioBrandStore" id="radioBrandStoreYes" value="option1" checked>
+                                        <label class="form-check-label" for="radioBrandsStoreYes">Yes</label>
+                                      </div>
+                                      <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="radioBrandStore" id="radioBrandStoreNo" value="option2">
+                                        <label class="form-check-label" for="radioBrandStoreNo">No</label>
+                                      </div>
+                                      <div class="pt-4"><span>Core Products Included</span></div>
+                                      <div class="form-check">
+                                          <input class="form-check-input" type="radio" name="radioBrandCore" id="radioBrandCoreYes" value="option1" checked>
+                                          <label class="form-check-label" for="radioBrandCoreYes"> Yes</label>
+                                        </div>
+                                        <div class="form-check">
+                                          <input class="form-check-input" type="radio" name="radioBrandCore" id="radioBrandCoreNo" value="option2">
+                                          <label class="form-check-label" for="radioBrandCoreNo"> No</label>
+                                        </div>
+                                </div>
+                              </div>
+                              <div class="row">
+                                  <div class="col-sm-1 offset-sm-11"><button class="btn btn-primary btn-block" type="button">Save</button></div>
+                            </div>
+                              </fieldset>
+                            </div>
+                            </form>
                     </div>
-                </div> -->
+                </div> 
               
       </div>
     </div>

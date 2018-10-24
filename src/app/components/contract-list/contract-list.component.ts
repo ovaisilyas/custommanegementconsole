@@ -17,6 +17,7 @@ import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {PagerService} from '../../services/pager.service';
 import {AlertService} from '../../services/alert.service';
 import {ViewChild, ElementRef} from '@angular/core';
+import {Router} from '@angular/router';
 
 import { NgxSpinnerService } from 'ngx-spinner';
 
@@ -75,6 +76,7 @@ export class ContractListComponent implements OnInit {
     private contractService: ContractService,
     private alertService: AlertService,
     private spinner: NgxSpinnerService,
+    private router: Router,
   ) {}
 
   // array of all items to be paged
@@ -87,8 +89,13 @@ export class ContractListComponent implements OnInit {
   pagedItems: any[];
 
   ngOnInit() {
+    if (sessionStorage.getItem('WCToken') === null) {
+      this.router.navigate(['/login']);
+    }
     this.getContractList();
     this.getCustomerListforContract();
+    this.getBaseContracts();
+    this.getStoreShippingModes();
   }
 
   searchOnEnter(value: string) {
@@ -165,6 +172,7 @@ export class ContractListComponent implements OnInit {
   }
 
   getContractList() {
+    this.loading = true;
     this.contractService.getContractList()
       .pipe(map(
         (contract) => {
@@ -236,6 +244,7 @@ export class ContractListComponent implements OnInit {
   }
 
   addNewContract() {
+    this.spinner.show();
     const currentTime = new Date();
     if (this.contract.startDate !== '') { this.contract.startDate = this.contract.startDate + 'T' + '00:00:00.0'; } else { this.contract.startDate = this.contract.startDate; }
     if (this.contract.endDate !== '') { this.contract.endDate = this.contract.endDate + 'T' + '00:00:00.0'; } else { this.contract.endDate = this.contract.endDate; }
@@ -243,15 +252,17 @@ export class ContractListComponent implements OnInit {
     this.contractService.addNewContract(this.contract)
     .subscribe(
       data => {
-        // this.alertService.success('New Contract Created');
+        this.alertService.success(data.message);
         this.contract.startDate = '';
         this.contract.endDate = '';
         this.getContractList();
+        this.spinner.hide();
       },
       error => {
         this.alertService.error(error);
         this.contract.startDate = '';
         this.contract.endDate = '';
+        this.spinner.hide();
       }
     );
     document.getElementById('addNewContractModalClose').click();
@@ -282,8 +293,6 @@ export class ContractListComponent implements OnInit {
           this.setPage(1);
           this.openContractDetail();
           this.showContractDetailTable = true;
-          this.getBaseContracts();
-          this.getStoreShippingModes();
         },
         error => {
           console.log(error);
@@ -352,10 +361,9 @@ export class ContractListComponent implements OnInit {
     this.showEdit = null;
   }
 
-  getCustomerforItem(code: any, price: any) {
+  getCustomerforItem(code: any) {
     this.selectedItemNumber = code;
-    this.selectedItemPrice = price;
-    /* this.contractService.getCustomersforItem()
+    this.contractService.getCustomersforItem(code)
     .pipe(map(
       (list) => {
         const customerList = list['accountCustomerList'];
@@ -364,17 +372,17 @@ export class ContractListComponent implements OnInit {
     ))
     .subscribe(
       data => {
-        this.ItemCustomerList = data;
+        this.selectedCustomer = data;
       },
       error => {
         this.alertService.error(error);
       }
 
-    ); */
+    );
   }
 
   getCustomerListforContract() {
-    this.contractService.getCustomersforItem()
+    this.contractService.getCustomersforContract()
     .pipe(map(
       (list) => {
         const customerList = list['accountCustomerList'];
@@ -424,6 +432,7 @@ export class ContractListComponent implements OnInit {
     .subscribe(
       data => {
         this.alertService.success('Item Added');
+        this.getContractDetail();
         this.spinner.hide();
       },
       error => {
@@ -500,6 +509,7 @@ export class ContractListComponent implements OnInit {
     }
 
     sendSeletedCustomers() {
+      this.spinner.show();
       document.getElementById('selectCustomerPopupClose').click();
       const list = {
         'partNumber' : this.selectedItemNumber,
@@ -510,10 +520,12 @@ export class ContractListComponent implements OnInit {
       this.contractService.saveSelectedCustomers(list)
       .subscribe(
         data => {
-          this.alertService.success('Customers added to Contract');
+          this.alertService.success(data.message);
+          this.spinner.hide();
         },
         error => {
           this.alertService.error(error);
+          this.spinner.hide();
         }
 
       );

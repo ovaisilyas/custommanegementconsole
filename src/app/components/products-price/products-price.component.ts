@@ -14,6 +14,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ProductListModel } from '../../model/productlist.model';
 import { ProductModel } from '../../model/product.model';
 import { ItemContractListModel } from '../../model/itemcontractlist.model';
+import {Router} from '@angular/router';
 
 declare var require: any;
 
@@ -26,7 +27,7 @@ export class ProductsPriceComponent implements OnInit {
   categoryList: CategoryListModel[];
   productList: ProductListModel[];
   itemContractList: ItemContractListModel[];
-  productDetail = new ProductModel('', '', '', '', '', '', '', false, '', false, false, '', '', '');
+  productDetail = new ProductModel('', '', '', '', '', '', '', false, '', false, false, '', '', '', '', '');
   loading = true;
   showPagination = false;
   selectedId = '';
@@ -42,6 +43,7 @@ export class ProductsPriceComponent implements OnInit {
     private pagerService: PagerService,
     private alertService: AlertService,
     private spinner: NgxSpinnerService,
+    private router: Router,
   ) { }
 
    // array of all items to be paged
@@ -54,6 +56,9 @@ export class ProductsPriceComponent implements OnInit {
    pagedItems: any[];
 
   ngOnInit() {
+    if (sessionStorage.getItem('WCToken') === null) {
+      this.router.navigate(['/login']);
+    }
   }
 
   onEnter(value: string) {
@@ -166,7 +171,8 @@ export class ProductsPriceComponent implements OnInit {
   }
 
   resetForm() {
-    this.productDetail = new ProductModel('', '', '', '', '', '', '', false, '', false, false, '', '', '');
+    this.productDetail = new ProductModel('', '', '', '', '', '', '', false, '', false, false, '', '', '', '', '');
+    this.selectedId = '';
   }
 
   getCategoryId(value: any) {
