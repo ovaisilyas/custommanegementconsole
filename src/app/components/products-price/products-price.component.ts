@@ -56,7 +56,7 @@ export class ProductsPriceComponent implements OnInit {
    pagedItems: any[];
 
   ngOnInit() {
-    if (sessionStorage.getItem('WCToken').length === 0) {
+    if (sessionStorage.getItem('WCToken') === null) {
       this.router.navigate(['/login']);
     }
   }
