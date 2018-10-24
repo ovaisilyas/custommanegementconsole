@@ -175,8 +175,8 @@
          </div>
 
          <div class="form-group row">
-          <label for="productPrice" class="col-sm-3 col-form-label">Price: <span class="text-danger">*</span></label>
-            <div class="col-sm-9">
+          <label for="productPrice" class="col-sm-3 col-form-label">List Price: <span class="text-danger">*</span></label>
+            <div class="col-sm-2">
               <input type="text" id="productPrice" class="form-control" required
               [(ngModel)]="productDetail.price" name="price" #price="ngModel"
               [ngClass]="{ 'is-invalid': newStoreProdForm.submitted && price.invalid }">
@@ -184,6 +184,24 @@
                   <div *ngIf="!!price.errors.required">Price is required</div>
                 </div>
             </div>
+            <label for="productPrice" class="col col-form-label pl-0 pr-0">Gov Price: <span class="text-danger">*</span></label>
+            <div class="col-sm-2">
+                <input type="text" id="productPrice" class="form-control" required
+                [(ngModel)]="productDetail.price" name="price" #price="ngModel"
+                [ngClass]="{ 'is-invalid': newStoreProdForm.submitted && price.invalid }">
+                <div *ngIf="newStoreProdForm.submitted && price.invalid" class="invalid-feedback">
+                    <div *ngIf="!!price.errors.required">Price is required</div>
+                  </div>
+              </div>
+              <label for="productPrice" class="col col-form-label pl-0 pr-0">Cost Price: <span class="text-danger">*</span></label>
+              <div class="col-sm-2">
+                <input type="text" id="productPrice" class="form-control" required
+                [(ngModel)]="productDetail.price" name="price" #price="ngModel"
+                [ngClass]="{ 'is-invalid': newStoreProdForm.submitted && price.invalid }">
+                <div *ngIf="newStoreProdForm.submitted && price.invalid" class="invalid-feedback">
+                    <div *ngIf="!!price.errors.required">Price is required</div>
+                  </div>
+              </div>
          </div>      
          <div class="form-group row">
               <label for="productTImage" class="col-sm-3 col-form-label">Image 1:</label>
