@@ -113,7 +113,7 @@
                     </td>
                     <td>
                       <a (click)="showEditPrice(i,item.price)">Edit Price</a> 
-                      <a role="button" data-toggle="modal" data-target="#addCustomers" (click)="getCustomerforItem(item.partnumber, item.price);">Customers</a>
+                      <a role="button" data-toggle="modal" data-target="#addCustomers" (click)="getCustomerforItem(item.partnumber); selectedItemPrice = item.price">Customers</a>
                       <a role="button" data-toggle="modal" data-target="#deleteCustomers" (click)="deletePartnumber = item.partnumber">Delete</a></td>
                   </tr>
                 </tbody>
@@ -154,21 +154,17 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <form #addContractForm="ngForm" novalidate>
+        <form #addContractForm="ngForm">
         <div class="modal-body">
          <div class="form-group row">
           <label for="accountName" class="col-sm-3 col-form-label">Account Name: <span class="text-danger">*</span></label>
             <div class="col-sm-9">
 
-                  <input type="text" list="customerDatalist" *ngIf="!loading" class="form-control" required [disabled]="editContract"
+                  <input type="text" list="customerDatalist" *ngIf="!loading" required class="form-control" [disabled]="editContract"
                   [(ngModel)]="contract.accountName" name="accountName" placeholder="Select Account">
                   <datalist id="customerDatalist">
                     <option *ngFor="let item of ItemCustomerList" [value]="item.customerName">
                   </datalist>
-
-                  <div *ngIf="addContractForm.submitted && accountName.invalid" class="invalid-feedback">
-                      <div *ngIf="!!accountName.errors.required">Account Name is required</div>
-                  </div>
             </div>
          </div>
   
@@ -176,35 +172,22 @@
           <label for="contractName" class="col-sm-3 col-form-label">Contract Name: <span class="text-danger">*</span></label>
             <div class="col-sm-9">
                 <input type="text" id="contractName" class="form-control" required [disabled]="editContract"
-                [(ngModel)]="contract.contractName" name="contractName" #contractName="ngModel"
-                [ngClass]="{ 'is-invalid': addContractForm.submitted && contractName.invalid }">
-                <div *ngIf="addContractForm.submitted && contractName.invalid" class="invalid-feedback">
-                    <div *ngIf="!!contractName.errors.required">Contract Name is required</div>
-                </div>
+                [(ngModel)]="contract.contractName" name="contractName" #contractName="ngModel">
             </div>
          </div>
           <div class="form-group row">
           <label for="chargeBy" class="col-sm-3 col-form-label">Charges by: <span class="text-danger">*</span></label>
             <div class="col-sm-3">
-                <select id="chargeBy" class="form-control" required [(ngModel)]="contract.chargeBy" name="chargeBy" #chargeBy="ngModel"
-                [ngClass]="{ 'is-invalid': addContractForm.submitted && chargeBy.invalid }">
+                <select id="chargeBy" class="form-control" [(ngModel)]="contract.chargeBy" name="chargeBy" #chargeBy="ngModel">
                   <option value="Seller">StandardShippingChargeBySeller</option>
                   <option value="Buyer">ShippingChargeByCarrier</option>
                 </select>
-                <div *ngIf="addContractForm.submitted && chargeBy.invalid" class="invalid-feedback">
-                    <div *ngIf="!!chargeBy.errors.required">Charges By is required</div>
-                </div>
             </div>
             <label for="shipBy" class="col-sm-3 col-form-label text-right">Ship By: <span class="text-danger">*</span></label>
                 <div class="col-sm-3">
-                    <select id="shipBy" class="form-control" required [(ngModel)]="contract.shipBy" name="shipBy" #shipBy="ngModel"
-                    [ngClass]="{ 'is-invalid': addContractForm.submitted && shipBy.invalid }">
-                    <option (value)="Courier">Courier</option>
-                      <option *ngFor="let item of shippingModes" (value)="item">{{item}}</option>                    
+                    <select id="shipBy" class="form-control" [(ngModel)]="contract.shipBy" name="shipBy" #shipBy="ngModel">
+                      <option *ngFor="let item of shippingModes" value="item">{{item}}</option>                    
                     </select>
-                    <div *ngIf="addContractForm.submitted && shipBy.invalid" class="invalid-feedback">
-                        <div *ngIf="!!shipBy.errors.required">Ship by is required</div>
-                    </div>
                 </div>
          </div>
           
@@ -226,19 +209,15 @@
          <div class="form-group row">
             <label for="shortDescription" class="col-sm-3 col-form-label">Short Description: <span class="text-danger">*</span></label>
               <div class="col-sm-9">
-                  <input type="text" id="shortDescription" class="form-control" required [(ngModel)]="contract.shortDescription" name="shortDescription" #shortDescription="ngModel"
-                  [ngClass]="{ 'is-invalid': addContractForm.submitted && shortDescription.invalid }">
-                  <div *ngIf="addContractForm.submitted && shortDescription.invalid" class="invalid-feedback">
-                      <div *ngIf="!!shortDescription.errors.required">Short Description is required</div>
-                  </div>
+                  <input type="text" id="shortDescription" class="form-control" required [(ngModel)]="contract.shortDescription" name="shortDescription" #shortDescription="ngModel">
+                 
               </div>
            </div> 
           <div class="form-group row">
           <label for="longDescription" class="col-sm-3 col-form-label">Long Description:</label>
             <div class="col-sm-9">
                 <input type="text" id="longDescription" class="form-control"
-                [(ngModel)]="contract.longDescription" name="longDescription" #longDescription="ngModel"
-                [ngClass]="{ 'is-invalid': addContractForm.submitted && longDescription.invalid }">
+                [(ngModel)]="contract.longDescription" name="longDescription" #longDescription="ngModel">
             </div>
          </div>
   
@@ -246,8 +225,7 @@
           <label for="minOrdAmount" class="col-sm-3 col-form-label">Min Order Amount:</label>
             <div class="col-sm-9">
                 <input type="text" id="minOrdAmount" class="form-control"
-                [(ngModel)]="contract.minOrdAmnt" name="minOrdAmnt" #minOrdAmnt="ngModel"
-                [ngClass]="{ 'is-invalid': addContractForm.submitted && minOrdAmnt.invalid }">
+                [(ngModel)]="contract.minOrdAmnt" name="minOrdAmnt" #minOrdAmnt="ngModel">
             </div>
          </div> 
              
@@ -255,8 +233,7 @@
                 <label for="includeWholeCatalog" class="col-sm-3 col-form-label">Include Whole Catalog:</label>
                   <div class="col-sm-9">
                       <input type="checkbox" id="includeWholeCatalog" class="form-check-label" (change)="switchWholeCatalog($event)"
-                      name="includeWholeCatalog" checked
-                      [ngClass]="{ 'is-invalid': addContractForm.submitted && includeWholeCatalog.invalid }">
+                      name="includeWholeCatalog" checked>
                   </div>
                </div> 
                <div class="card bg-light mb-3" *ngIf="showWholeCatalog">
@@ -264,8 +241,7 @@
                     <div class="form-row mb-3">
                         <label for="includeWholeCatalogAdjType" class="col-sm-6 col-form-label">Include Whole Catalog Adjustment Type: <span class="text-danger">*</span></label>
                         <div class="col-sm-6">
-                            <select id="includeWholeCatalogAdjType" class="form-control" [(ngModel)]="contract.includeWholeCatalogAdjType" name="includeWholeCatalogAdjType" #includeWholeCatalogAdjType="ngModel"
-                            [ngClass]="{ 'is-invalid': addContractForm.submitted && includeWholeCatalogAdjType.invalid }">
+                            <select id="includeWholeCatalogAdjType" class="form-control" [required]="contract.includeWholeCatalog === 'yes'" [(ngModel)]="contract.includeWholeCatalogAdjType" name="includeWholeCatalogAdjType" #includeWholeCatalogAdjType="ngModel">
                               <option value="m">Mark Up</option>
                               <option value="d">Mark Down</option>
                             </select>
@@ -274,9 +250,8 @@
                         <div class="form-row">
                         <label for="includeWholeCatalogAdjustment" class="col-sm-6 col-form-label">Include Whole Catalog Adjustment: <span class="text-danger">*</span></label>
                         <div class="col-sm-6">
-                            <input type="text" id="includeWholeCatalogAdjustment" class="form-control"
-                            [(ngModel)]="contract.includeWholeCatalogAdjustment" name="includeWholeCatalogAdjustment" #includeWholeCatalogAdjustment="ngModel"
-                            [ngClass]="{ 'is-invalid': addContractForm.submitted && includeWholeCatalogAdjustment.invalid }">
+                            <input type="text" id="includeWholeCatalogAdjustment" class="form-control" [required]="contract.includeWholeCatalog === 'yes'"
+                            [(ngModel)]="contract.includeWholeCatalogAdjustment" name="includeWholeCatalogAdjustment" #includeWholeCatalogAdjustment="ngModel">
                         </div>
                       </div>
                     </div>
@@ -290,8 +265,7 @@
                  <div class="form-group row">
                     <label for="priceLevel" class="col-sm-3 col-form-label">Price Level:</label>
                       <div class="col-sm-9">
-                          <select id="priceLevel" class="form-control" [disabled]="contract.contractRefrence != '' && contract.contractRefrence != null && contract.contractRefrence !='Does not refer to a contract'" [required]="!contract.contractRefrence" [(ngModel)]="contract.priceLevel" name="priceLevel" #priceLevel="ngModel"
-                          [ngClass]="{ 'is-invalid': addContractForm.submitted && priceLevel.invalid }">
+                          <select id="priceLevel" class="form-control" [disabled]="contract.contractRefrence != '' && contract.contractRefrence != null && contract.contractRefrence !='Does not refer to a contract'" [required]="contract.contractRefrence === ''" [(ngModel)]="contract.priceLevel" name="priceLevel" #priceLevel="ngModel">
                             <option value="">Select Price Level</option>
                             <option value="1">List</option>
                             <option value="2">Cost</option>
@@ -317,16 +291,13 @@
                             <option value="s8">Sell8</option>
                             <option value="nm">Natmed</option>
                           </select>
-                          <div *ngIf="addContractForm.submitted && priceLevel.invalid" class="invalid-feedback">
-                              <div *ngIf="!!priceLevel.errors.required">Price level is required</div>
-                          </div>
+                         
                       </div>
                    </div>
                  <div class="form-group row">
                     <label for="contractRefrence" class="col-sm-3 col-form-label">Contract Reference:</label>
                       <div class="col-sm-9">
-                          <select id="contractReference" class="form-control" [disabled]="contract.priceLevel != '' && contract.priceLevel != null" [required]="!contract.priceLevel" [(ngModel)]="contract.contractRefrence" name="contractRefrence" #contractRefrence="ngModel"
-                          [ngClass]="{ 'is-invalid': addContractForm.submitted && contractRefrence.invalid }">
+                          <select id="contractRefrence" class="form-control" [disabled]="contract.priceLevel != '' && contract.priceLevel != null" [required]="contract.priceLevel === ''" [(ngModel)]="contract.contractRefrence" name="contractRefrence" #contractRefrence="ngModel">
                             <option value="">Select Contract Reference</option>
                             <option *ngFor="let item of baseContractList" (value)="item">{{item}}</option>
                           </select>
@@ -336,7 +307,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" id="addNewContractModalClose" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-PrimaryModal" [disabled]="!(addContractForm.form.valid)" (click)="addNewContract()">Save</button>
+          <button type="button" class="btn btn-PrimaryModal" [disabled]="!addContractForm.form.valid" (click)="addNewContract()">Save</button>
         </div>
       </form>
       </div>
@@ -448,27 +419,19 @@
                        appAutofocus placeholder="Enter Code or Description and Press Enter" required>
                        <img style="display:inline;" *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
                   <button type="button" style="display:none;" id="openProductListButton" data-toggle="modal" data-target="#productListModal">productListModal</button>
-                 
-                  <div *ngIf="addItemForm.submitted && partnumber.invalid" class="invalid-feedback">
-                      <div *ngIf="!!partnumber.errors.required">Product code is required</div>
-                  </div>
               </div>
            </div>
             <div class="form-group row">
             <label class="col-sm-3 col-form-label">Price: <span class="text-danger">*</span></label>
               <div class="col-sm-9">
                   <input type="text" id="productPrice" class="form-control" required
-                  [(ngModel)]="contractItem.itemFixedPrice" name="productPrice" #productPrice="ngModel"
-                  [ngClass]="{ 'is-invalid': addItemForm.submitted && productPrice.invalid }">
-                  <div *ngIf="addItemForm.submitted && productPrice.invalid" class="invalid-feedback">
-                      <div *ngIf="!!productPrice.errors.required">Price is required</div>
-                  </div>
+                  [(ngModel)]="contractItem.itemFixedPrice" name="productPrice" #productPrice="ngModel">
               </div>
            </div>
           </div>
           <div class="modal-footer">
             <button type="button" id="addContractItemClose" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-PrimaryModal" (click)="saveAddItem();">Save</button>
+            <button type="button" class="btn btn-PrimaryModal" [disabled]="!addItemForm.form.valid" (click)="saveAddItem();">Save</button>
           </div>
         </form>
         </div>

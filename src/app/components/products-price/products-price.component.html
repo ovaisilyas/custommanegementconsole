@@ -184,22 +184,22 @@
                   <div *ngIf="!!price.errors.required">Price is required</div>
                 </div>
             </div>
-            <label for="productPrice" class="col col-form-label pl-0 pr-0">Gov Price: <span class="text-danger">*</span></label>
+            <label for="productgovtPrice" class="col col-form-label pl-0 pr-0">Gov Price: <span class="text-danger">*</span></label>
             <div class="col-sm-2">
-                <input type="text" id="productPrice" class="form-control" required
-                [(ngModel)]="productDetail.price" name="price" #price="ngModel"
-                [ngClass]="{ 'is-invalid': newStoreProdForm.submitted && price.invalid }">
-                <div *ngIf="newStoreProdForm.submitted && price.invalid" class="invalid-feedback">
-                    <div *ngIf="!!price.errors.required">Price is required</div>
+                <input type="text" id="productgovtPrice" class="form-control" required
+                [(ngModel)]="productDetail.govtPrice" name="govtPrice" #govtPrice="ngModel"
+                [ngClass]="{ 'is-invalid': newStoreProdForm.submitted && govtPrice.invalid }">
+                <div *ngIf="newStoreProdForm.submitted && govtPrice.invalid" class="invalid-feedback">
+                    <div *ngIf="!!govtPrice.errors.required">Gov Price is required</div>
                   </div>
               </div>
-              <label for="productPrice" class="col col-form-label pl-0 pr-0">Cost Price: <span class="text-danger">*</span></label>
+              <label for="productcostPrice" class="col col-form-label pl-0 pr-0">Cost Price: <span class="text-danger">*</span></label>
               <div class="col-sm-2">
-                <input type="text" id="productPrice" class="form-control" required
-                [(ngModel)]="productDetail.price" name="price" #price="ngModel"
-                [ngClass]="{ 'is-invalid': newStoreProdForm.submitted && price.invalid }">
-                <div *ngIf="newStoreProdForm.submitted && price.invalid" class="invalid-feedback">
-                    <div *ngIf="!!price.errors.required">Price is required</div>
+                <input type="text" id="productcostPrice" class="form-control" required
+                [(ngModel)]="productDetail.costPrice" name="costPrice" #costPrice="ngModel"
+                [ngClass]="{ 'is-invalid': newStoreProdForm.submitted && costPrice.invalid }">
+                <div *ngIf="newStoreProdForm.submitted && costPrice.invalid" class="invalid-feedback">
+                    <div *ngIf="!!costPrice.errors.required">Cost Price is required</div>
                   </div>
               </div>
          </div>      

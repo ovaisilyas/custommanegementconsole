@@ -70,8 +70,14 @@ import { ContractModel } from '../model/contract.model';
       this.httpOptions);
     }
 
-    getCustomersforItem() {
+    getCustomersforItem(partNumber: any) {
       console.log('Get customer list for item');
+      return this.httpClient.get<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcaccount/customerlist/${partNumber}`,
+      this.httpOptions);
+    }
+
+    getCustomersforContract() {
+      console.log('Get customer list for Contract');
       return this.httpClient.get<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcaccount/customerlist`,
       this.httpOptions);
     }

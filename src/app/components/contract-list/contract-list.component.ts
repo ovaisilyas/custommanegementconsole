@@ -244,6 +244,7 @@ export class ContractListComponent implements OnInit {
   }
 
   addNewContract() {
+    this.spinner.show();
     const currentTime = new Date();
     if (this.contract.startDate !== '') { this.contract.startDate = this.contract.startDate + 'T' + '00:00:00.0'; } else { this.contract.startDate = this.contract.startDate; }
     if (this.contract.endDate !== '') { this.contract.endDate = this.contract.endDate + 'T' + '00:00:00.0'; } else { this.contract.endDate = this.contract.endDate; }
@@ -255,11 +256,13 @@ export class ContractListComponent implements OnInit {
         this.contract.startDate = '';
         this.contract.endDate = '';
         this.getContractList();
+        this.spinner.hide();
       },
       error => {
         this.alertService.error(error);
         this.contract.startDate = '';
         this.contract.endDate = '';
+        this.spinner.hide();
       }
     );
     document.getElementById('addNewContractModalClose').click();
@@ -358,10 +361,9 @@ export class ContractListComponent implements OnInit {
     this.showEdit = null;
   }
 
-  getCustomerforItem(code: any, price: any) {
+  getCustomerforItem(code: any) {
     this.selectedItemNumber = code;
-    this.selectedItemPrice = price;
-    /* this.contractService.getCustomersforItem()
+    this.contractService.getCustomersforItem(code)
     .pipe(map(
       (list) => {
         const customerList = list['accountCustomerList'];
@@ -370,17 +372,17 @@ export class ContractListComponent implements OnInit {
     ))
     .subscribe(
       data => {
-        this.ItemCustomerList = data;
+        this.selectedCustomer = data;
       },
       error => {
         this.alertService.error(error);
       }
 
-    ); */
+    );
   }
 
   getCustomerListforContract() {
-    this.contractService.getCustomersforItem()
+    this.contractService.getCustomersforContract()
     .pipe(map(
       (list) => {
         const customerList = list['accountCustomerList'];
@@ -430,6 +432,7 @@ export class ContractListComponent implements OnInit {
     .subscribe(
       data => {
         this.alertService.success('Item Added');
+        this.getContractDetail();
         this.spinner.hide();
       },
       error => {
@@ -506,6 +509,7 @@ export class ContractListComponent implements OnInit {
     }
 
     sendSeletedCustomers() {
+      this.spinner.show();
       document.getElementById('selectCustomerPopupClose').click();
       const list = {
         'partNumber' : this.selectedItemNumber,
@@ -516,10 +520,12 @@ export class ContractListComponent implements OnInit {
       this.contractService.saveSelectedCustomers(list)
       .subscribe(
         data => {
-          this.alertService.success('Customers added to Contract');
+          this.alertService.success(data.message);
+          this.spinner.hide();
         },
         error => {
           this.alertService.error(error);
+          this.spinner.hide();
         }
 
       );
