@@ -11,37 +11,12 @@ import { NgxSpinnerService } from 'ngx-spinner';
   styleUrls: ['./catalogues.component.css']
 })
 export class CataloguesComponent implements OnInit {
-  extendedMoqList = {
-    'cfcondId': '51509',
-    'onFilter': false,
-    'cfcondvalId': '51509',
-    'identifier': 'EXTENDED',
-    'cfcondgrpId': '38506',
-      'COST': {
-        'CFcondId': '',
-        'cfcondvalId': '51509',
-        'attrVal': '5',
-        'attrValId': ''
-      },
-      'MOQ': {
-        'CFcondId': '',
-        'cfcondvalId': '51509',
-        'attrVal': '2',
-        'attrValId': ''
-      },
-      'RQ': {
-        'CFcondId': '',
-        'cfcondvalId': '51509',
-        'attrVal': false,
-        'attrValId': ''
-      }
-  };
-
+  extendedMoqList = {};
   extendedCostGreaterList = {};
-  coreCatalogs = {};
-  extendedCatalogs = {};
-  localCoreCatalogModel = {};
-  localExtCatalogModel = {};
+  coreCatalogs = [];
+  extendedCatalogs = [];
+  localCoreCatalogModel = [];
+  localExtCatalogModel = [];
 
   constructor(
     private router: Router,
@@ -54,6 +29,7 @@ export class CataloguesComponent implements OnInit {
     }
     this.getExtendedMoqList();
     this.getExtendedCostGreaterList();
+    this.getExtendedCatalog();
   }
 
   getExtendedMoqList() {
@@ -119,10 +95,9 @@ export class CataloguesComponent implements OnInit {
     this.extendedCatalogs = [];
     this.catalogService.getExtendedCatalog()
     .pipe(map(
-      (product) => {
-        const searchDetails = product['SearchDetails'];
-        const searchList = searchDetails['SearchList'];
-        return searchList;
+      (list) => {
+        const extCatlist = list['extAisLesList'];
+        return extCatlist;
       }
     ))
     .subscribe(
@@ -136,6 +111,18 @@ export class CataloguesComponent implements OnInit {
   }
 
   saveExtendedCatalog() {
+    const localModel = this.localExtCatalogModel;
+
+    for (const key in localModel) {
+      if (localModel[key].COST.attrValId !== null && localModel[key].COST.attrValId !== '') {
+        localModel[key].COST.attrvalue = document.getElementById('optionCost' + localModel[key].COST.attrValId).innerText;
+      }
+    }
+    for (const key in localModel) {
+      if (localModel[key].MOQ.attrValId !== null && localModel[key].MOQ.attrValId !== '') {
+        localModel[key].MOQ.attrvalue = document.getElementById('optionMoq' + localModel[key].MOQ.attrValId).innerText;
+      }
+    }
     this.catalogService.saveExtendedCatalog(this.localExtCatalogModel)
     .subscribe(
       data => {

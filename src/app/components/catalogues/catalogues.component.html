@@ -3,7 +3,6 @@
   <div class="row">
     <div class="col-lg-12">
       <div class="tab-content" id="nav-tabContent">
-      <form>
           <div class="row mt-1">
               <div class="col-lg-5 col-sm-5 col-xl-5 catalogCol1">
                 <h5><span>Core</span></h5>
@@ -162,19 +161,19 @@
             </div>
       </div>
 
-      <div class="wrapperExtendedRow">
-      <div class="row">
+	<div class="wrapperExtendedRow">
+      <div class="row" *ngFor="let item of localExtCatalogModel; let i = index">
             <div class="col-lg-5 col-sm-5 col-xl-5 catalogCol3">
                     <div class="form-group row">
-                            <div class="col col-lg-7 col-xl-6 offset-sm-1">Stationery/Office Products</div>
+                            <div class="col col-lg-7 col-xl-6 offset-sm-1">{{item.identifier}}</div>
                             <div class="col col-lg-4 col-xl-5">
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="radioStationery" id="radioStationeryOff" value="option1">
-                                    <label class="form-check-label" for="radioStationeryOff">Off</label>
+                                    <input class="form-check-input" type="radio" [name]="item.cfcondId" [attr.id]="'radioStationeryOff'+i" [(ngModel)]="item.onFilter" [value]="false">
+                                    <label class="form-check-label" [attr.for]="'radioStationeryOff'+i">Off</label>
                                   </div>
                                   <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="radioStationery" id="radioStationeryOn" value="option2">
-                                    <label class="form-check-label" for="radioStationeryOn">On</label>
+                                    <input class="form-check-input" type="radio" [name]="item.cfcondId" [attr.id]="'radioStationeryOn'+i" [(ngModel)]="item.onFilter" [value]="true">
+                                    <label class="form-check-label" [attr.for]="'radioStationeryOn'+i">On</label>
                                   </div>
                              
                             </div>
@@ -184,22 +183,23 @@
                     <div class="form-row">
                             <div class="col-xl-3 col-lg-3 col-md-3 col-sm-2">
                                
-                                <select id="selectLess1" class="form-control">
-                                  <option selected>N/A</option>
-                                 
+                                <select [attr.id]="'selectMoq'+item.cfcondgrpId" class="form-control" [(ngModel)]="item.MOQ.attrValId" [name]="item.MOQ.cfcondId" #moqValue="ngModel">
+                                    <option value="">N/A</option>
+                                  <option *ngFor="let item of extendedMoqList" [value]="item.attrValId" [attr.id]="'optionMoq'+item.attrValId">{{item.attrValue}}</option>                                 
                                 </select>
+                                <input type="hidden" [value]="item.attrValue" />
                             </div>
                             <div class="col-xl-3 col-lg-3 col-md-3 col-sm-2">
                                
-                                <select id="selectGrt1" class="form-control">
-                                  <option selected>0</option>
-                                
+                                <select [attr.id]="'selectCost'+item.cfcondgrpId" class="form-control" [(ngModel)]="item.COST.attrValId" [name]="item.COST.cfcondId" #costValue="ngModel">
+                                    <option value="">0</option>
+                                  <option *ngFor="let item of extendedCostGreaterList" [value]="item.attrValId" [attr.id]="'optionCost'+item.attrValId">{{item.attrValue}}</option>
                                 </select>
                             </div>
                             <div class="col-xl-1 col-md-2">
                                
                                 <div class="form-check">
-                                    <input id="ChkRq1" class="form-check-input" type="checkbox">
+                                    <input id="ChkRq1" class="form-check-input" type="checkbox" [checked]="item.RQ.attrvalue" [(ngModel)]="item.RQ.attrvalue" [name]="item.RQ.cfcondId" #rqValue="ngModel">
                                   </div>
                             </div>
                             <div class="col">
@@ -216,402 +216,10 @@
                           </div>
             </div>
       </div>
+	</div>
       <div class="row">
-            <div class="col-lg-5 col-sm-5 col-xl-5 catalogCol3">
-                    <div class="form-group row">
-                            <div class="col col-lg-7 col-xl-6 offset-sm-1">Paper</div>
-                            <div class="col col-lg-4 col-xl-5">
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="radioPaper" id="radioPaperOff" value="option1">
-                                    <label class="form-check-label" for="radioPaperOff">Off</label>
-                                  </div>
-                                  <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="radioPaper" id="radioPaperOn" value="option2">
-                                    <label class="form-check-label" for="radioPaperOn">On</label>
-                                  </div>
-                             
-                            </div>
-                          </div>
-             </div>
-            <div class="col-xl-7 col-lg-7 col-sm-7 catalogCol4">
-                    <div class="form-row">
-                            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-2">
-                                <select id="selectLess2" class="form-control">
-                                  <option selected>N/A</option>
-                                 
-                                </select>
-                            </div>
-                            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-2">
-                                <select id="selectGrt2" class="form-control">
-                                  <option selected>0</option>
-                                
-                                </select>
-                            </div>
-                            <div class="col-xl-1 col-md-2">
-                                <div class="form-check">
-                                    <input id="ChkRq2" class="form-check-input" type="checkbox">
-                                  </div>
-                            </div>
-                            <div class="col">
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="radioExtRange2" id="radioExtRangeOff2" value="option1">
-                                    <label class="form-check-label" for="radioExtRangeOff2">Off</label>
-                                  </div>
-                                  <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="radioExtRange2" id="radioExtRangeOn2" value="option2">
-                                    <label class="form-check-label" for="radioExtRangeOn2">On</label>
-                                  </div>
-                              </div>
-                          </div>
-             </div>   
+            <div class="col-md-2 col-lg-1 offset-md-10 offset-lg-11"><button class="btn btn-primary btn-block" type="button" (click)="saveExtendedCatalog();">Save</button></div>
       </div>
-      <div class="row">
-            <div class="col-lg-5 col-sm-5 col-xl-5 catalogCol3">
-                    <div class="form-group row">
-                            <div class="col col-lg-7 col-xl-6 offset-sm-1">Ink & Toners</div>
-                            <div class="col col-lg-4 col-xl-5">
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="radioInk" id="radioInkOff" value="option1">
-                                    <label class="form-check-label" for="radioInkOff">Off</label>
-                                  </div>
-                                  <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="radioInk" id="radioInkOn" value="option2">
-                                    <label class="form-check-label" for="radioInkOn">On</label>
-                                  </div>
-                             
-                            </div>
-                          </div>
-             </div>
-            <div class="col-xl-7 col-lg-7 col-sm-7 catalogCol4">
-                 <div class="form-row">
-                        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-2">
-                            <select id="selectLess3" class="form-control">
-                              <option selected>N/A</option>
-                             
-                            </select>
-                        </div>
-                        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-2">
-                            <select id="selectGrt3" class="form-control">
-                              <option selected>0</option>
-                            
-                            </select>
-                        </div>
-                        <div class="col-xl-1 col-md-2">
-                            <div class="form-check">
-                                <input id="ChkRq3" class="form-check-input" type="checkbox">
-                              </div>
-                        </div>
-                        <div class="col">
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="radioExtRange3" id="radioExtRangeOff3" value="option1">
-                                <label class="form-check-label" for="radioExtRangeOff3">Off</label>
-                              </div>
-                              <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="radioExtRange3" id="radioExtRangeOn3" value="option2">
-                                <label class="form-check-label" for="radioExtRangeOn3">On</label>
-                              </div>
-                          </div>
-                      </div>
-             </div>   
-      </div>
-      <div class="row">
-            <div class="col-lg-5 col-sm-5 col-xl-5 catalogCol3">
-                    <div class="form-group row">
-                            <div class="col col-lg-7 col-xl-6 offset-sm-1">Technology</div>
-                            <div class="col col-lg-4 col-xl-5">
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="radioTechnology" id="radioTechnologyOff" value="option1">
-                                    <label class="form-check-label" for="radioTechnologyOff">Off</label>
-                                  </div>
-                                  <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="radioTechnology" id="radioTechnologyOn" value="option2">
-                                    <label class="form-check-label" for="radioTechnologyOn">On</label>
-                                  </div>
-                             
-                            </div>
-                          </div>
-             </div>
-            <div class="col-xl-7 col-lg-7 col-sm-7 catalogCol4">
-                    <div class="form-row">
-                            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-2">
-                                <select id="selectLess4" class="form-control">
-                                  <option selected>N/A</option>
-                                 
-                                </select>
-                            </div>
-                            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-2">
-                                <select id="selectGrt4" class="form-control">
-                                  <option selected>0</option>
-                                
-                                </select>
-                            </div>
-                            <div class="col-xl-1 col-md-2">
-                                <div class="form-check">
-                                    <input id="ChkRq4" class="form-check-input" type="checkbox">
-                                  </div>
-                            </div>
-                            <div class="col">
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="radioExtRange4" id="radioExtRangeOff4" value="option1">
-                                    <label class="form-check-label" for="radioExtRangeOff4">Off</label>
-                                  </div>
-                                  <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="radioExtRange4" id="radioExtRangeOn4" value="option2">
-                                    <label class="form-check-label" for="radioExtRangeOn4">On</label>
-                                  </div>
-                              </div>
-                          </div>
-             </div>   
-      </div>
-      <div class="row">
-            <div class="col-lg-5 col-sm-5 col-xl-5 catalogCol3">
-                    <div class="form-group row">
-                            <div class="col col-lg-7 col-xl-6 offset-sm-1">Furniture</div>
-                            <div class="col col-lg-4 col-xl-5">
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="radioFurniture" id="radioFurnitureOff" value="option1">
-                                    <label class="form-check-label" for="radioFurnitureOff">Off</label>
-                                  </div>
-                                  <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="radioFurniture" id="radioFurnitureOn" value="option2">
-                                    <label class="form-check-label" for="radioFurnitureOn">On</label>
-                                  </div>
-                             
-                            </div>
-                          </div>
-            </div>
-            <div class="col-xl-7 col-lg-7 col-sm-7 catalogCol4">
-                    <div class="form-row">
-                            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-2">
-                                <select id="selectLess5" class="form-control">
-                                  <option selected>N/A</option>
-                                 
-                                </select>
-                            </div>
-                            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-2">
-                                <select id="selectGrt5" class="form-control">
-                                  <option selected>0</option>
-                                
-                                </select>
-                            </div>
-                            <div class="col-xl-1 col-md-2">
-                                <div id="ChkRq5" class="form-check">
-                                    <input class="form-check-input" type="checkbox">
-                                  </div>
-                            </div>
-                            <div class="col">
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="radioExtRange5" id="radioExtRangeOff5" value="option1">
-                                    <label class="form-check-label" for="radioExtRangeOff5">Off</label>
-                                  </div>
-                                  <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="radioExtRange5" id="radioExtRangeOn5" value="option2">
-                                    <label class="form-check-label" for="radioExtRangeOn5">On</label>
-                                  </div>
-                              </div>
-                          </div>
-            </div>
-      </div>
-      <div class="row">
-            <div class="col-lg-5 col-sm-5 col-xl-5 catalogCol3">
-                    <div class="form-group row">
-                            <div class="col col-lg-7 col-xl-6 offset-sm-1">3D CAD Furniture (OLG)</div>
-                            <div class="col col-lg-4 col-xl-5">
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="radioCad" id="radioCadOff" value="option1">
-                                    <label class="form-check-label" for="radioCadOff">Off</label>
-                                  </div>
-                                  <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="radioCad" id="radioCadOn" value="option2">
-                                    <label class="form-check-label" for="radioCadOn">On</label>
-                                  </div>
-                            </div>
-                    </div>
-            </div>
-            <div class="col-xl-7 col-lg-7 col-sm-7 catalogCol4">
-                    <div class="form-row">
-                            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-2">
-                                <select id="selectLess6" class="form-control">
-                                  <option selected>N/A</option>
-                                 
-                                </select>
-                            </div>
-                            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-2">
-                                <select id="selectGrt6" class="form-control">
-                                  <option selected>0</option>
-                                
-                                </select>
-                            </div>
-                            <div class="col-xl-1 col-md-2">
-                                <div class="form-check">
-                                    <input id="ChkRq6" class="form-check-input" type="checkbox">
-                                  </div>
-                            </div>
-                            <div class="col">
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="radioExtRange6" id="radioExtRangeOff6" value="option1">
-                                    <label class="form-check-label" for="radioExtRangeOff6">Off</label>
-                                  </div>
-                                  <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="radioExtRange6" id="radioExtRangeOn6" value="option2">
-                                    <label class="form-check-label" for="radioExtRangeOn6">On</label>
-                                  </div>
-                              </div>
-                          </div>
-            </div>
-      </div>
-      <div class="row">
-            <div class="col-lg-5 col-sm-5 col-xl-5 catalogCol3">
-                    <div class="form-group row">
-                            <div class="col col-lg-7 col-xl-6 offset-sm-1">Facilities</div>
-                            <div class="col col-lg-4 col-xl-5">
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="radioFacilites" id="radioFacilitesOff" value="option1">
-                                    <label class="form-check-label" for="radioFacilitesOff">Off</label>
-                                  </div>
-                                  <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="radioFacilites" id="radioFacilitesOn" value="option2">
-                                    <label class="form-check-label" for="radioFacilitesOn">On</label>
-                                  </div>
-                             
-                            </div>
-                          </div>
-            </div>
-            <div class="col-xl-7 col-lg-7 col-sm-7 catalogCol4">
-                    <div class="form-row">
-                            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-2">
-                                <select id="selectLess7" class="form-control">
-                                  <option selected>N/A</option>
-                                 
-                                </select>
-                            </div>
-                            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-2">
-                                <select id="selectGrt7" class="form-control">
-                                  <option selected>0</option>
-                                
-                                </select>
-                            </div>
-                            <div class="col-xl-1 col-md-2">
-                                <div id="ChkRq7" class="form-check">
-                                    <input class="form-check-input" type="checkbox">
-                                  </div>
-                            </div>
-                            <div class="col">
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="radioExtRange7" id="radioExtRangeOff7" value="option1">
-                                    <label class="form-check-label" for="radioExtRangeOff7">Off</label>
-                                  </div>
-                                  <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="radioExtRange7" id="radioExtRangeOn7" value="option2">
-                                    <label class="form-check-label" for="radioExtRangeOn7">On</label>
-                                  </div>
-                              </div>
-                          </div>
-            </div>
-      </div>
-      <div class="row">
-            <div class="col-lg-5 col-sm-5 col-xl-5 catalogCol3">
-                    <div class="form-group row">
-                            <div class="col col-lg-7 col-xl-6 offset-sm-1">Art, Craft & Education</div>
-                            <div class="col col-lg-4 col-xl-5">
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="radioArt" id="radioArtOff" value="option1">
-                                    <label class="form-check-label" for="radioArtOff">Off</label>
-                                  </div>
-                                  <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="radioArt" id="radioArtOn" value="option2">
-                                    <label class="form-check-label" for="radioArtOn">On</label>
-                                  </div>
-                             
-                            </div>
-                          </div>
-            </div>
-            <div class="col-xl-7 col-lg-7 col-sm-7 catalogCol4">
-                    <div class="form-row">
-                            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-2">
-                                <select id="selectLess8" class="form-control">
-                                  <option selected>N/A</option>
-                                 
-                                </select>
-                            </div>
-                            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-2">
-                                <select id="selectGrt8" class="form-control">
-                                  <option selected>0</option>
-                                
-                                </select>
-                            </div>
-                            <div class="col-xl-1 col-md-2">
-                                <div id="ChkRq8" class="form-check">
-                                    <input class="form-check-input" type="checkbox">
-                                  </div>
-                            </div>
-                            <div class="col">
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="radioExtRange8" id="radioExtRangeOff8" value="option1">
-                                    <label class="form-check-label" for="radioExtRangeOff8">Off</label>
-                                  </div>
-                                  <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="radioExtRange8" id="radioExtRangeOn8" value="option2">
-                                    <label class="form-check-label" for="radioExtRangeOn8">On</label>
-                                  </div>
-                              </div>
-                          </div>
-            </div>
-      </div>
-      <div class="row">
-            <div class="col-lg-5 col-sm-5 col-xl-5 catalogCol3">
-                    <div class="form-group row">
-                            <div class="col col-lg-7 col-xl-6 offset-sm-1">OTHER RANGES...</div>
-                            <div class="col col-lg-4 col-xl-5">
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="radioOtherRange" id="radioOtherRangeOff" value="option1">
-                                    <label class="form-check-label" for="radioOtherRangeOff">Off</label>
-                                  </div>
-                                  <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="radioOtherRange" id="radioOtherRangeOn" value="option2">
-                                    <label class="form-check-label" for="radioOtherRangeOn">On</label>
-                                  </div>
-                             
-                            </div>
-                          </div>
-            </div>
-            <div class="col-xl-7 col-lg-7 col-sm-7 catalogCol4">
-                    <div class="form-row">
-                            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-2">
-                                <select id="selectLess9" class="form-control">
-                                  <option selected>N/A</option>
-                                 
-                                </select>
-                            </div>
-                            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-2">
-                                <select id="selectGrt9" class="form-control">
-                                  <option selected>0</option>
-                                
-                                </select>
-                            </div>
-                            <div class="col-xl-1 col-md-2">
-                                <div id="ChkRq9" class="form-check">
-                                    <input class="form-check-input" type="checkbox">
-                                  </div>
-                            </div>
-                            <div class="col">
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="radioExtRange9" id="radioExtRangeOff9" value="option1">
-                                    <label class="form-check-label" for="radioExtRangeOff9">Off</label>
-                                  </div>
-                                  <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="radioExtRange9" id="radioExtRangeOn9" value="option2">
-                                    <label class="form-check-label" for="radioExtRangeOn9">On</label>
-                                  </div>
-                              </div>
-                          </div>
-            </div>
-      </div>
-      </div>
-      <div class="row">
-            <div class="col-md-2 col-lg-1 offset-md-10 offset-lg-11"><button class="btn btn-primary btn-block" type="button">Save</button></div>
-      </div>
-      </form>
       </div>
     </div>
   </div>

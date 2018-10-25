@@ -27,7 +27,7 @@ export class ProductsPriceComponent implements OnInit {
   categoryList: CategoryListModel[];
   productList: ProductListModel[];
   itemContractList: ItemContractListModel[];
-  productDetail = new ProductModel('', '', '', '', '', '', '', false, '', false, false, '', '', '', '', '');
+  productDetail = new ProductModel('', '', '', '', '', '', '', true, '', true, true, '', '', '', '', '');
   loading = true;
   showPagination = false;
   selectedId = '';
@@ -171,7 +171,7 @@ export class ProductsPriceComponent implements OnInit {
   }
 
   resetForm() {
-    this.productDetail = new ProductModel('', '', '', '', '', '', '', false, '', false, false, '', '', '', '', '');
+    this.productDetail = new ProductModel('', '', '', '', '', '', '', true, '', true, true, '', '', '', '', '');
     this.selectedId = '';
   }
 

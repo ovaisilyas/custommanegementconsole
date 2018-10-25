@@ -29,14 +29,14 @@ export class CatalogService {
   getMoqlist() {
     console.log('Get MOQ list');
     console.log(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcmoq/getmoq`);
-    return this.httpClient.post<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcmoq/getmoq`,
+    return this.httpClient.get<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcmoq/getmoq`,
       this.httpOptions);
   }
 
   getCostGreaterlist() {
     console.log('Get Cost Greater list');
     console.log(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmccost/getcost`);
-    return this.httpClient.post<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmccost/getcost`,
+    return this.httpClient.get<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmccost/getcost`,
       this.httpOptions);
   }
 
@@ -57,16 +57,16 @@ export class CatalogService {
   }
 
   getCoreCatalog() {
-    console.log('Save Core Catalog');
+    console.log('Get Core Catalog');
     console.log(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/orgAddUpdate/addOrganization`);
-    return this.httpClient.post<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/orgAddUpdate/addOrganization`,
+    return this.httpClient.get<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/orgAddUpdate/addOrganization`,
       this.httpOptions);
   }
 
   getExtendedCatalog() {
-    console.log('Save Extended Catalog');
-    console.log(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/orgAddUpdate/addOrganization`);
-    return this.httpClient.post<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/orgAddUpdate/addOrganization`,
+    console.log('Get Extended Catalog');
+    console.log(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcfilter/extaisles`);
+    return this.httpClient.get<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcfilter/extaisles`,
       this.httpOptions);
   }
 
