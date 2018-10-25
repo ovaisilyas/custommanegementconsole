@@ -5,7 +5,7 @@ import {environment} from '../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class CatalogService {
+export class FiltersService {
   userId = sessionStorage.getItem('userId');
   WCToken = sessionStorage.getItem('WCToken');
   WCTrustedToken = sessionStorage.getItem('WCTrustedToken');
@@ -25,47 +25,33 @@ export class CatalogService {
     })
   };
 
-  getMoqlist() {
-    console.log('Get MOQ list');
+  getLevelTwoCategories() {
+    console.log('Get Level 2 Categories');
     console.log(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcmoq/getmoq`);
     return this.httpClient.get<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcmoq/getmoq`,
       this.httpOptions);
   }
 
-  getCostGreaterlist() {
-    console.log('Get Cost Greater list');
+  getBrandList() {
+    console.log('Get Brands list');
     console.log(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmccost/getcost`);
     return this.httpClient.get<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmccost/getcost`,
       this.httpOptions);
   }
 
-  saveCoreCatalog(coreCatalogOptions) {
-    console.log('Save Core Catalog');
+  saveLevelTwoCategories(levelCategories) {
+    console.log('Save Level 2 Categories');
     console.log(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/orgAddUpdate/addOrganization`);
-    console.log(coreCatalogOptions);
-    return this.httpClient.post<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/orgAddUpdate/addOrganization`, coreCatalogOptions,
+    console.log(levelCategories);
+    return this.httpClient.post<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/orgAddUpdate/addOrganization`, levelCategories,
       this.httpOptions);
   }
 
-  saveExtendedCatalog(extendedCatalogOptions) {
-    console.log('Save Extended Catalog');
+  saveBrandList(brandList) {
+    console.log('Save Brands list');
     console.log(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/orgAddUpdate/addOrganization`);
-    console.log(extendedCatalogOptions);
-    return this.httpClient.post<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/orgAddUpdate/addOrganization`, extendedCatalogOptions,
-      this.httpOptions);
-  }
-
-  getCoreCatalog() {
-    console.log('Get Core Catalog');
-    console.log(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/orgAddUpdate/addOrganization`);
-    return this.httpClient.get<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/orgAddUpdate/addOrganization`,
-      this.httpOptions);
-  }
-
-  getExtendedCatalog() {
-    console.log('Get Extended Catalog');
-    console.log(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcfilter/extaisles`);
-    return this.httpClient.get<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcfilter/extaisles`,
+    console.log(brandList);
+    return this.httpClient.post<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/orgAddUpdate/addOrganization`, brandList,
       this.httpOptions);
   }
 
