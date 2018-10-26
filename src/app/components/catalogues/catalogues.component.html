@@ -16,7 +16,7 @@
         <div class="row wrapperCoreRow">
             <div class="col-lg-5 col-sm-5 col-xl-5 catalogCol1">
                 <div class="form-group row">
-                    <div class="col col-lg-7 col-xl-6 offset-sm-1">Catalogue</div>
+                    <label class="col col-lg-7 col-xl-6 offset-sm-1">Catalogue</label>
                     <div class="col col-lg-4 col-xl-5">
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="radioCatlog" id="radioCatlogOff" value="option1">
@@ -32,7 +32,7 @@
               </div>
               <div class="col-lg-5 col-sm-5 col-xl-5 catalogCol1">
                   <div class="form-group row">
-                      <div class="col col-lg-7 col-xl-6 offset-sm-1">Store Products</div>
+                      <label class="col col-lg-7 col-xl-6 offset-sm-1">Store Products</label>
                       <div class="col col-lg-4 col-xl-5">
                           <div class="form-check form-check-inline">
                               <input class="form-check-input" type="radio" name="radioStoreProduct" id="radioStoreProductOff" value="option1">
@@ -49,7 +49,7 @@
               </div>
               <div class="col-lg-5 col-sm-5 col-xl-5 catalogCol1">
                   <div class="form-group row">
-                      <div class="col col-lg-7 col-xl-6 offset-sm-1">Web Only</div>
+                      <label class="col col-lg-7 col-xl-6 offset-sm-1">Web Only</label>
                       <div class="col col-lg-4 col-xl-5">
                           <div class="form-check form-check-inline">
                               <input class="form-check-input" type="radio" name="radioWeb" id="radioWebOff" value="option1">
@@ -65,7 +65,7 @@
               </div>
               <div class="col-lg-5 col-sm-5 col-xl-5 catalogCol1">
                   <div class="form-group row">
-                      <div class="col col-lg-7 col-xl-6 offset-sm-1">Me Too</div>
+                      <label class="col col-lg-7 col-xl-6 offset-sm-1">Me Too</label>
                       <div class="col col-lg-4 col-xl-5">
                           <div class="form-check form-check-inline">
                               <input class="form-check-input" type="radio" name="radioMeToo" id="radioMeTooOff" value="option1">
@@ -81,7 +81,7 @@
               </div>
               <div class="col-lg-5 col-sm-5 col-xl-5 catalogCol1">
                   <div class="form-group row">
-                      <div class="col col-lg-7 col-xl-6 offset-sm-1">Education Only</div>
+                      <label class="col col-lg-7 col-xl-6 offset-sm-1">Education Only</label>
                       <div class="col col-lg-4 col-xl-5">
                           <div class="form-check form-check-inline">
                               <input class="form-check-input" type="radio" name="radioEducation" id="radioEducationOff" value="option1">
@@ -97,7 +97,7 @@
               </div>
               <div class="col-lg-5 col-sm-5 col-xl-5 catalogCol1">
                   <div class="form-group row" *ngFor="let item of coreCatalogs; let i = index">
-                      <div class="col col-lg-7 col-xl-6 offset-sm-1">{{item.name}}</div>
+                      <label class="col col-lg-7 col-xl-6 offset-sm-1">{{item.name}}</label>
                       <div class="col col-lg-4 col-xl-5">
                           <div class="form-check form-check-inline">
                               <input class="form-check-input" type="radio" name="radioStatus" id="radioStatusOff" value="off" [(ngModel)]="item.status" #radioStatus="ngModel" [checked]="item.status === 'off'" (click)="updateCoreCatalogModel(item.name, 'status', item.status);">
@@ -113,7 +113,7 @@
               </div>
               <div class="col-lg-5 col-sm-5 col-xl-5 catalogCol1">
                   <div class="form-group row">
-                      <div class="col col-lg-7 col-xl-6 offset-sm-1">Furniture Only</div>
+                      <label class="col col-lg-7 col-xl-6 offset-sm-1">Furniture Only</label>
                       <div class="col col-lg-4 col-xl-5">
                           <div class="form-check form-check-inline">
                               <input class="form-check-input" type="radio" name="radioFurniture" id="radioFurnitureOff" value="option1">
@@ -165,7 +165,7 @@
       <div class="row" *ngFor="let item of localExtCatalogModel; let i = index">
             <div class="col-lg-5 col-sm-5 col-xl-5 catalogCol3">
                     <div class="form-group row">
-                            <div class="col col-lg-7 col-xl-6 offset-sm-1">{{item.identifier}}</div>
+                            <label class="col col-lg-7 col-xl-6 offset-sm-1">{{item.identifier}}</label>
                             <div class="col col-lg-4 col-xl-5">
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" [name]="item.cfcondId" [attr.id]="'radioStationeryOff'+i" [(ngModel)]="item.onFilter" [value]="false">
