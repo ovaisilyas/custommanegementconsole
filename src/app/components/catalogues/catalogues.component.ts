@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
 import {map} from 'rxjs/operators';
 import {CatalogService} from '../../services/catalog.service';
+import {AlertService} from '../../services/alert.service';
 
 import { NgxSpinnerService } from 'ngx-spinner';
 
@@ -22,6 +23,7 @@ export class CataloguesComponent implements OnInit {
     private router: Router,
     private catalogService: CatalogService,
     private spinner: NgxSpinnerService,
+    private alertService: AlertService,
   ) { }
 
   ngOnInit() {
@@ -30,6 +32,7 @@ export class CataloguesComponent implements OnInit {
     }
     this.getExtendedMoqList();
     this.getExtendedCostGreaterList();
+    this.getCoreCatalog();
     this.getExtendedCatalog();
   }
 
@@ -72,26 +75,19 @@ export class CataloguesComponent implements OnInit {
   getCoreCatalog() {
     this.coreCatalogs = [];
     this.catalogService.getCoreCatalog()
+    .pipe(map(
+      (list) => {
+        const coreCatlist = list['coreList'];
+        return coreCatlist;
+      }
+    ))
     .subscribe(
       data => {
         this.coreCatalogs = data;
+        this.localCoreCatalogModel = this.coreCatalogs;
       },
       error => {
-        console.log('Core catalog get error');
-      });
-  }
-
-  saveCoreCatalog() {
-    this.spinner.show();
-    this.catalogService.saveCoreCatalog(this.localCoreCatalogModel)
-    .subscribe(
-      data => {
-        console.log('Core Catalog saved');
-        this.spinner.hide();
-      },
-      error => {
-        console.log('Core Catalog error');
-        this.spinner.hide();
+        this.alertService.error(error);
       });
   }
 
@@ -110,7 +106,25 @@ export class CataloguesComponent implements OnInit {
         this.localExtCatalogModel = this.extendedCatalogs;
       },
       error => {
-        console.log('Extended catalog get error');
+        this.alertService.error(error);
+      });
+  }
+
+  saveCoreCatalog() {
+    this.spinner.show();
+    const localModel = this.localCoreCatalogModel;
+    const finalSaveData = {
+      coreList : localModel,
+    };
+    this.catalogService.saveCoreCatalog(finalSaveData)
+    .subscribe(
+      data => {
+        this.alertService.success(data.message);
+        this.spinner.hide();
+      },
+      error => {
+        this.alertService.error(error);
+        this.spinner.hide();
       });
   }
 
@@ -136,39 +150,13 @@ export class CataloguesComponent implements OnInit {
     this.catalogService.saveExtendedCatalog(finalSaveData)
     .subscribe(
       data => {
-        console.log('Extended Catalog saved');
+        this.alertService.success(data.message);
         this.spinner.hide();
       },
       error => {
-        console.log('Extended Catalog error');
+        this.alertService.error(error);
         this.spinner.hide();
       });
   }
-
-  updateCoreCatalogModel(name: any, field: any, value: any) {
-    const localModel = this.localCoreCatalogModel;
-
-    for (const key in localModel) {
-      if (localModel[key].name === name) {
-        localModel[key].field = value;
-      }
-    }
-
-    this.localCoreCatalogModel = localModel;
-  }
-
-  updateExtCatalogModel(name: any, field: any, value: any) {
-    const localModel = this.localExtCatalogModel;
-
-    for (const key in localModel) {
-      if (localModel[key].name === name) {
-        localModel[key].field = value;
-      }
-    }
-
-    this.localExtCatalogModel = localModel;
-  }
-
-
 
 }

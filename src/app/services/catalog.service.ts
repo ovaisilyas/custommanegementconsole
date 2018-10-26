@@ -39,11 +39,25 @@ export class CatalogService {
       this.httpOptions);
   }
 
+  getCoreCatalog() {
+    console.log('Get Core Catalog');
+    console.log(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmccorefilter/coureGroup`);
+    return this.httpClient.get<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmccorefilter/coureGroup`,
+      this.httpOptions);
+  }
+
+  getExtendedCatalog() {
+    console.log('Get Extended Catalog');
+    console.log(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcfilter/extaisles`);
+    return this.httpClient.get<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcfilter/extaisles`,
+      this.httpOptions);
+  }
+
   saveCoreCatalog(coreCatalogOptions) {
     console.log('Save Core Catalog');
-    console.log(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/orgAddUpdate/addOrganization`);
+    console.log(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmccorefilter/updateCoureGroup`);
     console.log(coreCatalogOptions);
-    return this.httpClient.post<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/orgAddUpdate/addOrganization`, coreCatalogOptions,
+    return this.httpClient.post<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmccorefilter/updateCoureGroup`, coreCatalogOptions,
       this.httpOptions);
   }
 
@@ -52,20 +66,6 @@ export class CatalogService {
     console.log(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcfilter/updateExtAisles`);
     console.log(extendedCatalogOptions);
     return this.httpClient.post<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcfilter/updateExtAisles`, extendedCatalogOptions,
-      this.httpOptions);
-  }
-
-  getCoreCatalog() {
-    console.log('Get Core Catalog');
-    console.log(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/orgAddUpdate/addOrganization`);
-    return this.httpClient.get<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/orgAddUpdate/addOrganization`,
-      this.httpOptions);
-  }
-
-  getExtendedCatalog() {
-    console.log('Get Extended Catalog');
-    console.log(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcfilter/extaisles`);
-    return this.httpClient.get<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcfilter/extaisles`,
       this.httpOptions);
   }
 
