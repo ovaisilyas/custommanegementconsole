@@ -186,6 +186,7 @@
             <label for="shipBy" class="col-sm-3 col-form-label text-right">Ship By: <span class="text-danger">*</span></label>
                 <div class="col-sm-3">
                     <select id="shipBy" class="form-control" [(ngModel)]="contract.shipBy" name="shipBy" #shipBy="ngModel">
+                      <option value="courier">Courier</option>
                       <option *ngFor="let item of shippingModes" value="item">{{item}}</option>                    
                     </select>
                 </div>
