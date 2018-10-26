@@ -11,8 +11,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
   styleUrls: ['./catalogues.component.css']
 })
 export class CataloguesComponent implements OnInit {
-  extendedMoqList = {};
-  extendedCostGreaterList = {};
+  extendedMoqList = [];
+  extendedCostGreaterList = [];
   coreCatalogs = [];
   extendedCatalogs = [];
   localCoreCatalogModel = [];
@@ -21,6 +21,7 @@ export class CataloguesComponent implements OnInit {
   constructor(
     private router: Router,
     private catalogService: CatalogService,
+    private spinner: NgxSpinnerService,
   ) { }
 
   ngOnInit() {
@@ -81,13 +82,16 @@ export class CataloguesComponent implements OnInit {
   }
 
   saveCoreCatalog() {
+    this.spinner.show();
     this.catalogService.saveCoreCatalog(this.localCoreCatalogModel)
     .subscribe(
       data => {
         console.log('Core Catalog saved');
+        this.spinner.hide();
       },
       error => {
         console.log('Core Catalog error');
+        this.spinner.hide();
       });
   }
 
@@ -111,6 +115,7 @@ export class CataloguesComponent implements OnInit {
   }
 
   saveExtendedCatalog() {
+    this.spinner.show();
     const localModel = this.localExtCatalogModel;
 
     for (const key in localModel) {
@@ -123,13 +128,20 @@ export class CataloguesComponent implements OnInit {
         localModel[key].MOQ.attrvalue = document.getElementById('optionMoq' + localModel[key].MOQ.attrValId).innerText;
       }
     }
-    this.catalogService.saveExtendedCatalog(this.localExtCatalogModel)
+
+    const finalSaveData = {
+      extAisLesList : localModel,
+    };
+
+    this.catalogService.saveExtendedCatalog(finalSaveData)
     .subscribe(
       data => {
         console.log('Extended Catalog saved');
+        this.spinner.hide();
       },
       error => {
         console.log('Extended Catalog error');
+        this.spinner.hide();
       });
   }
 

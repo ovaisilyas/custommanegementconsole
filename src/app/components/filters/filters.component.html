@@ -1,3 +1,11 @@
+<ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="medium"
+  color="#fff"
+  type="ball-scale-multiple">
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+
 <app-header></app-header>
 <div class="container-fluid PageContWrap filterPageCont">
   <div class="row">
@@ -28,22 +36,22 @@
                                 <div class="col-4">
                                   <div class="form-group">
                                     <div class="text-center font-weight-bold"><span>On</span></div>
-                                    <select multiple class="form-control" id="" multiple>
-                                      <option>Adhesives glues & tapes</option>
-                                      <option>Books, pads & self adhesive notes</option>                             
+                                    <select multiple class="form-control" id="testId">
+                                      <option value="1">Adhesives glues & tapes</option>
+                                      <option value="2">Books, pads & self adhesive notes</option>                             
                                     </select>
                                   </div>
                                 </div>
                                 <div class="col-2 pt-4">
-                                  <button type="button" class="btn btn-outline-dark btn-block filterBtnArrow filterBtnArwRight"></button>
-                                  <button type="button" class="btn btn-outline-dark btn-block filterBtnArrow filterBtnArwRightAll"></button>
-                                  <button type="button" class="btn btn-outline-dark btn-block mt-4 filterBtnArrow filterBtnArwLeftAll"></button>
-                                  <button type="button" class="btn btn-outline-dark btn-block filterBtnArrow filterBtnArwLeft"></button>
+                                  <button type="button" class="btn btn-outline-dark btn-block filterBtnArrow filterBtnArwRight" (click)="moveItemToRight('selected','category')"></button>
+                                  <button type="button" class="btn btn-outline-dark btn-block filterBtnArrow filterBtnArwRightAll" (click)="moveItemToRight('all','category')"></button>
+                                  <button type="button" class="btn btn-outline-dark btn-block mt-4 filterBtnArrow filterBtnArwLeftAll" (click)="moveItemToLeft('all','category')"></button>
+                                  <button type="button" class="btn btn-outline-dark btn-block filterBtnArrow filterBtnArwLeft" (click)="moveItemToLeft('selected','category')"></button>
                                 </div>
                                 <div class="col-4">
                                     <div class="form-group">
                                       <div class="text-center font-weight-bold"><span>Off</span></div>
-                                      <select multiple class="form-control" id="" multiple>
+                                      <select multiple class="form-control" id="">
                                         <option>Books, pads & self adhesive notes</option>                             
                                       </select>
                                     </div>

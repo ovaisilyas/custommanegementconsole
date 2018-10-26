@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {environment} from '../../../environments/environment';
 import { SearchService } from '../../services/search.service';
+import { Observable } from 'rxjs/Observable';
 import {map} from 'rxjs/operators';
 import {saveAs} from 'file-saver';
 import {UserlistModel} from '../../model/userlist.model';
@@ -18,6 +19,7 @@ import {PagerService} from '../../services/pager.service';
 import {AlertService} from '../../services/alert.service';
 import {ViewChild, ElementRef} from '@angular/core';
 import {Router} from '@angular/router';
+
 
 import { NgxSpinnerService } from 'ngx-spinner';
 
@@ -363,6 +365,7 @@ export class ContractListComponent implements OnInit {
 
   getCustomerforItem(code: any) {
     this.selectedItemNumber = code;
+    this.spinner.show();
     this.contractService.getCustomersforItem(code)
     .pipe(map(
       (list) => {
@@ -373,9 +376,11 @@ export class ContractListComponent implements OnInit {
     .subscribe(
       data => {
         this.selectedCustomer = data;
+        this.spinner.hide();
       },
       error => {
         this.alertService.error(error);
+        this.spinner.hide();
       }
 
     );

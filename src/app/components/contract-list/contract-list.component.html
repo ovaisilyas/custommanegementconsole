@@ -113,7 +113,7 @@
                     </td>
                     <td>
                       <a (click)="showEditPrice(i,item.price)">Edit Price</a> 
-                      <a role="button" data-toggle="modal" data-target="#addCustomers" (click)="getCustomerforItem(item.partnumber); selectedItemPrice = item.price">Customers</a>
+                      <a role="button" data-toggle="modal" data-target="#addCustomers" (click)="getCustomerforItem(item.catEntryId); selectedItemPrice = item.price">Customers</a>
                       <a role="button" data-toggle="modal" data-target="#deleteCustomers" (click)="deletePartnumber = item.partnumber">Delete</a></td>
                   </tr>
                 </tbody>
