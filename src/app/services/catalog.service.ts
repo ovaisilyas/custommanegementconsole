@@ -49,9 +49,9 @@ export class CatalogService {
 
   saveExtendedCatalog(extendedCatalogOptions) {
     console.log('Save Extended Catalog');
-    console.log(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/orgAddUpdate/addOrganization`);
+    console.log(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcfilter/updateExtAisles`);
     console.log(extendedCatalogOptions);
-    return this.httpClient.post<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/orgAddUpdate/addOrganization`, extendedCatalogOptions,
+    return this.httpClient.post<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcfilter/updateExtAisles`, extendedCatalogOptions,
       this.httpOptions);
   }
 

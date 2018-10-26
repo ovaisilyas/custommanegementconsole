@@ -11,8 +11,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
   styleUrls: ['./catalogues.component.css']
 })
 export class CataloguesComponent implements OnInit {
-  extendedMoqList = {};
-  extendedCostGreaterList = {};
+  extendedMoqList = [];
+  extendedCostGreaterList = [];
   coreCatalogs = [];
   extendedCatalogs = [];
   localCoreCatalogModel = [];
@@ -128,7 +128,12 @@ export class CataloguesComponent implements OnInit {
         localModel[key].MOQ.attrvalue = document.getElementById('optionMoq' + localModel[key].MOQ.attrValId).innerText;
       }
     }
-    this.catalogService.saveExtendedCatalog(this.localExtCatalogModel)
+
+    const finalSaveData = {
+      extAisLesList : localModel,
+    };
+
+    this.catalogService.saveExtendedCatalog(finalSaveData)
     .subscribe(
       data => {
         console.log('Extended Catalog saved');

@@ -14,6 +14,8 @@ export class FiltersComponent implements OnInit {
 
   levelCategoryList = [];
   brandsList = [];
+  localLevelCategoryList = [];
+  localBrandList = [];
 
 
 
@@ -36,6 +38,7 @@ export class FiltersComponent implements OnInit {
     .subscribe(
       data => {
         this.levelCategoryList = data;
+        this.localLevelCategoryList = this.levelCategoryList;
       },
       error => {
 
@@ -47,13 +50,30 @@ export class FiltersComponent implements OnInit {
     .subscribe(
       data => {
         this.brandsList = data;
+        this.localBrandList = this.brandsList;
       },
       error => {
 
       });
   }
 
+  moveItemToRight(item: any, catagory: any) {
+    if (item === 'selected') {
 
+    }
+    if (item === 'all') {
+
+    }
+  }
+
+  moveItemToLeft(item: any, catagory: any) {
+    if (item === 'selected') {
+
+    }
+    if (item === 'all') {
+
+    }
+  }
 
 
 }
