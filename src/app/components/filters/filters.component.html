@@ -26,6 +26,7 @@
               <div class="text-danger border border-dark p-1 filterWarningTxt"><small> Warning: Use advanced filters by category or Brand with Caution. Select the filter type and use the arrows to turn on or off Categories and brands.</small></div>
             </div>
           </div>
+          <app-alert></app-alert>
                 <div class="tab-content filterTabContent" id="filterTabContent">
                     <div class="tab-pane fade active show filterCateOne" id="filterCategory" role="tabpanel" aria-labelledby="filterTabOne">
                             <div class="filterSupplierCont" *ngFor="let item of localLevelCategoryList">
@@ -35,46 +36,43 @@
                                 <div class="col-4">
                                   <div class="form-group">
                                     <div class="text-center font-weight-bold"><span>On</span></div>
-                                    <select multiple class="form-control" [attr.id]="'selectOn'+item.topCategoryId">
-                                      <option *ngFor="let childItems of item.ChildCategory_ON" [value]="childItems.categoryId">{{childItems.categoryName}}</option>
-                                      <option value="1">Adhesives glues & tapes</option>
-                                      <option value="2">Books, pads & self adhesive notes</option>                             
+                                    <select multiple class="form-control" [attr.id]="'selectOn'+item.TopCategoryId">
+                                      <option *ngFor="let childItems of item.ChildCategory_ON" [value]="childItems.CategoryId">{{childItems.CategoryName}}</option>                     
                                     </select>
                                   </div>
                                 </div>
                                 <div class="col-2 pt-4">
-                                  <button type="button" class="btn btn-outline-dark btn-block filterBtnArrow filterBtnArwRight" (click)="moveItemToRight('selected',item.topCategoryId,'category')"></button>
-                                  <button type="button" class="btn btn-outline-dark btn-block filterBtnArrow filterBtnArwRightAll" (click)="moveItemToRight('all',item.topCategoryId,'category')"></button>
-                                  <button type="button" class="btn btn-outline-dark btn-block mt-4 filterBtnArrow filterBtnArwLeftAll" (click)="moveItemToLeft('all',item.topCategoryId,'category')"></button>
-                                  <button type="button" class="btn btn-outline-dark btn-block filterBtnArrow filterBtnArwLeft" (click)="moveItemToLeft('selected',item.topCategoryId,'category')"></button>
+                                  <button type="button" class="btn btn-outline-dark btn-block filterBtnArrow filterBtnArwRight" (click)="moveItemToRight('selected',item.TopCategoryId,'category')"></button>
+                                  <button type="button" class="btn btn-outline-dark btn-block filterBtnArrow filterBtnArwRightAll" (click)="moveItemToRight('all',item.TopCategoryId,'category')"></button>
+                                  <button type="button" class="btn btn-outline-dark btn-block mt-4 filterBtnArrow filterBtnArwLeftAll" (click)="moveItemToLeft('all',item.TopCategoryId,'category')"></button>
+                                  <button type="button" class="btn btn-outline-dark btn-block filterBtnArrow filterBtnArwLeft" (click)="moveItemToLeft('selected',item.TopCategoryId,'category')"></button>
                                 </div>
                                 <div class="col-4">
                                     <div class="form-group">
                                       <div class="text-center font-weight-bold"><span>Off</span></div>
-                                      <select multiple class="form-control" [attr.id]="'selectOff'+item.topCategoryId">
-                                          <option *ngFor="let childItems of item.ChildCategory_OFF" [value]="childItems.categoryId">{{childItems.categoryName}}</option>
-                                        <option>Books, pads & self adhesive notes</option>                             
+                                      <select multiple class="form-control" [attr.id]="'selectOff'+item.TopCategoryId">
+                                          <option *ngFor="let childItems of item.ChildCategory_OF" [value]="childItems.CategoryId">{{childItems.CategoryName}}</option>                        
                                       </select>
                                     </div>
                                   </div>
                                 <div class="col-2">
                                   <div class="pt-4"><span>Store Products Included</span></div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" [name]="'radioStoreProductYes'+item.topCategoryId" [attr.id]="'radioStoreProductYes'+item.topCategoryId" [(ngModel)]="item.includeStoreProducts" [value]="true">
-                                        <label class="form-check-label" [attr.for]="'radioStoreProductYes'+item.topCategoryId">Yes</label>
+                                        <input class="form-check-input" type="radio" [name]="'radioStoreProductYes'+item.TopCategoryId" [attr.id]="'radioStoreProductYes'+item.TopCategoryId" [(ngModel)]="item.includeStoreProducts" [value]="true">
+                                        <label class="form-check-label" [attr.for]="'radioStoreProductYes'+item.TopCategoryId">Yes</label>
                                       </div>
                                       <div class="form-check">
-                                        <input class="form-check-input" type="radio" [name]="'radioStoreProductNo'+item.topCategoryId" [attr.id]="'radioStoreProductNo'+item.topCategoryId" [(ngModel)]="item.includeStoreProducts" [value]="false">
-                                        <label class="form-check-label" [attr.for]="'radioStoreProductNo'+item.topCategoryId">No</label>
+                                        <input class="form-check-input" type="radio" [name]="'radioStoreProductNo'+item.TopCategoryId" [attr.id]="'radioStoreProductNo'+item.TopCategoryId" [(ngModel)]="item.includeStoreProducts" [value]="false">
+                                        <label class="form-check-label" [attr.for]="'radioStoreProductNo'+item.TopCategoryId">No</label>
                                       </div>
                                       <div class="pt-4"><span>Core Products Included</span></div>
                                       <div class="form-check">
-                                          <input class="form-check-input" type="radio" [name]="'radioCoreProductYes'+item.topCategoryId" [attr.id]="'radioCoreProductYes'+item.topCategoryId" [(ngModel)]="item.includeCoreProducts" [value]="true">
-                                          <label class="form-check-label" [attr.for]="'radioCoreProductYes'+item.topCategoryId">Yes</label>
+                                          <input class="form-check-input" type="radio" [name]="'radioCoreProductYes'+item.TopCategoryId" [attr.id]="'radioCoreProductYes'+item.TopCategoryId" [(ngModel)]="item.includeCoreProducts" [value]="true">
+                                          <label class="form-check-label" [attr.for]="'radioCoreProductYes'+item.TopCategoryId">Yes</label>
                                         </div>
                                         <div class="form-check">
-                                          <input class="form-check-input" type="radio" [name]="'radioCoreProductNo'+item.topCategoryId" [attr.id]="'radioCoreProductNo'+item.topCategoryId" [(ngModel)]="item.includeCoreProducts" [value]="false">
-                                          <label class="form-check-label" [attr.for]="'radioCoreProductNo'+item.topCategoryId">No</label>
+                                          <input class="form-check-input" type="radio" [name]="'radioCoreProductNo'+item.TopCategoryId" [attr.id]="'radioCoreProductNo'+item.TopCategoryId" [(ngModel)]="item.includeCoreProducts" [value]="false">
+                                          <label class="form-check-label" [attr.for]="'radioCoreProductNo'+item.TopCategoryId">No</label>
                                         </div>
                                 </div>
                               </div>
@@ -85,61 +83,56 @@
                             </div>
                     </div>
                     <div class="tab-pane fade filterCateTwo" id="filterSupplier" role="tabpanel" aria-labelledby="filterTabTwo">
-                            <div class="filterBrandCont" *ngFor="let item of localBrandList">
+                            <div class="filterBrandCont">
                               <fieldset>
-                                <legend>{{item.identifier}}</legend>
+                                <legend>Brands</legend>
                                 <div class="row">
                                 <div class="col-4">
                                   <div class="form-group">
                                     <div class="text-center font-weight-bold"><span>On</span></div>
-                                    <select multiple class="form-control" [attr.id]="'selectOn'+item.topCategoryId">
-                                      <option *ngFor="let childItems of item.ChildCategory_ON" [value]="childItems.categoryId">{{childItems.categoryName}}</option>
-                                      <option value="1">Initiative (House brand)</option>
-                                      <option value="2">Nice Day (House Brand)</option>
-                                      <option value="3">Office National (House Brand)</option>
-                                      <option value="4">Artline</option>
+                                    <select multiple class="form-control" id="selectOnBrand">
+                                      <option *ngFor="let childItems of localBrandList.BrandName_ON" [value]="childItems.brandName">{{childItems.brandName}}</option>
                                     </select>
                                   </div>
                                 </div>
                                 <div class="col-2 pt-4">
-                                    <button type="button" class="btn btn-outline-dark btn-block filterBtnArrow filterBtnArwRight" (click)="moveItemToRight('selected',item.topCategoryId,'brand')"></button>
-                                    <button type="button" class="btn btn-outline-dark btn-block filterBtnArrow filterBtnArwRightAll" (click)="moveItemToRight('all',item.topCategoryId,'brand')"></button>
-                                    <button type="button" class="btn btn-outline-dark btn-block mt-4 filterBtnArrow filterBtnArwLeftAll" (click)="moveItemToLeft('all',item.topCategoryId,'brand')"></button>
-                                    <button type="button" class="btn btn-outline-dark btn-block filterBtnArrow filterBtnArwLeft" (click)="moveItemToLeft('selected',item.topCategoryId,'brand')"></button>
+                                    <button type="button" class="btn btn-outline-dark btn-block filterBtnArrow filterBtnArwRight" (click)="moveBrandItemToRight('selected','brand')"></button>
+                                    <button type="button" class="btn btn-outline-dark btn-block filterBtnArrow filterBtnArwRightAll" (click)="moveBrandItemToRight('all','brand')"></button>
+                                    <button type="button" class="btn btn-outline-dark btn-block mt-4 filterBtnArrow filterBtnArwLeftAll" (click)="moveBrandItemToLeft('all','brand')"></button>
+                                    <button type="button" class="btn btn-outline-dark btn-block filterBtnArrow filterBtnArwLeft" (click)="moveBrandItemToLeft('selected','brand')"></button>
                                 </div>
                                 <div class="col-4">
                                     <div class="form-group">
                                       <div class="text-center font-weight-bold"><span>Off</span></div>
-                                      <select multiple class="form-control" [attr.id]="'selectOff'+item.topCategoryId">
-                                          <option *ngFor="let childItems of item.ChildCategory_OFF" [value]="childItems.categoryId">{{childItems.categoryName}}</option>
-                                        <option>Books, pads & self adhesive notes</option>                             
+                                      <select multiple class="form-control" id="selectOffBrand">
+                                          <option *ngFor="let childItems of localBrandList.BrandName_OFF" [value]="childItems.brandName">{{childItems.brandName}}</option>                         
                                       </select>
                                     </div>
                                   </div>
                                 <div class="col-2">
                                   <div class="pt-4"><span>Store Products Included</span></div>
 
-                                  <div class="form-check">
-                                      <input class="form-check-input" type="radio" [name]="'radioBrandStoreYes'+item.topCategoryId" [attr.id]="'radioStoreProductYes'+item.topCategoryId" [(ngModel)]="item.includeStoreProducts" [value]="true">
-                                      <label class="form-check-label" [attr.for]="'radioBrandStoreYes'+item.topCategoryId">Yes</label>
+                                  <!-- <div class="form-check">
+                                      <input class="form-check-input" type="radio" [name]="'radioBrandStoreYes'" [attr.id]="'radioStoreProductYes'" [(ngModel)]="item.includeStoreProducts" [value]="true">
+                                      <label class="form-check-label" [attr.for]="'radioBrandStoreYes'">Yes</label>
                                     </div>
                                     <div class="form-check">
-                                      <input class="form-check-input" type="radio" [name]="'radioBrandStoreNo'+item.topCategoryId" [attr.id]="'radioBrandStoreNo'+item.topCategoryId" [(ngModel)]="item.includeStoreProducts" [value]="false">
-                                      <label class="form-check-label" [attr.for]="'radioBrandStoreNo'+item.topCategoryId">No</label>
+                                      <input class="form-check-input" type="radio" [name]="'radioBrandStoreNo'" [attr.id]="'radioBrandStoreNo'" [(ngModel)]="item.includeStoreProducts" [value]="false">
+                                      <label class="form-check-label" [attr.for]="'radioBrandStoreNo'">No</label>
                                     </div>
                                     <div class="pt-4"><span>Core Products Included</span></div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" [name]="'radioBrandCoreYes'+item.topCategoryId" [attr.id]="'radioBrandCoreYes'+item.topCategoryId" [(ngModel)]="item.includeCoreProducts" [value]="true">
-                                        <label class="form-check-label" [attr.for]="'radioBrandCoreYes'+item.topCategoryId">Yes</label>
+                                        <input class="form-check-input" type="radio" [name]="'radioBrandCoreYes'" [attr.id]="'radioBrandCoreYes'" [(ngModel)]="item.includeCoreProducts" [value]="true">
+                                        <label class="form-check-label" [attr.for]="'radioBrandCoreYes'">Yes</label>
                                       </div>
                                       <div class="form-check">
-                                        <input class="form-check-input" type="radio" [name]="'radioBrandCoreNo'+item.topCategoryId" [attr.id]="'radioBrandCoreNo'+item.topCategoryId" [(ngModel)]="item.includeCoreProducts" [value]="false">
-                                        <label class="form-check-label" [attr.for]="'radioBrandCoreNo'+item.topCategoryId">No</label>
-                                      </div>
+                                        <input class="form-check-input" type="radio" [name]="'radioBrandCoreNo'" [attr.id]="'radioBrandCoreNo'" [(ngModel)]="item.includeCoreProducts" [value]="false">
+                                        <label class="form-check-label" [attr.for]="'radioBrandCoreNo'">No</label>
+                                      </div> -->
                                 </div>
                               </div>
                               <div class="row">
-                                  <div class="col-sm-1 offset-sm-11"><button class="btn btn-primary btn-block" type="button" (click)="saveBrandsList(item.identifier)">Save</button></div>
+                                  <div class="col-sm-1 offset-sm-11"><button class="btn btn-primary btn-block" type="button" (click)="saveBrandsList()">Save</button></div>
                             </div>
                               </fieldset>
                             </div>
