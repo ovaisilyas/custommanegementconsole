@@ -122,7 +122,7 @@ export class FiltersComponent implements OnInit {
 
   }
 
-  saveBrandsList(brand: any) {
+  saveBrandsList() {
     this.spinner.show();
     const localBrandListModel = this.localBrandList;
 
@@ -149,6 +149,26 @@ export class FiltersComponent implements OnInit {
             if (currentField[key].TopCategoryId === catagory) {
               currentField[key].ChildCategory_ON = currentField[key].ChildCategory_ON.filter(function(x) {return x.CategoryId !== catOnList.options[i].value; });
               currentField[key].ChildCategory_OF.push({'CategoryId': catOnList.options[i].value, 'CategoryName': catOnList.options[i].text});
+              currentField[key].ChildCategory_OF.sort(function(a, b) {
+                const nameA = a.CategoryName.toLowerCase(), nameB = b.CategoryName.toLowerCase();
+                if (nameA < nameB) {
+                  return -1;
+                }
+                if (nameA > nameB) {
+                    return 1;
+                }
+                return 0;
+            });
+              currentField[key].ChildCategory_ON.sort(function(a, b) {
+                const nameA = a.CategoryName.toLowerCase(), nameB = b.CategoryName.toLowerCase();
+                if (nameA < nameB) {
+                  return -1;
+                }
+                if (nameA > nameB) {
+                    return 1;
+                }
+                return 0;
+            });
             }
           }
         }
@@ -160,6 +180,26 @@ export class FiltersComponent implements OnInit {
           if (currentField[key].TopCategoryId === catagory) {
             currentField[key].ChildCategory_ON = currentField[key].ChildCategory_ON.filter(function(x) {return x.CategoryId !== catOnList.options[i].value; });
             currentField[key].ChildCategory_OF.push({'CategoryId': catOnList.options[i].value, 'CategoryName': catOnList.options[i].text});
+            currentField[key].ChildCategory_OF.sort(function(a, b) {
+              const nameA = a.CategoryName.toLowerCase(), nameB = b.CategoryName.toLowerCase();
+              if (nameA < nameB) {
+                return -1;
+              }
+              if (nameA > nameB) {
+                  return 1;
+              }
+              return 0;
+          });
+            currentField[key].ChildCategory_ON.sort(function(a, b) {
+              const nameA = a.CategoryName.toLowerCase(), nameB = b.CategoryName.toLowerCase();
+              if (nameA < nameB) {
+                return -1;
+              }
+              if (nameA > nameB) {
+                  return 1;
+              }
+              return 0;
+          });
           }
         }
       }
@@ -180,6 +220,26 @@ export class FiltersComponent implements OnInit {
             if (currentField[key].TopCategoryId === catagory) {
               currentField[key].ChildCategory_OF = currentField[key].ChildCategory_OF.filter(function(x) {return x.CategoryId !== catOffList.options[i].value; });
               currentField[key].ChildCategory_ON.push({'CategoryId': catOffList.options[i].value, 'CategoryName': catOffList.options[i].text});
+              currentField[key].ChildCategory_OF.sort(function(a, b) {
+                const nameA = a.CategoryName.toLowerCase(), nameB = b.CategoryName.toLowerCase();
+                if (nameA < nameB) {
+                  return -1;
+                }
+                if (nameA > nameB) {
+                    return 1;
+                }
+                return 0;
+            });
+              currentField[key].ChildCategory_ON.sort(function(a, b) {
+                const nameA = a.CategoryName.toLowerCase(), nameB = b.CategoryName.toLowerCase();
+                if (nameA < nameB) {
+                  return -1;
+                }
+                if (nameA > nameB) {
+                    return 1;
+                }
+                return 0;
+            });
             }
           }
         }
@@ -191,10 +251,31 @@ export class FiltersComponent implements OnInit {
           if (currentField[key].TopCategoryId === catagory) {
             currentField[key].ChildCategory_OF = currentField[key].ChildCategory_OF.filter(function(x) {return x.CategoryId !== catOffList.options[i].value; });
             currentField[key].ChildCategory_ON.push({'CategoryId': catOffList.options[i].value, 'CategoryName': catOffList.options[i].text});
+            currentField[key].ChildCategory_OF.sort(function(a, b) {
+              const nameA = a.CategoryName.toLowerCase(), nameB = b.CategoryName.toLowerCase();
+              if (nameA < nameB) {
+                return -1;
+              }
+              if (nameA > nameB) {
+                  return 1;
+              }
+              return 0;
+          });
+            currentField[key].ChildCategory_ON.sort(function(a, b) {
+              const nameA = a.CategoryName.toLowerCase(), nameB = b.CategoryName.toLowerCase();
+              if (nameA < nameB) {
+                return -1;
+              }
+              if (nameA > nameB) {
+                  return 1;
+              }
+              return 0;
+          });
           }
         }
       }
     }
+
 
       this.localLevelCategoryList = currentField;
 
@@ -220,8 +301,26 @@ export class FiltersComponent implements OnInit {
             currentField.BrandName_OFF.push({'brandName': catOnList.options[i].text});
       }
     }
-    currentField.BrandName_OFF = this.sortArray(currentField.BrandName_OFF);
-    currentField.BrandName_ON = this.sortArray(currentField.BrandName_ON);
+    currentField.BrandName_OFF.sort(function(a, b) {
+      const nameA = a.brandName.toLowerCase(), nameB = b.brandName.toLowerCase();
+      if (nameA < nameB) {
+        return -1;
+      }
+      if (nameA > nameB) {
+          return 1;
+      }
+      return 0;
+  });
+    currentField.BrandName_ON.sort(function(a, b) {
+      const nameA = a.brandName.toLowerCase(), nameB = b.brandName.toLowerCase();
+      if (nameA < nameB) {
+        return -1;
+      }
+      if (nameA > nameB) {
+          return 1;
+      }
+      return 0;
+  });
     this.localBrandList = currentField;
 
   }
@@ -244,25 +343,27 @@ export class FiltersComponent implements OnInit {
             currentField.BrandName_ON.push({'brandName': catOffList.options[i].text});
       }
     }
-    currentField.BrandName_OFF = this.sortArray(currentField.BrandName_OFF);
-    currentField.BrandName_ON = this.sortArray(currentField.BrandName_ON);
-    this.localBrandList = currentField;
-  }
-
-
-
-  sortArray(sortArray) {
-    const sortable = [];
-    for (const key in sortArray) {
-      if (key) {
-        sortable.push(sortArray[key]);
+    currentField.BrandName_OFF.sort(function(a, b){
+      const nameA = a.brandName.toLowerCase(), nameB = b.brandName.toLowerCase();
+      if (nameA < nameB) {
+        return -1;
       }
-    }
-
-    sortable.sort(function(a, b) {
-        return a - b;
-    });
-    return sortable;
+      if (nameA > nameB) {
+          return 1;
+      }
+      return 0;
+  });
+    currentField.BrandName_ON.sort(function(a, b){
+      const nameA = a.brandName.toLowerCase(), nameB = b.brandName.toLowerCase();
+      if (nameA < nameB) {
+        return -1;
+      }
+      if (nameA > nameB) {
+          return 1;
+      }
+      return 0;
+  });
+    this.localBrandList = currentField;
   }
 
 
