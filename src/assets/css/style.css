@@ -100,7 +100,7 @@ a:hover{color:#404040;}
 .custPriceEdit input{width:60px;}
   
   /*************Catalog page*************/
-  .catalogCol1 .form-group,.catalogCol2 .form-group,.catalogCol3 .form-group{margin-bottom: .6rem}
+  .catalogCol1 .form-group,.catalogCol2 .form-group,.catalogCol3 .form-group, .regionSettingDetails .form-group {margin-bottom: .6rem}
   .catalogCol4 .form-row{margin-top: .4rem;}
   .catalogCol4 .clearfix{height: 2.2rem;}
   .catalogCol4 .form-control{width: 90%;height: calc(1.5rem + 2px);padding: 0rem .75rem;line-height: 1;}
@@ -109,8 +109,8 @@ a:hover{color:#404040;}
  .filterTab .nav-pills .nav-link{border-radius: 1.25rem;}
  .filterTab .nav-pills .nav-link.active{background-color: #e0e0e0; color: #000;}
 
- .filterTabContent fieldset {border: 1px solid #ddd !important;margin: 0;padding: 10px;position: relative;border-radius:4px;padding-left:10px!important;}	
- .filterTabContent legend{font-size:1rem;font-weight:bold;margin-bottom: 0px; width: auto; border: 1px solid #ddd;border-radius: 4px; padding: 5px 10px 5px 10px; background-color: #ffffff;}
+ .filterTabContent fieldset, .regionSettCont fieldset {border: 1px solid #ddd !important;margin: 0;padding: 10px;position: relative;border-radius:4px;padding-left:10px!important;}	
+ .filterTabContent legend, .regionSettCont legend{font-size:1rem;font-weight:bold;margin-bottom: 0px; width: auto; border: 1px solid #ddd;border-radius: 4px; padding: 5px 10px 5px 10px; background-color: #ffffff;}
  .filterBtnArrow:before {
   content: "";
   width: 35px;
@@ -132,7 +132,11 @@ a:hover{color:#404040;}
 .filterTabContent select{min-height: 220px;}
 .filterTabContent option{padding:5px 0px 5px 5px;}
 .filterCateTwo select{min-height: 450px;}
+.filterSupplierCont{margin-top: 1.5rem;}
+.filterSupplierCont:nth-child(1){margin-top: 0rem;}
 
+ /**************Region page***********/
+ .regionFinancialDetails .form-check-inline{margin-right: 2.25rem;}
 
  /*************Responsive************/
   @media (min-width: 1366px)  { 
