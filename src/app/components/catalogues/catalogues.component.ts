@@ -27,6 +27,7 @@ export class CataloguesComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.getHeaderOptions();
     if (sessionStorage.getItem('WCToken') === null) {
       this.router.navigate(['/login']);
     }
@@ -34,6 +35,10 @@ export class CataloguesComponent implements OnInit {
     this.getExtendedCostGreaterList();
     this.getCoreCatalog();
     this.getExtendedCatalog();
+  }
+
+  getHeaderOptions() {
+    this.catalogService.getHeaderOptions();
   }
 
   getExtendedMoqList() {
@@ -73,6 +78,7 @@ export class CataloguesComponent implements OnInit {
   }
 
   getCoreCatalog() {
+    this.spinner.show();
     this.coreCatalogs = [];
     this.catalogService.getCoreCatalog()
     .pipe(map(
@@ -83,15 +89,18 @@ export class CataloguesComponent implements OnInit {
     ))
     .subscribe(
       data => {
+        this.spinner.hide();
         this.coreCatalogs = data;
         this.localCoreCatalogModel = this.coreCatalogs;
       },
       error => {
+        this.spinner.hide();
         this.alertService.error(error);
       });
   }
 
   getExtendedCatalog() {
+    this.spinner.show();
     this.extendedCatalogs = [];
     this.catalogService.getExtendedCatalog()
     .pipe(map(
@@ -102,10 +111,12 @@ export class CataloguesComponent implements OnInit {
     ))
     .subscribe(
       data => {
+        this.spinner.hide();
         this.extendedCatalogs = data;
         this.localExtCatalogModel = this.extendedCatalogs;
       },
       error => {
+        this.spinner.hide();
         this.alertService.error(error);
       });
   }

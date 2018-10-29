@@ -56,9 +56,14 @@ export class ProductsPriceComponent implements OnInit {
    pagedItems: any[];
 
   ngOnInit() {
+    this.getHeaderOptions();
     if (sessionStorage.getItem('WCToken') === null) {
       this.router.navigate(['/login']);
     }
+  }
+
+  getHeaderOptions() {
+    this.productService.getHeaderOptions();
   }
 
   onEnter(value: string) {

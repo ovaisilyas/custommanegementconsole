@@ -9,24 +9,33 @@ import { ProductModel } from '../model/product.model';
     providedIn: 'root'
   })
   export class ProductService {
-    storeId = sessionStorage.getItem('storeId');
-    userId = sessionStorage.getItem('userId');
-    WCToken = sessionStorage.getItem('WCToken');
-    WCTrustedToken = sessionStorage.getItem('WCTrustedToken');
-    personalizationID = sessionStorage.getItem('personalizationID');
+    userId = '';
+    WCToken = '';
+    WCTrustedToken = '';
+    personalizationID = '';
+    storeId = '';
+    httpOptions = {};
 
     constructor(
       private httpClient: HttpClient,
     ) { }
 
-    httpOptions = {
-      headers: new HttpHeaders({ 'Access-Control-Allow-Origin': 'true', 'Content-Type': 'application/json',
-        'userId': this.userId,
-        'WCToken': this.WCToken,
-        'WCTrustedToken': this.WCTrustedToken,
-        'personalizationID': this.personalizationID
-      })
-    };
+    getHeaderOptions() {
+      this.userId = sessionStorage.getItem('userId');
+      this.WCToken = sessionStorage.getItem('WCToken');
+      this.WCTrustedToken = sessionStorage.getItem('WCTrustedToken');
+      this.personalizationID = sessionStorage.getItem('personalizationID');
+      this.storeId = sessionStorage.getItem('storeId');
+      this.httpOptions = {
+        headers: new HttpHeaders({ 'Access-Control-Allow-Origin': 'true', 'Content-Type': 'application/json',
+          'userId': this.userId,
+          'storeId': this.storeId,
+          'WCToken': this.WCToken,
+          'WCTrustedToken': this.WCTrustedToken,
+          'personalizationID': this.personalizationID
+        })
+      };
+    }
     getCategory() {
       console.log(this.storeId);
       console.log('in getCategory function');

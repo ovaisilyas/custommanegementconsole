@@ -33,6 +33,7 @@ export class FiltersComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.getHeaderOptions();
     if (sessionStorage.getItem('WCToken') === null) {
       this.router.navigate(['/login']);
     }
@@ -40,8 +41,13 @@ export class FiltersComponent implements OnInit {
     this.getBrandList();
   }
 
-  getLevelTwoCategories() {
+  getHeaderOptions() {
+    this.filtersService.getHeaderOptions();
+  }
 
+
+  getLevelTwoCategories() {
+    this.spinner.show();
     this.filtersService.getLevelTwoCategories()
     .pipe(map(
       (list) => {
@@ -51,15 +57,18 @@ export class FiltersComponent implements OnInit {
     ))
     .subscribe(
       data => {
+        this.spinner.hide();
         this.levelCategoryList = data;
         this.localLevelCategoryList = this.levelCategoryList;
       },
       error => {
+        this.spinner.hide();
         console.log(error);
       });
   }
 
   getBrandList() {
+    this.spinner.show();
     this.filtersService.getBrandList()
     .pipe(map(
       (list) => {
@@ -69,12 +78,13 @@ export class FiltersComponent implements OnInit {
     ))
     .subscribe(
       data => {
+        this.spinner.hide();
         this.brandsList = data;
         this.localBrandList = data;
         console.log(this.localBrandList);
       },
       error => {
-
+        this.spinner.hide();
       });
   }
 
