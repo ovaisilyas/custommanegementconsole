@@ -11,6 +11,7 @@
   <div class="row">
     <div class="col-lg-12">
       <div class="tab-content" id="nav-tabContent">
+          <app-alert></app-alert>
           <div class="row mt-1">
               <div class="col-lg-5 col-sm-5 col-xl-5 catalogCol1">
                 <h5><span>Core</span></h5>
@@ -24,14 +25,14 @@
         <div class="row wrapperCoreRow">
             <div class="col-lg-5 col-sm-5 col-xl-5 catalogCol1" *ngFor="let item of localCoreCatalogModel; let i = index">
                 <div class="form-group row">
-                    <label class="col col-lg-7 col-xl-6 offset-sm-1">{{item.catName}}</label>
+                    <label class="col col-lg-7 col-xl-6 offset-sm-1 text-capitalize">{{item.catName | lowercase}}</label>
                     <div class="col col-lg-4 col-xl-5">
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" [name]="item.cfcondId" [attr.id]="'radioCatlogOff'+i" [(ngModel)]="item.attrVal" [value]="false">
                             <label class="form-check-label" [attr.for]="'radioCatlogOff'+i">Off</label>
                           </div>
                           <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" [name]="item.cfcondId" [attr.id]="'radioCatlogOn'+i" [(ngModel)]="item.attrVal" [value]="false">
+                            <input class="form-check-input" type="radio" [name]="item.cfcondId" [attr.id]="'radioCatlogOn'+i" [(ngModel)]="item.attrVal" [value]="true">
                             <label class="form-check-label" [attr.for]="'radioCatlogOn'+i">On</label>
                           </div>
                     </div>
@@ -73,7 +74,7 @@
       <div class="row" *ngFor="let item of localExtCatalogModel; let i = index">
             <div class="col-lg-5 col-sm-5 col-xl-5 catalogCol3">
                     <div class="form-group row">
-                            <label class="col col-lg-7 col-xl-6 offset-sm-1">{{item.identifier}}</label>
+                            <label class="col col-lg-7 col-xl-6 offset-sm-1 text-capitalize">{{item.identifier | lowercase}}</label>
                             <div class="col col-lg-4 col-xl-5">
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" [name]="item.cfcondId" [attr.id]="'radioStationeryOff'+i" [(ngModel)]="item.onFilter" [value]="false">
