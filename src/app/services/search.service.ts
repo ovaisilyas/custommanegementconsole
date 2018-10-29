@@ -37,6 +37,7 @@ export class SearchService {
 
   searchData(searchTerm: string) {
     console.log('in search function');
+    this.getHeaderOptions();
     console.log(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcusersearch/findUser/${searchTerm}`);
     return this.httpClient.get<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcusersearch/findUser/${searchTerm}`,
       this.httpOptions);
@@ -44,6 +45,7 @@ export class SearchService {
 
   searchProduct(searchTerm: string) {
     console.log('in search product function');
+    this.getHeaderOptions();
     console.log(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcproductsearch/findProduct/${searchTerm}`);
 
     return this.httpClient.get<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcproductsearch/findProduct/${searchTerm}`,
@@ -52,6 +54,7 @@ export class SearchService {
 
   searchProductOnContract(searchTerm: string, contractId: string) {
     console.log('in search product function');
+    this.getHeaderOptions();
     console.log(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcproductsearch/findContractProduct/${contractId}/${searchTerm}`);
 
     return this.httpClient.get<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcproductsearch/findContractProduct/${contractId}/${searchTerm}`,
@@ -60,6 +63,7 @@ export class SearchService {
 
   searchContractDetail(searchTerm: string) {
     console.log('Show contract details table');
+    this.getHeaderOptions();
     console.log(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmccontractdetails/${searchTerm}`);
 
     return this.httpClient.get<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmccontractdetails/${searchTerm}`,
