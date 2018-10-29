@@ -151,7 +151,7 @@ export class FiltersComponent implements OnInit {
   moveItemToRight(item: any, catagory: any, tab: any) {
     const currentField = this.localLevelCategoryList;
 
-    const catOnList = document.getElementById('selectOn' + catagory);
+    const catOnList = document.getElementById('selectOn' + catagory) as HTMLSelectElement;
     if (item === 'selected') {
       for (let i = 0; i < catOnList.options.length ; i++) {
         if (catOnList.options[i].selected) {
@@ -222,7 +222,7 @@ export class FiltersComponent implements OnInit {
   moveItemToLeft(item: any, catagory: any, tab: any) {
     const currentField = this.localLevelCategoryList;
 
-    const catOffList = document.getElementById('selectOff' + catagory);
+    const catOffList = document.getElementById('selectOff' + catagory) as HTMLSelectElement;
     if (item === 'selected') {
       for (let i = 0; i < catOffList.options.length ; i++) {
         if (catOffList.options[i].selected) {
@@ -296,7 +296,7 @@ export class FiltersComponent implements OnInit {
   moveBrandItemToRight(item: any, tab: any) {
     const currentField = this.localBrandList;
 
-    const catOnList = document.getElementById('selectOnBrand');
+    const catOnList = document.getElementById('selectOnBrand') as HTMLSelectElement;
     if (item === 'selected') {
       for (let i = 0; i < catOnList.options.length ; i++) {
         if (catOnList.options[i].selected) {
@@ -338,7 +338,7 @@ export class FiltersComponent implements OnInit {
   moveBrandItemToLeft(item: any, tab: any) {
     const currentField = this.localBrandList;
 
-    const catOffList = document.getElementById('selectOffBrand');
+    const catOffList = document.getElementById('selectOffBrand') as HTMLSelectElement;
     if (item === 'selected') {
       for (let i = 0; i < catOffList.options.length ; i++) {
         if (catOffList.options[i].selected) {
@@ -353,7 +353,7 @@ export class FiltersComponent implements OnInit {
             currentField.BrandName_ON.push({'brandName': catOffList.options[i].text});
       }
     }
-    currentField.BrandName_OFF.sort(function(a, b){
+    currentField.BrandName_OFF.sort(function(a, b) {
       const nameA = a.brandName.toLowerCase(), nameB = b.brandName.toLowerCase();
       if (nameA < nameB) {
         return -1;
@@ -363,7 +363,7 @@ export class FiltersComponent implements OnInit {
       }
       return 0;
   });
-    currentField.BrandName_ON.sort(function(a, b){
+    currentField.BrandName_ON.sort(function(a, b) {
       const nameA = a.brandName.toLowerCase(), nameB = b.brandName.toLowerCase();
       if (nameA < nameB) {
         return -1;
