@@ -1,9 +1,146 @@
 <app-header></app-header>
-<div class="container-fluid PageContWrap">
+<div class="container-fluid PageContWrap regionSettCont">
   <div class="row">
     <div class="col-lg-12">
-      <div class="tab-content" id="nav-tabContent">
-        Coming Soon
+      <div class="tab-content" id="nav-tabContent">  
+        <div class="regionStoreDetails">
+          <fieldset>
+            <legend>Store Details</legend>
+            <div class="row">
+              <div class="col-xl-8 col-lg-7">
+                  <div class="form-group row">
+                      <label class="col-xl-3 col-lg-4 col-md-4 col-form-label">Store Name & ABN:</label>
+                      <div class="col-xl-9 col-lg-8 col-md-8">
+                          <input type="text" class="form-control">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-xl-3 col-lg-4 col-md-4 col-form-label">Store Email:</label>
+                        <div class="col-xl-9 col-lg-8 col-md-8">
+                            <input type="text" class="form-control">
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                          <label class="col-xl-3 col-lg-4 col-md-4 col-form-label">Store Phone Number:</label>
+                          <div class="col-xl-4 col-lg-4 col-md-4">
+                              <input type="text" class="form-control">
+                          </div>
+                          <div class="col-xl-5 col-lg-4 col-md-4 text-right">
+                              <button class="btn btn-PrimaryModal" type="button">User Accounts</button>
+                          </div>
+                        </div>
+              </div>
+              <div class="col-xl-4 col-lg-5">
+                  <div class="form-group">
+                      <label for="storeAddress">Store Address:</label>
+                      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                    </div>
+              </div>
+            </div> 
+            <div class="row">
+            <div class="col-md-2 col-lg-1 offset-md-10 offset-lg-11"><button class="btn btn-primary btn-block" type="button">Save</button></div>    
+            </div>
+          </fieldset>
+        </div>
+        <div class="regionFinancialDetails mt-4">
+          <fieldset>
+            <legend>Financial Details</legend>
+                  <div class="form-group row">
+                <label class="col-xl-2 col-lg-3 col-md-12">Payments Method:</label>
+                <div class="col-xl-10 col-lg-9 col-md-12">
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="checkAccount" value="option1">
+                  <label class="form-check-label" for="checkAccount">Account</label>
+                </div> 
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="checkCod" value="option2">
+                  <label class="form-check-label" for="checkCod">Cash on Delivery</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="checkCc" value="option3">
+                  <label class="form-check-label" for="checkCc">eWay (Credit Card)</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="checkPaypal" value="option4">
+                  <label class="form-check-label" for="checkPaypal">Paypal</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="checkAfterPay" value="option5">
+                  <label class="form-check-label" for="checkAfterPay">Afterpay</label>
+                </div>       
+              </div>      
+            </div>
+            <div class="form-group row">
+                <label class="col-xl-2 col-lg-3 col-md-3 col-form-label">eWay Password</label>
+                <div class="col-xl-6 col-lg-8 col-md-8">
+                    <input type="text" class="form-control">
+                </div>
+              </div>
+              <div class="row">
+                  <div class="col-md-2 col-lg-1 offset-md-10 offset-lg-11"><button class="btn btn-primary btn-block" type="button">Save</button></div>    
+                  </div>
+          </fieldset>
+        </div>
+        <div class="regionSettingDetails mt-4">
+            <fieldset>
+              <legend>Setting Details</legend>
+                  <div class="form-group row">
+                  <label class="col-xl-2 col-lg-3 col-md-3">U-Rewards+Loyalty</label>
+                  <div class="col-xl-10 col-lg-9 col-md-9">
+                      <div class="form-check form-check-inline">
+                          <input class="form-check-input" type="radio" name="radioLoyalty" id="radioLoyaltyOff" value="option1">
+                          <label class="form-check-label" for="radioLoyaltyOff">Off</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                          <input class="form-check-input" type="radio" name="radioLoyalty" id="radioLoyaltyOn" value="option2">
+                          <label class="form-check-label" for="radioLoyaltyOn">On</label>
+                        </div>                   
+                  </div>      
+                  </div>
+                  <div class="form-group row">
+                      <label class="col-xl-2 col-lg-3 col-md-3">Print Solutions</label>
+                      <div class="col-xl-10 col-lg-9 col-md-9">
+                          <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="radio" name="radioPrint" id="radioPrintOff" value="option1">
+                              <label class="form-check-label" for="radioPrintOff">Off</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="radio" name="radioPrint" id="radioPrintOn" value="option2">
+                              <label class="form-check-label" for="radioPrintOn">On</label>
+                            </div>                   
+                      </div>      
+                  </div>
+                  <div class="form-group row">
+                      <label class="col-xl-2 col-lg-3 col-md-3">Guest Shopping</label>
+                      <div class="col-xl-10 col-lg-9 col-md-9">
+                          <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="radio" name="radioGuest" id="radioGuestOff" value="option1">
+                              <label class="form-check-label" for="radioGuestOff">Off</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="radio" name="radioGuest" id="radioGuestOn" value="option2">
+                              <label class="form-check-label" for="radioGuestOn">On</label>
+                            </div>                   
+                      </div>      
+                  </div>
+                  <div class="form-group row">
+                      <label class="col-xl-2 col-lg-3 col-md-3">Furniture CAD</label>
+                      <div class="col-xl-10 col-lg-9 col-md-9">
+                          <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="radio" name="radioFurniture" id="radioFurnitureOff" value="option1">
+                              <label class="form-check-label" for="radioFurnitureOff">Off</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="radio" name="radioFurniture" id="radioFurnitureOn" value="option2">
+                              <label class="form-check-label" for="radioFurnitureOn">On</label>
+                            </div>                   
+                      </div>      
+                  </div>
+                  <div class="row">
+                      <div class="col-md-2 col-lg-1 offset-md-10 offset-lg-11"><button class="btn btn-primary btn-block" type="button">Save</button></div>    
+                  </div>
+            </fieldset>
+          </div>
       </div>
     </div>
   </div>

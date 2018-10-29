@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 import { NgxSpinnerModule } from 'ngx-spinner';
@@ -59,6 +60,7 @@ import { environment } from '../environments/environment';
     AuthenticationService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    { provide: LocationStrategy, useClass: HashLocationStrategy},
   ],
   bootstrap: [AppComponent]
 })

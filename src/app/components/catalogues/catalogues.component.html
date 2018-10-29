@@ -11,6 +11,7 @@
   <div class="row">
     <div class="col-lg-12">
       <div class="tab-content" id="nav-tabContent">
+          <app-alert></app-alert>
           <div class="row mt-1">
               <div class="col-lg-5 col-sm-5 col-xl-5 catalogCol1">
                 <h5><span>Core</span></h5>
@@ -22,121 +23,21 @@
                </div>
              </div>
         <div class="row wrapperCoreRow">
-            <div class="col-lg-5 col-sm-5 col-xl-5 catalogCol1">
+            <div class="col-lg-5 col-sm-5 col-xl-5 catalogCol1" *ngFor="let item of localCoreCatalogModel; let i = index">
                 <div class="form-group row">
-                    <label class="col col-lg-7 col-xl-6 offset-sm-1">Catalogue</label>
+                    <label class="col col-lg-7 col-xl-6 offset-sm-1 text-capitalize">{{item.catName | lowercase}}</label>
                     <div class="col col-lg-4 col-xl-5">
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="radioCatlog" id="radioCatlogOff" value="option1">
-                            <label class="form-check-label" for="radioCatlogOff">Off</label>
+                            <input class="form-check-input" type="radio" [name]="item.cfcondId" [attr.id]="'radioCatlogOff'+i" [(ngModel)]="item.attrVal" [value]="false">
+                            <label class="form-check-label" [attr.for]="'radioCatlogOff'+i">Off</label>
                           </div>
                           <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="radioCatlog" id="radioCatlogOn" value="option2">
-                            <label class="form-check-label" for="radioCatlogOn">On</label>
+                            <input class="form-check-input" type="radio" [name]="item.cfcondId" [attr.id]="'radioCatlogOn'+i" [(ngModel)]="item.attrVal" [value]="true">
+                            <label class="form-check-label" [attr.for]="'radioCatlogOn'+i">On</label>
                           </div>
-                     
                     </div>
                   </div>
               </div>
-              <div class="col-lg-5 col-sm-5 col-xl-5 catalogCol1">
-                  <div class="form-group row">
-                      <label class="col col-lg-7 col-xl-6 offset-sm-1">Store Products</label>
-                      <div class="col col-lg-4 col-xl-5">
-                          <div class="form-check form-check-inline">
-                              <input class="form-check-input" type="radio" name="radioStoreProduct" id="radioStoreProductOff" value="option1">
-                              <label class="form-check-label" for="radioStoreProductOff">Off</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                              <input class="form-check-input" type="radio" name="radioStoreProduct" id="radioStoreProductOn" value="option2">
-                              <label class="form-check-label" for="radioStoreProductOn">On</label>
-                            </div>
-                       
-                      </div>
-                    </div>
-
-              </div>
-              <div class="col-lg-5 col-sm-5 col-xl-5 catalogCol1">
-                  <div class="form-group row">
-                      <label class="col col-lg-7 col-xl-6 offset-sm-1">Web Only</label>
-                      <div class="col col-lg-4 col-xl-5">
-                          <div class="form-check form-check-inline">
-                              <input class="form-check-input" type="radio" name="radioWeb" id="radioWebOff" value="option1">
-                              <label class="form-check-label" for="radioWebOff">Off</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                              <input class="form-check-input" type="radio" name="radioWeb" id="radioWebOn" value="option2">
-                              <label class="form-check-label" for="radioWebOn">On</label>
-                            </div>
-                       
-                      </div>
-                    </div>
-              </div>
-              <div class="col-lg-5 col-sm-5 col-xl-5 catalogCol1">
-                  <div class="form-group row">
-                      <label class="col col-lg-7 col-xl-6 offset-sm-1">Me Too</label>
-                      <div class="col col-lg-4 col-xl-5">
-                          <div class="form-check form-check-inline">
-                              <input class="form-check-input" type="radio" name="radioMeToo" id="radioMeTooOff" value="option1">
-                              <label class="form-check-label" for="radioMeTooOff">Off</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                              <input class="form-check-input" type="radio" name="radioMeToo" id="radioMeTooOn" value="option2">
-                              <label class="form-check-label" for="radioMeTooOn">On</label>
-                            </div>
-                       
-                      </div>
-                    </div>
-              </div>
-              <div class="col-lg-5 col-sm-5 col-xl-5 catalogCol1">
-                  <div class="form-group row">
-                      <label class="col col-lg-7 col-xl-6 offset-sm-1">Education Only</label>
-                      <div class="col col-lg-4 col-xl-5">
-                          <div class="form-check form-check-inline">
-                              <input class="form-check-input" type="radio" name="radioEducation" id="radioEducationOff" value="option1">
-                              <label class="form-check-label" for="radioEducationOff">Off</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                              <input class="form-check-input" type="radio" name="radioEducation" id="radioEducationOn" value="option2">
-                              <label class="form-check-label" for="radioEducationOn">On</label>
-                            </div>
-                       
-                      </div>
-                    </div>
-              </div>
-              <div class="col-lg-5 col-sm-5 col-xl-5 catalogCol1">
-                  <div class="form-group row" *ngFor="let item of coreCatalogs; let i = index">
-                      <label class="col col-lg-7 col-xl-6 offset-sm-1">{{item.name}}</label>
-                      <div class="col col-lg-4 col-xl-5">
-                          <div class="form-check form-check-inline">
-                              <input class="form-check-input" type="radio" name="radioStatus" id="radioStatusOff" value="off" [(ngModel)]="item.status" #radioStatus="ngModel" [checked]="item.status === 'off'" (click)="updateCoreCatalogModel(item.name, 'status', item.status);">
-                              <label class="form-check-label" for="radioStatusOff">Off</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                              <input class="form-check-input" type="radio" name="radioStatus" id="radioStatusOn" value="on" [(ngModel)]="item.status" #radioStatus="ngModel" [checked]="item.status === 'on'" (click)="updateCoreCatalogModel(item.name, 'status', item.status);">
-                              <label class="form-check-label" for="radioStatusOn">On</label>
-                            </div>
-                       
-                      </div>
-                    </div>
-              </div>
-              <div class="col-lg-5 col-sm-5 col-xl-5 catalogCol1">
-                  <div class="form-group row">
-                      <label class="col col-lg-7 col-xl-6 offset-sm-1">Furniture Only</label>
-                      <div class="col col-lg-4 col-xl-5">
-                          <div class="form-check form-check-inline">
-                              <input class="form-check-input" type="radio" name="radioFurniture" id="radioFurnitureOff" value="option1">
-                              <label class="form-check-label" for="radioFurnitureOff">Off</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                              <input class="form-check-input" type="radio" name="radioFurniture" id="radioFurnitureOn" value="option2">
-                              <label class="form-check-label" for="radioFurnitureOn">On</label>
-                            </div>
-                       
-                      </div>
-                    </div>
-
-              </div>
-
         </div>
 
      
@@ -173,7 +74,7 @@
       <div class="row" *ngFor="let item of localExtCatalogModel; let i = index">
             <div class="col-lg-5 col-sm-5 col-xl-5 catalogCol3">
                     <div class="form-group row">
-                            <label class="col col-lg-7 col-xl-6 offset-sm-1">{{item.identifier}}</label>
+                            <label class="col col-lg-7 col-xl-6 offset-sm-1 text-capitalize">{{item.identifier | lowercase}}</label>
                             <div class="col col-lg-4 col-xl-5">
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" [name]="item.cfcondId" [attr.id]="'radioStationeryOff'+i" [(ngModel)]="item.onFilter" [value]="false">
@@ -191,7 +92,7 @@
                     <div class="form-row">
                             <div class="col-xl-3 col-lg-3 col-md-3 col-sm-2">
                                
-                                <select [attr.id]="'selectMoq'+item.cfcondgrpId" class="form-control" [(ngModel)]="item.MOQ.attrValId" [name]="item.MOQ.cfcondId" #moqValue="ngModel">
+                                <select [attr.id]="'selectMoq'+item.cfcondgrpId" class="form-control" [(ngModel)]="item.MOQ.attrValId" [name]="item.MOQ.cfcondId" #moqValue="ngModel" [disabled]="!item.onFilter">
                                     <option value="">N/A</option>
                                   <option *ngFor="let item of extendedMoqList" [value]="item.attrValId" [attr.id]="'optionMoq'+item.attrValId">{{item.attrValue}}</option>                                 
                                 </select>
@@ -199,7 +100,7 @@
                             </div>
                             <div class="col-xl-3 col-lg-3 col-md-3 col-sm-2">
                                
-                                <select [attr.id]="'selectCost'+item.cfcondgrpId" class="form-control" [(ngModel)]="item.COST.attrValId" [name]="item.COST.cfcondId" #costValue="ngModel">
+                                <select [attr.id]="'selectCost'+item.cfcondgrpId" class="form-control" [(ngModel)]="item.COST.attrValId" [name]="item.COST.cfcondId" #costValue="ngModel" [disabled]="!item.onFilter">
                                     <option value="">0</option>
                                   <option *ngFor="let item of extendedCostGreaterList" [value]="item.attrValId" [attr.id]="'optionCost'+item.attrValId">{{item.attrValue}}</option>
                                 </select>
@@ -207,18 +108,18 @@
                             <div class="col-xl-1 col-md-2">
                                
                                 <div class="form-check">
-                                    <input id="ChkRq1" class="form-check-input" type="checkbox" [checked]="item.RQ.attrvalue" [(ngModel)]="item.RQ.attrvalue" [name]="item.RQ.cfcondId" #rqValue="ngModel">
+                                    <input id="ChkRq1" class="form-check-input" type="checkbox" [checked]="item.RQ.attrvalue" [(ngModel)]="item.RQ.attrvalue" [name]="item.RQ.cfcondId" #rqValue="ngModel" [disabled]="!item.onFilter">
                                   </div>
                             </div>
                             <div class="col">
                                
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="radioExtRange1" id="radioExtRangeOff1" value="option1">
-                                    <label class="form-check-label" for="radioExtRangeOff1">Off</label>
+                                    <input class="form-check-input" type="radio" name="item.cfcondId" [attr.id]="'radioExtRangeOff'+i" [value]="false" [disabled]="!item.onFilter">
+                                    <label class="form-check-label" [attr.for]="'radioExtRangeOff'+i">Off</label>
                                   </div>
                                   <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="radioExtRange1" id="radioExtRangeOn1" value="option2">
-                                    <label class="form-check-label" for="radioExtRangeOn1">On</label>
+                                    <input class="form-check-input" type="radio" name="item.cfcondId" [attr.id]="'radioExtRangeOn'+i" [value]="false" [disabled]="!item.onFilter">
+                                    <label class="form-check-label" [attr.for]="'radioExtRangeOn'+i">On</label>
                                   </div>
                               </div>
                           </div>

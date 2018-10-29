@@ -91,6 +91,7 @@ export class ContractListComponent implements OnInit {
   pagedItems: any[];
 
   ngOnInit() {
+    this.getHeaderOptions();
     if (sessionStorage.getItem('WCToken') === null) {
       this.router.navigate(['/login']);
     }
@@ -98,6 +99,10 @@ export class ContractListComponent implements OnInit {
     this.getCustomerListforContract();
     this.getBaseContracts();
     this.getStoreShippingModes();
+  }
+
+  getHeaderOptions() {
+    this.contractService.getHeaderOptions();
   }
 
   searchOnEnter(value: string) {

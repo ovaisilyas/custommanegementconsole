@@ -48,10 +48,15 @@ export class UsersOrgComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.getHeaderOptions();
     if (sessionStorage.getItem('WCToken') === null) {
       this.router.navigate(['/login']);
     }
     this.getCustomers();
+  }
+
+  getHeaderOptions() {
+    this.usersService.getHeaderOptions();
   }
 
   onEnter(value: string) {
