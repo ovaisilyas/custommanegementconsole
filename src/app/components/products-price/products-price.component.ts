@@ -64,6 +64,7 @@ export class ProductsPriceComponent implements OnInit {
 
   getHeaderOptions() {
     this.productService.getHeaderOptions();
+    this.contractService.getHeaderOptions();
   }
 
   onEnter(value: string) {

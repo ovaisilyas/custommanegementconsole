@@ -78,7 +78,10 @@
                             <div class="col-sm-8"><span>{{catalogFilter}}</span></div>
                         </div>
                         <div class="row mt-3 border-0">
-                          <div class="col-sm-12 text-center"><button class="btn btn-PrimaryModal btn-default" data-toggle="modal" data-target="#addNewContract" type="button" (click)="openContractDetail()">Edit Contract</button></div>
+                          <div class="col-sm-12 text-center"><button class="btn btn-PrimaryModal btn-default" data-toggle="modal" data-target="#addNewContract" type="button" (click)="openContractDetail()">Edit Contract</button>
+                            <button class="btn btn-PrimaryModal btn-default ml-2" data-toggle="modal" data-target="#addCustomers" (click)="getCustomerforItem(selectedContractID);">Customers</button>
+                          </div>
+                          
                          
                       </div>
                           </div>
@@ -112,8 +115,7 @@
                           </div>                       
                     </td>
                     <td>
-                      <a (click)="showEditPrice(i,item.price)">Edit Price</a> 
-                      <a role="button" data-toggle="modal" data-target="#addCustomers" (click)="getCustomerforItem(item.catEntryId); selectedItemPrice = item.price">Customers</a>
+                      <a *ngIf="item.fixedPrice" (click)="showEditPrice(i,item.price)">Edit Price</a> 
                       <a role="button" data-toggle="modal" data-target="#deleteCustomers" (click)="deletePartnumber = item.partnumber">Delete</a></td>
                   </tr>
                 </tbody>

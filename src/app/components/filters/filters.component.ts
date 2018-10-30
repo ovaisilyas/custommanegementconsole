@@ -295,6 +295,8 @@ export class FiltersComponent implements OnInit {
 
   moveBrandItemToRight(item: any, tab: any) {
     const currentField = this.localBrandList;
+    let houseBrandsOff = [];
+    let houseBrandsOn = [];
 
     const catOnList = document.getElementById('selectOnBrand') as HTMLSelectElement;
     if (item === 'selected') {
@@ -331,12 +333,31 @@ export class FiltersComponent implements OnInit {
       }
       return 0;
   });
+
+  for (let i = 0; i < currentField.BrandName_OFF.length; i++) {
+    if (currentField.BrandName_OFF[i].brandName.indexOf('(House Brand)') !== -1) {
+      houseBrandsOff = currentField.BrandName_OFF[i];
+      currentField.BrandName_OFF = currentField.BrandName_OFF.filter(function(x) {return x.brandName !== currentField.BrandName_OFF[i].brandName; });
+      currentField.BrandName_OFF.unshift(houseBrandsOff);
+    }
+  }
+  for (let i = 0; i < currentField.BrandName_ON.length; i++) {
+    if (currentField.BrandName_ON[i].brandName.indexOf('(House Brand)') !== -1) {
+      houseBrandsOn = currentField.BrandName_ON[i];
+      currentField.BrandName_ON = currentField.BrandName_ON.filter(function(x) {return x.brandName !== currentField.BrandName_ON[i].brandName; });
+      currentField.BrandName_ON.unshift(houseBrandsOn);
+    }
+  }
+
+
     this.localBrandList = currentField;
 
   }
 
   moveBrandItemToLeft(item: any, tab: any) {
     const currentField = this.localBrandList;
+    let houseBrandsOff = [];
+    let houseBrandsOn = [];
 
     const catOffList = document.getElementById('selectOffBrand') as HTMLSelectElement;
     if (item === 'selected') {
@@ -373,6 +394,21 @@ export class FiltersComponent implements OnInit {
       }
       return 0;
   });
+
+  for (let i = 0; i < currentField.BrandName_OFF.length; i++) {
+    if (currentField.BrandName_OFF[i].brandName.indexOf('(House Brand)') !== -1) {
+      houseBrandsOff = currentField.BrandName_OFF[i];
+      currentField.BrandName_OFF = currentField.BrandName_OFF.filter(function(x) {return x.brandName !== currentField.BrandName_OFF[i].brandName; });
+      currentField.BrandName_OFF.unshift(houseBrandsOff);
+    }
+  }
+  for (let i = 0; i < currentField.BrandName_ON.length; i++) {
+    if (currentField.BrandName_ON[i].brandName.indexOf('(House Brand)') !== -1) {
+      houseBrandsOn = currentField.BrandName_ON[i];
+      currentField.BrandName_ON = currentField.BrandName_ON.filter(function(x) {return x.brandName !== currentField.BrandName_ON[i].brandName; });
+      currentField.BrandName_ON.unshift(houseBrandsOn);
+    }
+  }
     this.localBrandList = currentField;
   }
 
