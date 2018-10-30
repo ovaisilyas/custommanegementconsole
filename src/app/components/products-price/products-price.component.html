@@ -53,7 +53,7 @@
                       <td scope="col" class="tableDataDesc"><span title="{{item.description}}">{{item.description}}</span></td>
                       <td scope="col"> ${{item.listprice | number:'1.2-2'}}</td>
                       <td scope="col">${{item.govtprice | number:'1.2-2'}}</td>
-                      <td scope="col"><a href="javascript:void(0)" role="button" data-toggle="modal" data-target="#openContract" (click)="openContract(item.catentryId)">Open Contract</a></td>
+                      <td scope="col"><a href="javascript:void(0)" role="button" data-toggle="modal" data-target="#openContract" (click)="openContract(item.catentryId)">Open Contract</a> &nbsp; <a href="javascript:void(0)" role="button" data-toggle="modal" data-target="#openContract" (click)="openContract(item.catentryId)">Show prices</a></td>
                     </tr>
                   </tbody>
                 </table>
