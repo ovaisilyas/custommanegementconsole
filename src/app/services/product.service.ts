@@ -45,6 +45,14 @@ import { ProductModel } from '../model/product.model';
         this.httpOptions);
     }
 
+    getPriceList(catEntryId: any) {
+      console.log('Get price level');
+      console.log(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmccategory/categorylist/${catEntryId}`);
+
+      return this.httpClient.get<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmccategory/categorylist/${catEntryId}`,
+        this.httpOptions);
+    }
+
     addStoreProduct(productDetail: ProductModel) {
       console.log(productDetail);
       console.log('Add product call');

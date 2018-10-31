@@ -11,34 +11,34 @@
                   <div class="form-group row">
                       <label class="col-xl-3 col-lg-4 col-md-4 col-form-label">Store Name & ABN:</label>
                       <div class="col-xl-9 col-lg-8 col-md-8">
-                          <input type="text" class="form-control">
+                          <input type="text" class="form-control" [(ngModel)]="storeDetails.name" #name="ngModel">
                       </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-xl-3 col-lg-4 col-md-4 col-form-label">Store Email:</label>
                         <div class="col-xl-9 col-lg-8 col-md-8">
-                            <input type="text" class="form-control">
+                            <input type="text" class="form-control" [(ngModel)]="storeDetails.email" #email="ngModel">
                         </div>
                       </div>
                       <div class="form-group row">
                           <label class="col-xl-3 col-lg-4 col-md-4 col-form-label">Store Phone Number:</label>
                           <div class="col-xl-4 col-lg-4 col-md-4">
-                              <input type="text" class="form-control">
+                              <input type="text" class="form-control"  [(ngModel)]="storeDetails.phone" #phone="ngModel">
                           </div>
                           <div class="col-xl-5 col-lg-4 col-md-4 text-right">
-                              <button class="btn btn-PrimaryModal" type="button">User Accounts</button>
+                              <button class="btn btn-PrimaryModal" type="button" (click)="openUserAccounts()">User Accounts</button>
                           </div>
                         </div>
               </div>
               <div class="col-xl-4 col-lg-5">
                   <div class="form-group">
                       <label for="storeAddress">Store Address:</label>
-                      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" [(ngModel)]="storeDetails.address" #address="ngModel"></textarea>
                     </div>
               </div>
             </div> 
             <div class="row">
-            <div class="col-md-2 col-lg-1 offset-md-10 offset-lg-11"><button class="btn btn-primary btn-block" type="button">Save</button></div>    
+            <div class="col-md-2 col-lg-1 offset-md-10 offset-lg-11"><button class="btn btn-primary btn-block" type="button" (click)="saveStoreDetails()">Save</button></div>    
             </div>
           </fieldset>
         </div>
@@ -77,7 +77,7 @@
                 </div>
               </div>
               <div class="row">
-                  <div class="col-md-2 col-lg-1 offset-md-10 offset-lg-11"><button class="btn btn-primary btn-block" type="button">Save</button></div>    
+                  <div class="col-md-2 col-lg-1 offset-md-10 offset-lg-11"><button class="btn btn-primary btn-block" type="button" (click)="saveFinancialDetails()">Save</button></div>    
                   </div>
           </fieldset>
         </div>
