@@ -30,6 +30,7 @@ export class ProductsPriceComponent implements OnInit {
   productDetail = new ProductModel('', '', '', '', '', '', '', true, '', true, true, '', '', '', '', '');
   loading = true;
   showPagination = false;
+  itemPriceList = [];
   selectedId = '';
   IdKey = 0;
   searchTerm = '';
@@ -151,6 +152,17 @@ export class ProductsPriceComponent implements OnInit {
         console.log(error);
       }
     );
+  }
+
+  getPriceList(catEntryId: any) {
+    this.productService.getPriceList(catEntryId)
+    .subscribe(
+      data => {
+        this.itemPriceList = data;
+      },
+      error => {
+        this.alertService.error(error);
+      });
   }
 
   saveStoreProduct() {
