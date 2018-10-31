@@ -6,7 +6,7 @@
        
           <div class="homeHeader"><h5>Recent Purchases</h5>
             <div class="float-right moreIcon">
-              <a href="#">
+              <a href="#" data-target="#recentPurchase" data-toggle="modal" role="button">
               <span></span>
               <span></span>
               <span></span>
@@ -24,7 +24,7 @@
                 <tr>
                   <td scope="row">Office brands</td>
                   <td>$999.00</td>
-                  <td>Order</td>
+                  <td><a data-target="#orderDetails" data-toggle="modal" role="button" href="javascript:void(0)">Order</a></td>
                   
                 </tr>
                 <tr>
@@ -76,7 +76,103 @@
               </tbody>
             </table>
           </div>
-        
+          <!-- Modal Recent Purchase-->
+          <div class="modal fade homeRecentModal" id="recentPurchase" tabindex="-1" role="dialog" aria-labelledby="recentPurchase" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title"><span>Recent Purchases</span></h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                    <div class="homePurchaseGrid table-responsive">
+                        <table class="table table-bordered table-striped">
+                          <thead>
+                            <tr>
+                              <th scope="col">Customer</th>
+                              <th scope="col">Purchase Value</th>
+                              <th scope="col">Order Details</th>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td scope="row">Office brands</td>
+                              <td>$999.00</td>
+                              <td><a data-target="#orderDetails" data-toggle="modal" role="button" href="javascript:void(0)">Order</a></td>
+                              
+                            </tr>
+                            <tr>
+                              <td scope="row">Office brands</td>
+                              <td>$499.00</td>
+                              <td><a href="#">Order</a></td>
+                             
+                            </tr>
+                             <tr>
+                              <td scope="row">Office National</td>
+                              <td>$599.00</td>
+                              <td><a href="#">Order</a></td>
+                             
+                            </tr>
+                           
+                          </tbody>
+                        </table>
+                      </div>
+                </div>
+              </div>
+            </div>
+          </div>
+           <!-- Modal Order Details-->
+          <div class="modal fade homeOrderDetailsModal" id="orderDetails" tabindex="-1" role="dialog" aria-labelledby="recentPurchase" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title"><span>Order Details</span></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">×</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="orderDetailsView">
+                        <div class="row">
+                        <div class="col-sm-5"><label>Order Number</label></div>
+                        <div class="col-sm-7"><span>7583311</span></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-5"><label>Order Date</label></div>
+                            <div class="col-sm-7"><span>August 30, 2017</span></div>
+                        </div>
+                        <div class="row">
+                          <div class="col-sm-5"><label>Shipping Address</label></div>
+                          <div class="col-sm-7">
+                            <div class="shipAddress">
+                            <span>National Store</span>
+                            <span>Street 1</span>
+                            <span>Shipping Address 1</span>
+                            <span>New South Wales</span>
+                            <span>Australia 2150</span>
+                            <span>4125611</span>
+                            <span>testuser@officenat.com</span>
+                          </div>
+                          </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-5"><label>Ship as Complete</label></div>
+                        <div class="col-sm-7"><span>Yes</span></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-5"><label>Shipping Method</label></div>
+                        <div class="col-sm-7"><span>Courier</span></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-5"><label>Purchase Order Number</label></div>
+                        <div class="col-sm-7"><span>18734561</span></div>
+                    </div> 
+                  </div>
+                  </div>
+                </div>
+              </div>
+            </div>
       </div>
     </div>
   </div>
