@@ -47,9 +47,9 @@ import { ProductModel } from '../model/product.model';
 
     getPriceList(catEntryId: any) {
       console.log('Get price level');
-      console.log(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmccategory/categorylist/${catEntryId}`);
+      console.log(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcshowprices/priceList/${catEntryId}`);
 
-      return this.httpClient.get<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmccategory/categorylist/${catEntryId}`,
+      return this.httpClient.get<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcshowprices/priceList/${catEntryId}`,
         this.httpOptions);
     }
 

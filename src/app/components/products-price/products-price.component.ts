@@ -155,7 +155,15 @@ export class ProductsPriceComponent implements OnInit {
   }
 
   getPriceList(catEntryId: any) {
+    this.itemPriceList = [];
     this.productService.getPriceList(catEntryId)
+    .pipe(map(
+      (list) => {
+        const priceList = list['priceList'];
+        console.log(priceList);
+        return priceList;
+      }
+    ))
     .subscribe(
       data => {
         this.itemPriceList = data;
