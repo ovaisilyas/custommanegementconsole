@@ -129,11 +129,11 @@
                             <div class="col">
                                
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" [name]="item.EXTRA_RANGE.cfcondId" [attr.id]="'radioExtRangeOff'+i" [(ngModel)]="item.EXTRA_RANGE.attrvalue" [value]="false" [disabled]="!item.onFilter">
+                                    <input class="form-check-input" type="radio" [name]="'radioEROff'+i" [attr.id]="'radioExtRangeOff'+i" [(ngModel)]="item.EXTRA_RANGE.attrvalue" [value]="false" [disabled]="!item.onFilter">
                                     <label class="form-check-label" [attr.for]="'radioExtRangeOff'+i">Off</label>
                                   </div>
                                   <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" [name]="item.EXTRA_RANGE.cfcondId" [attr.id]="'radioExtRangeOn'+i" [(ngModel)]="item.EXTRA_RANGE.attrvalue" [value]="true" [disabled]="!item.onFilter">
+                                    <input class="form-check-input" type="radio" [name]="'radioEROn'+i" [attr.id]="'radioExtRangeOn'+i" [(ngModel)]="item.EXTRA_RANGE.attrvalue" [value]="true" [disabled]="!item.onFilter">
                                     <label class="form-check-label" [attr.for]="'radioExtRangeOn'+i">On</label>
                                   </div>
                               </div>
