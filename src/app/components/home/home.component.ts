@@ -3,6 +3,7 @@ import {Router} from '@angular/router';
 import {AlertService} from '../../services/alert.service';
 import {HomeService} from '../../services/home.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-home',
@@ -38,6 +39,12 @@ export class HomeComponent implements OnInit {
   getRecentPurchaseList() {
     this.spinner.show();
     this.homeService.getRecentPurchaseList()
+    .pipe(map(
+      (list) => {
+        const recentPurchaseList = list['OrderList'];
+        return recentPurchaseList;
+      }
+    ))
     .subscribe(
       data => {
         this.recentPurchaseList = data;
@@ -51,6 +58,12 @@ export class HomeComponent implements OnInit {
   getSaleSummary() {
     this.spinner.show();
     this.homeService.getSaleSummary()
+    .pipe(map(
+      (list) => {
+        const summary = list['OrderSummary'];
+        return summary;
+      }
+    ))
     .subscribe(
       data => {
         this.salesSummary = data;
@@ -64,6 +77,12 @@ export class HomeComponent implements OnInit {
   getPurchaseHistory() {
     this.spinner.show();
     this.homeService.getPurchaseHistory()
+    .pipe(map(
+      (list) => {
+        const recentPurchaseList = list['OrderList'];
+        return recentPurchaseList;
+      }
+    ))
     .subscribe(
       data => {
         this.purchaseHistory = data;

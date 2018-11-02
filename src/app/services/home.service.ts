@@ -36,22 +36,22 @@ export class HomeService {
 
   getRecentPurchaseList() {
     console.log('Get Recent Purchase list');
-    console.log(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmccatalogcategories/getTopCategories`);
-    return this.httpClient.get<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmccatalogcategories/getTopCategories`,
+    console.log(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcorderdetails/getOrdersPurchase?days=10`);
+    return this.httpClient.get<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcorderdetails/getOrdersPurchase?days=10`,
       this.httpOptions);
   }
 
   getSaleSummary() {
     console.log('Get Sales Summary');
-    console.log(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmccatalogcategories/getTopCategories`);
-    return this.httpClient.get<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmccatalogcategories/getTopCategories`,
+    console.log(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcorderdetails/getOrdersSummary`);
+    return this.httpClient.get<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcorderdetails/getOrdersSummary`,
       this.httpOptions);
   }
 
   getPurchaseHistory() {
     console.log('Get Purchase history for 60 days');
-    console.log(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmccatalogcategories/OnOfCategory`);
-    return this.httpClient.get<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmccatalogcategories/OnOfCategory`,
+    console.log(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcorderdetails/getOrdersPurchase?days=60`);
+    return this.httpClient.get<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcorderdetails/getOrdersPurchase?days=60`,
       this.httpOptions);
   }
 

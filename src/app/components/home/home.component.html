@@ -1,3 +1,11 @@
+<ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="medium"
+  color="#fff"
+  type="ball-scale-multiple">
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+
 <app-header></app-header>
 <div class="container-fluid PageContWrap homePageCont">
   <div class="row">
@@ -6,7 +14,7 @@
        
           <div class="homeHeader"><h5>Recent Purchases</h5>
             <div class="float-right moreIcon">
-              <a href="#" data-target="#recentPurchase" data-toggle="modal" role="button">
+              <a href="#" data-target="#recentPurchase" data-toggle="modal" role="button" (click)="getPurchaseHistory()">
               <span></span>
               <span></span>
               <span></span>
@@ -21,25 +29,11 @@
                   <th scope="col">Order Details</th>
               </thead>
               <tbody>
-                <tr>
-                  <td scope="row">Office brands</td>
-                  <td>$999.00</td>
-                  <td><a data-target="#orderDetails" data-toggle="modal" role="button" href="javascript:void(0)">Order</a></td>
-                  
+                <tr *ngFor="let item of recentPurchaseList">
+                  <td scope="row">{{item.LogonName}}</td>
+                  <td>{{item.PurchaseValue}}</td>
+                  <td><a data-target="#orderDetails" data-toggle="modal" role="button" (click)="getOrderDetails(item.OrderId)" href="javascript:void(0)">{{item.OrderId}}</a></td>
                 </tr>
-                <tr>
-                  <td scope="row">Office brands</td>
-                  <td>$499.00</td>
-                  <td>Order</td>
-                 
-                </tr>
-                 <tr>
-                  <td scope="row">Office National</td>
-                  <td>$599.00</td>
-                  <td>Order</td>
-                 
-                </tr>
-               
               </tbody>
             </table>
           </div>
@@ -53,25 +47,9 @@
                   <th scope="col">Value ($)</th>
               </thead>
               <tbody>
-                <tr>
-                  <td scope="row">Financial YTD Sales</td>
-                  <td>$999 999.00</td>               
-                </tr>
-                <tr>
-                  <td scope="row">Sales this Month to date</td>
-                  <td>$9999.00</td>
-                </tr>
-                 <tr>
-                  <td scope="row">Sales last Month</td>
-                  <td>$99 999.00</td>
-                </tr>
-                <tr>
-                  <td scope="row">B2C Sales directed to store</td>
-                  <td>$1000.00</td>
-                </tr>
-                <tr>
-                  <td scope="row">National Account Sales directed to store</td>
-                  <td>$2000.00</td>
+                <tr *ngFor="let item of salesSummary">
+                  <td scope="row" class="text-capitalize">{{item.identifier | lowercase}}</td>
+                  <td>{{item.price}}</td>               
                 </tr>
               </tbody>
             </table>
@@ -96,25 +74,11 @@
                               <th scope="col">Order Details</th>
                           </thead>
                           <tbody>
-                            <tr>
-                              <td scope="row">Office brands</td>
-                              <td>$999.00</td>
-                              <td><a data-target="#orderDetails" data-toggle="modal" role="button" href="javascript:void(0)">Order</a></td>
-                              
+                            <tr *ngFor="let item of purchaseHistory">
+                              <td scope="row">{{item.LogonName}}</td>
+                              <td>{{item.PurchaseValue}}</td>
+                              <td><a data-target="#orderDetails" data-toggle="modal" role="button" (click)="getOrderDetails(item.OrderId)" href="javascript:void(0)">{{item.OrderId}}</a></td>
                             </tr>
-                            <tr>
-                              <td scope="row">Office brands</td>
-                              <td>$499.00</td>
-                              <td><a href="#">Order</a></td>
-                             
-                            </tr>
-                             <tr>
-                              <td scope="row">Office National</td>
-                              <td>$599.00</td>
-                              <td><a href="#">Order</a></td>
-                             
-                            </tr>
-                           
                           </tbody>
                         </table>
                       </div>
