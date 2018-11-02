@@ -71,5 +71,35 @@ export class StoresService {
       this.httpOptions);
   }
 
+  getGuestShopping() {
+    console.log('Get Guest Shopping details');
+    console.log(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcstoresetting/guestshopping`);
+    return this.httpClient.get<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcstoresetting/guestshopping`,
+      this.httpOptions);
+  }
+
+  saveGuestShopping(guest: any) {
+    console.log('Save Guest shopping settings');
+    console.log(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcstoresetting/OnOfguestshopping`);
+    console.log(guest);
+    return this.httpClient.post<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcstoresetting/OnOfguestshopping`, guest,
+      this.httpOptions);
+  }
+
+  saveLoyaltySettings(loyaltyDetail: any) {
+    console.log('Save Loyalty settings');
+    console.log(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcloyality/updateLoyality`);
+    console.log(loyaltyDetail);
+    return this.httpClient.post<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcloyality/updateLoyality`, loyaltyDetail,
+      this.httpOptions);
+  }
+
+  openUserAccounts() {
+    console.log('Open User Accounts popup');
+    console.log(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcstoresetting/guestshopping`);
+    return this.httpClient.get<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcstoresetting/guestshopping`,
+      this.httpOptions);
+  }
+
 
 }

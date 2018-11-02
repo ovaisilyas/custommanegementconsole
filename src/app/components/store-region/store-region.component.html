@@ -11,6 +11,7 @@
   <div class="row">
     <div class="col-lg-12">
       <div class="tab-content" id="nav-tabContent">  
+          <app-alert></app-alert>
         <div class="regionStoreDetails">
           <fieldset>
             <legend>Store Details</legend>
@@ -34,7 +35,7 @@
                               <input type="text" class="form-control"  [(ngModel)]="storeDetails.phone" #phone="ngModel">
                           </div>
                           <div class="col-xl-5 col-lg-4 col-md-4 text-right">
-                              <button class="btn btn-PrimaryModal" type="button" (click)="openUserAccounts()">User Accounts</button>
+                              <button class="btn btn-PrimaryModal" type="button" data-toggle="modal" data-target="#userAccountsModal" (click)="openUserAccounts()">User Accounts</button>
                           </div>
                         </div>
               </div>
@@ -102,56 +103,31 @@
                   <label class="col-xl-2 col-lg-3 col-md-3">U-Rewards+Loyalty</label>
                   <div class="col-xl-10 col-lg-9 col-md-9">
                       <div class="form-check form-check-inline">
-                          <input class="form-check-input" type="radio" name="radioLoyalty" id="radioLoyaltyOff" value="option1">
+                          <input class="form-check-input" type="radio" name="radioLoyaltyOff" [(ngModel)]="loyaltyDetail.loyalityEnable" id="radioLoyaltyOff" [value]="false">
                           <label class="form-check-label" for="radioLoyaltyOff">Off</label>
                         </div>
                         <div class="form-check form-check-inline">
-                          <input class="form-check-input" type="radio" name="radioLoyalty" id="radioLoyaltyOn" value="option2">
+                          <input class="form-check-input" type="radio" name="radioLoyaltyOn" [(ngModel)]="loyaltyDetail.loyalityEnable" id="radioLoyaltyOn" [value]="true">
                           <label class="form-check-label" for="radioLoyaltyOn">On</label>
                         </div>                   
                   </div>      
                   </div>
                   <div class="form-group row">
-                      <label class="col-xl-2 col-lg-3 col-md-3">Print Solutions</label>
-                      <div class="col-xl-10 col-lg-9 col-md-9">
-                          <div class="form-check form-check-inline">
-                              <input class="form-check-input" type="radio" name="radioPrint" id="radioPrintOff" value="option1">
-                              <label class="form-check-label" for="radioPrintOff">Off</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                              <input class="form-check-input" type="radio" name="radioPrint" id="radioPrintOn" value="option2">
-                              <label class="form-check-label" for="radioPrintOn">On</label>
-                            </div>                   
-                      </div>      
-                  </div>
-                  <div class="form-group row">
                       <label class="col-xl-2 col-lg-3 col-md-3">Guest Shopping</label>
                       <div class="col-xl-10 col-lg-9 col-md-9">
                           <div class="form-check form-check-inline">
-                              <input class="form-check-input" type="radio" name="radioGuest" id="radioGuestOff" value="option1">
+                              <input class="form-check-input" type="radio" name="radioGuest" [(ngModel)]="guestShopping.enable" id="radioGuestOff" [value]="false">
                               <label class="form-check-label" for="radioGuestOff">Off</label>
                             </div>
                             <div class="form-check form-check-inline">
-                              <input class="form-check-input" type="radio" name="radioGuest" id="radioGuestOn" value="option2">
+                              <input class="form-check-input" type="radio" name="radioGuest" [(ngModel)]="guestShopping.enable" id="radioGuestOn" [value]="true">
                               <label class="form-check-label" for="radioGuestOn">On</label>
                             </div>                   
                       </div>      
                   </div>
-                  <div class="form-group row">
-                      <label class="col-xl-2 col-lg-3 col-md-3">Furniture CAD</label>
-                      <div class="col-xl-10 col-lg-9 col-md-9">
-                          <div class="form-check form-check-inline">
-                              <input class="form-check-input" type="radio" name="radioFurniture" id="radioFurnitureOff" value="option1">
-                              <label class="form-check-label" for="radioFurnitureOff">Off</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                              <input class="form-check-input" type="radio" name="radioFurniture" id="radioFurnitureOn" value="option2">
-                              <label class="form-check-label" for="radioFurnitureOn">On</label>
-                            </div>                   
-                      </div>      
-                  </div>
+                  
                   <div class="row">
-                      <div class="col-md-2 col-lg-1 offset-md-10 offset-lg-11"><button class="btn btn-primary btn-block" type="button">Save</button></div>    
+                      <div class="col-md-2 col-lg-1 offset-md-10 offset-lg-11"><button class="btn btn-primary btn-block" type="button" (click)="saveSettingDetails();">Save</button></div>    
                   </div>
             </fieldset>
           </div>
@@ -159,3 +135,51 @@
     </div>
   </div>
 </div>
+
+  <!--Modal User Accounts-->
+  <div class="modal fade" id="userAccountsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered model-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalCenterTitle"><span>User Accounts</span></h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="userDataGrid table-responsive">
+            <table class="table table-bordered table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">Customer</th>
+                  <th scope="col">User</th>
+                  <th scope="col">User ID</th>
+                  <th scope="col">Roles</th>
+                  <th scope="col">Active</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of itemList">
+                  <td scope="row">{{item.orgName}}</td>
+                  <td>{{item.firstName}} {{item.lastName}}</td>
+                  <td>{{item.logonId}}</td>
+                  <td><span *ngIf="item.buyer === 'true'">Buyer</span><span *ngIf="item.approver && item.buyer === 'true'"> | </span><span *ngIf="item.approver === 'true'">Approver</span><span *ngIf="(item.approver && item.admin === 'true') || (item.buyer && item.admin === 'true')"> | </span><span *ngIf="item.admin === 'true'">Admin</span></td>
+                  <td>
+                    <label><a (click)="resetPassword(item.logonId)">Reset Password</a></label>
+                    <div class="form-check form-check-inline customCheckNew text-right">
+                      <input class="form-check-input" type="checkbox" id="userStatusCheckbox" name="userStatusCheckbox" value="{{item.userStatus}}"
+                             [checked]="item.userStatus == '1'"
+                             (change)="updateUserStatus(item.userId, $event)"></div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+

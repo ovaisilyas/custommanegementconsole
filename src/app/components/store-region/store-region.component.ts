@@ -15,6 +15,8 @@ export class StoreRegionComponent implements OnInit {
   storeDetails = new StoreDetailsModel('', '', '', '', '', '', '');
   financialDetails = [];
   loyaltyDetail = [];
+  guestShopping = [];
+  itemList = [];
 
   constructor(
     private router: Router,
@@ -29,6 +31,8 @@ export class StoreRegionComponent implements OnInit {
       this.router.navigate(['/login']);
     }
     this.getStoreDetails();
+    this.getGuestShopping();
+    this.getLoyaltyDetail();
   }
 
   getHeaderOptions() {
@@ -93,11 +97,53 @@ export class StoreRegionComponent implements OnInit {
 
   getLoyaltyDetail() {
     this.storesService.getLoyaltyDetail()
+    .pipe(map(
+      (list) => {
+        const loyaltylist = list['Loyality Details'];
+        const loyalty = loyaltylist['loyality'];
+        return loyalty;
+      }
+    ))
     .subscribe(
       data => {
-        this.loyaltyDetail = data;
+        this.loyaltyDetail = data[0];
       },
       error => {
+        this.alertService.error(error);
+      });
+  }
+
+  getGuestShopping() {
+    this.storesService.getGuestShopping()
+    .subscribe(
+      data => {
+        this.guestShopping = data;
+      },
+      error => {
+        this.alertService.error(error);
+      });
+  }
+
+  saveSettingDetails() {
+    const loyaltyData = {
+      'Loyality Details': {
+      'loyality': [ this.loyaltyDetail]
+      }
+    };
+    this.storesService.saveGuestShopping(this.guestShopping).subscribe();
+    this.storesService.saveLoyaltySettings(loyaltyData).subscribe();
+  }
+
+  openUserAccounts() {
+    this.spinner.show();
+    this.storesService.openUserAccounts()
+    .subscribe(
+      data => {
+        this.spinner.hide();
+        this.itemList = data;
+      },
+      error => {
+        this.spinner.hide();
         this.alertService.error(error);
       });
   }
