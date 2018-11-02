@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
 import {map} from 'rxjs/operators';
 import {StoreDetailsModel} from '../../model/storedetail.model';
+import {UserStatusModel} from '../../model/userstatus.model';
 import {AlertService} from '../../services/alert.service';
+import {UsersService} from '../../services/users.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import {StoresService} from '../../services/stores.service';
 
@@ -13,7 +15,10 @@ import {StoresService} from '../../services/stores.service';
 })
 export class StoreRegionComponent implements OnInit {
   storeDetails = new StoreDetailsModel('', '', '', '', '', '', '');
-  financialDetails = [];
+  userStatusModel: UserStatusModel;
+  paymethods = [];
+  eWayDetails = [];
+  eWayChecked = false;
   loyaltyDetail = [];
   guestShopping = [];
   itemList = [];
@@ -21,6 +26,7 @@ export class StoreRegionComponent implements OnInit {
   constructor(
     private router: Router,
     private storesService: StoresService,
+    private usersService: UsersService,
     private alertService: AlertService,
     private spinner: NgxSpinnerService,
   ) { }
@@ -33,6 +39,7 @@ export class StoreRegionComponent implements OnInit {
     this.getStoreDetails();
     this.getGuestShopping();
     this.getLoyaltyDetail();
+    this.getFinancialDetails();
   }
 
   getHeaderOptions() {
@@ -75,9 +82,19 @@ export class StoreRegionComponent implements OnInit {
 
   getFinancialDetails() {
     this.storesService.getFinancialDetails()
+    .pipe(map(
+      (list) => {
+        const payDetail = list['Payment Methods Details'];
+        return payDetail;
+      }
+    ))
     .subscribe(
       data => {
-        this.financialDetails = data;
+        this.paymethods = data['paymentMethodsValue'];
+        this.eWayDetails = data['ewayDetail'];
+        if (this.eWayDetails[0].paymentMethodValue === true || this.eWayDetails[1].paymentMethodValue === true || this.eWayDetails[2].paymentMethodValue === true) {
+          this.eWayChecked = true;
+        }
       },
       error => {
         this.alertService.error(error);
@@ -85,12 +102,21 @@ export class StoreRegionComponent implements OnInit {
   }
 
   saveFinancialDetails() {
-    this.storesService.saveFinancialDetails(this.financialDetails)
+    this.spinner.show();
+    const finalData = {
+      'Payment Methods Details': {
+          'paymentMethodsValue': [this.paymethods],
+          'ewayDetail': [this.eWayDetails]
+      }
+  };
+    this.storesService.saveFinancialDetails(finalData)
     .subscribe(
       data => {
+        this.spinner.hide();
         this.alertService.success(data.message);
       },
       error => {
+        this.spinner.hide();
         this.alertService.error(error);
       });
   }
@@ -100,13 +126,12 @@ export class StoreRegionComponent implements OnInit {
     .pipe(map(
       (list) => {
         const loyaltylist = list['Loyality Details'];
-        const loyalty = loyaltylist['loyality'];
-        return loyalty;
+        return loyaltylist;
       }
     ))
     .subscribe(
       data => {
-        this.loyaltyDetail = data[0];
+        this.loyaltyDetail = data;
       },
       error => {
         this.alertService.error(error);
@@ -126,9 +151,7 @@ export class StoreRegionComponent implements OnInit {
 
   saveSettingDetails() {
     const loyaltyData = {
-      'Loyality Details': {
-      'loyality': [ this.loyaltyDetail]
-      }
+      'Loyality Details':  this.loyaltyDetail
     };
     this.storesService.saveGuestShopping(this.guestShopping).subscribe();
     this.storesService.saveLoyaltySettings(loyaltyData).subscribe();
@@ -136,7 +159,14 @@ export class StoreRegionComponent implements OnInit {
 
   openUserAccounts() {
     this.spinner.show();
-    this.storesService.openUserAccounts()
+    this.storesService.openUserAccounts('admin')
+    .pipe(map(
+      (users) => {
+        const searchDetails = users['SearchDetails'];
+        const searchList = searchDetails['SearchList'];
+        return searchList;
+      }
+    ))
     .subscribe(
       data => {
         this.spinner.hide();
@@ -148,5 +178,31 @@ export class StoreRegionComponent implements OnInit {
       });
   }
 
+  updateUserStatus(userId: string, event: any) {
+    this.spinner.show();
+    if (event.currentTarget.checked) {
+      status = '1';
+    } else {
+      status = '0';
+    }
+    this.userStatusModel = new UserStatusModel(userId, status);
+    this.usersService.updateUserStatus(this.userStatusModel)
+      .pipe(map(
+        (res) => {
+          return res;
+        }
+      ))
+      .subscribe(
+        data => {
+          console.log(data['message']);
+          this.alertService.success(data['message']);
+          this.spinner.hide();
+        },
+        error => {
+          console.log(error);
+          this.alertService.error(error);
+          this.spinner.hide();
+        });
+  }
 
 }

@@ -61,35 +61,53 @@
           <fieldset>
             <legend>Financial Details</legend>
                   <div class="form-group row">
-                <label class="col-xl-2 col-lg-3 col-md-12">Payments Method:</label>
+                      <label class="col-xl-2 col-lg-3 col-md-12">Payments Method:</label>
                 <div class="col-xl-10 col-lg-9 col-md-12">
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="checkbox" id="checkAccount" value="option1">
-                  <label class="form-check-label" for="checkAccount">Account</label>
+                <div class="form-check form-check-inline" *ngFor="let item of paymethods; let i = index">
+                  <input class="form-check-input" type="checkbox" [attr.id]="'check'+i" [(ngModel)]="item.paymentMethodValue" [value]="item.paymentMethodValue" [checked]="item.paymentMethodValue">
+                  <label class="form-check-label" [attr.for]="'check'+i">{{item.paymentMethodName}}</label>
                 </div> 
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="checkbox" id="checkCod" value="option2">
-                  <label class="form-check-label" for="checkCod">Cash on Delivery</label>
-                </div>
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="checkbox" id="checkCc" value="option3">
-                  <label class="form-check-label" for="checkCc">eWay (Credit Card)</label>
-                </div>
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="checkbox" id="checkPaypal" value="option4">
-                  <label class="form-check-label" for="checkPaypal">Paypal</label>
-                </div>
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="checkbox" id="checkAfterPay" value="option5" disabled>
-                  <label class="form-check-label" for="checkAfterPay">Afterpay</label>
+                  <input class="form-check-input" type="checkbox" id="checkeWay" [(ngModel)]="eWayChecked" [checked]="eWayChecked === true" (change)="$event.currentTarget.checked ? eWayChecked = true : eWayChecked = false">
+                  <label class="form-check-label" for="checkeWay">eWay</label>
                 </div>       
               </div>      
             </div>
             <div class="form-group row">
-                <label class="col-xl-2 col-lg-3 col-md-3 col-form-label">eWay Password</label>
-                <div class="col-xl-6 col-lg-8 col-md-8">
-                    <input type="text" class="form-control">
-                </div>
+                <label class="col-xl-2 col-lg-3 col-md-12"></label>
+                <div class="col-xl-10 col-lg-9 col-md-12" *ngIf="eWayChecked">
+                    <div class="form-check form-check-inline" *ngFor="let item of eWayDetails | slice:0:3; let i=index">
+                        <input class="form-check-input" type="checkbox" [attr.id]="'checkeWay'+i" [(ngModel)]="item.paymentMethodValue" [value]="item.paymentMethodValue" [checked]="item.paymentMethodValue">
+                        <label class="form-check-label" [attr.for]="'checkeWay'+i">{{item.paymentMethodName}}</label>
+                      </div> 
+                      <div>
+                      <div class="col-xl-10 col-lg-9 col-md-12">
+                          <label class="col-xl-2 col-lg-3 col-md-3 col-form-label">API key</label>
+                          <div class="col-xl-10 col-lg-8 col-md-8">
+                              <input type="text" class="form-control" [(ngModel)]="eWayDetails[3].apiKey" #apiKey="ngModel">
+                          </div>
+                      </div>
+                      <div class="col-xl-10 col-lg-9 col-md-12">
+                          <label class="col-xl-2 col-lg-3 col-md-3 col-form-label">API Password</label>
+                          <div class="col-xl-10 col-lg-8 col-md-8">
+                              <input type="text" class="form-control" [(ngModel)]="eWayDetails[3].apiPassword" #apiPassword="ngModel">
+                          </div>
+                      </div>
+                      <div class="col-xl-10 col-lg-9 col-md-12">
+                          <label class="col-xl-2 col-lg-3 col-md-3 col-form-label">Customer Id</label>
+                          <div class="col-xl-10 col-lg-8 col-md-8">
+                              <input type="text" class="form-control" [(ngModel)]="eWayDetails[3].customerId" #customerId="ngModel">
+                          </div>
+                      </div>
+                      <div class="col-xl-10 col-lg-9 col-md-12">
+                          <label class="col-xl-2 col-lg-3 col-md-3 col-form-label">Encryption Key</label>
+                          <div class="col-xl-10 col-lg-8 col-md-8">
+                              <textarea type="text" class="form-control" rows="6" [(ngModel)]="eWayDetails[3].encryptionKey" #encryptionKey="ngModel">{{eWayDetails[3].encryptionKey}}</textarea>
+                          </div>
+                      </div>
+                      </div>
+            </div>
+            
               </div>
               <div class="row">
                   <div class="col-md-2 col-lg-1 offset-md-10 offset-lg-11"><button class="btn btn-primary btn-block" type="button" (click)="saveFinancialDetails()">Save</button></div>    
@@ -138,7 +156,7 @@
 
   <!--Modal User Accounts-->
   <div class="modal fade" id="userAccountsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered model-lg" role="document">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalCenterTitle"><span>User Accounts</span></h5>

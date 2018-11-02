@@ -51,16 +51,16 @@ export class StoresService {
 
   getFinancialDetails() {
     console.log('Get Financial details');
-    console.log(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmccatalogcategories/getTopCategories`);
-    return this.httpClient.get<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmccatalogcategories/getTopCategories`,
+    console.log(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcgetupdatepaymethods/getPayMethods`);
+    return this.httpClient.get<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcgetupdatepaymethods/getPayMethods`,
       this.httpOptions);
   }
 
-  saveFinancialDetails(financialSettings) {
+  saveFinancialDetails(paymentDetails) {
     console.log('Save Financial settings');
     console.log(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmccatalogcategories/OnOfCategory`);
-    console.log(financialSettings);
-    return this.httpClient.post<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmccatalogcategories/OnOfCategory`, financialSettings,
+    console.log(paymentDetails);
+    return this.httpClient.post<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmccatalogcategories/OnOfCategory`, paymentDetails,
       this.httpOptions);
   }
 
@@ -94,10 +94,10 @@ export class StoresService {
       this.httpOptions);
   }
 
-  openUserAccounts() {
+  openUserAccounts(searchTerm) {
     console.log('Open User Accounts popup');
-    console.log(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcstoresetting/guestshopping`);
-    return this.httpClient.get<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcstoresetting/guestshopping`,
+    console.log(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcusersearch/findUser/${searchTerm}`);
+    return this.httpClient.get<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcusersearch/findUser/${searchTerm}`,
       this.httpOptions);
   }
 
