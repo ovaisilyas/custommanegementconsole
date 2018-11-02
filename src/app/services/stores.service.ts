@@ -36,16 +36,16 @@ export class StoresService {
 
   getStoreDetails() {
     console.log('Get Store setting details');
-    console.log(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmccatalogcategories/getTopCategories`);
-    return this.httpClient.get<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmccatalogcategories/getTopCategories`,
+    console.log(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcstore/storeDetails`);
+    return this.httpClient.get<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcstore/storeDetails`,
       this.httpOptions);
   }
 
   saveStoreSettings(storeSettings) {
     console.log('Save Store settings');
-    console.log(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmccatalogcategories/OnOfCategory`);
+    console.log(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcstore/updateStoreDetails`);
     console.log(storeSettings);
-    return this.httpClient.post<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmccatalogcategories/OnOfCategory`, storeSettings,
+    return this.httpClient.post<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcstore/updateStoreDetails`, storeSettings,
       this.httpOptions);
   }
 
@@ -61,6 +61,13 @@ export class StoresService {
     console.log(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmccatalogcategories/OnOfCategory`);
     console.log(financialSettings);
     return this.httpClient.post<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmccatalogcategories/OnOfCategory`, financialSettings,
+      this.httpOptions);
+  }
+
+  getLoyaltyDetail() {
+    console.log('Get Loyalty details');
+    console.log(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcloyality/getloyality`);
+    return this.httpClient.get<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcloyality/getloyality`,
       this.httpOptions);
   }
 

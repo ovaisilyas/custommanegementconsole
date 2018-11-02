@@ -140,6 +140,8 @@ a:hover{color:#404040;}
 
  /**************Region page***********/
  .regionFinancialDetails .form-check-inline{margin-right: 2.25rem;}
+ .storeAddress {padding: 10px 0;border: 1px solid #6a6a6a !important;}
+ .storeAddress .no-border {border: 0 !important; box-shadow: none !important; line-height: 16px; height: 25px;}
 
  /*************Responsive************/
   @media (min-width: 1366px)  { 
