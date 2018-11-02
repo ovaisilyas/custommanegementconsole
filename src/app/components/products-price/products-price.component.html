@@ -305,7 +305,8 @@
                 <tbody>
                   <tr *ngFor="let item of itemPriceList">
                     <td>{{item.name}}</td>
-                    <td>{{item.listPrice}}</td>
+                    <td *ngIf="item.listPrice === 0">No Price Available</td>
+                    <td *ngIf="item.listPrice !== 0">{{item.listPrice}}</td>
                   </tr>
   
                 </tbody>

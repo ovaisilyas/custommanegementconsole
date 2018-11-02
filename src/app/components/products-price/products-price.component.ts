@@ -134,7 +134,8 @@ export class ProductsPriceComponent implements OnInit {
   }
 
   openContract(value: any) {
-    this.contractService.getContractDetail(value)
+    this.spinner.show();
+    this.productService.getContractDetail(value)
     .pipe(map(
       (contract) => {
         const contractDetail = contract['Contract Details'];
@@ -146,15 +147,17 @@ export class ProductsPriceComponent implements OnInit {
     .subscribe(
       data => {
         this.itemContractList = data;
-        console.log(data);
+        this.spinner.hide();
       },
       error => {
         console.log(error);
+        this.spinner.hide();
       }
     );
   }
 
   getPriceList(catEntryId: any) {
+    this.spinner.show();
     this.itemPriceList = [];
     this.productService.getPriceList(catEntryId)
     .pipe(map(
@@ -167,9 +170,11 @@ export class ProductsPriceComponent implements OnInit {
     .subscribe(
       data => {
         this.itemPriceList = data;
+        this.spinner.hide();
       },
       error => {
         this.alertService.error(error);
+        this.spinner.hide();
       });
   }
 
