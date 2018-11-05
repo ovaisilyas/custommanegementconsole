@@ -178,7 +178,6 @@
                   <th scope="col">Customer</th>
                   <th scope="col">User</th>
                   <th scope="col">User ID</th>
-                  <th scope="col">Roles</th>
                   <th scope="col">Active</th>
                 </tr>
               </thead>
@@ -187,7 +186,6 @@
                   <td scope="row">{{item.orgName}}</td>
                   <td>{{item.firstName}} {{item.lastName}}</td>
                   <td>{{item.logonId}}</td>
-                  <td><span *ngIf="item.buyer === 'true'">Buyer</span><span *ngIf="item.approver && item.buyer === 'true'"> | </span><span *ngIf="item.approver === 'true'">Approver</span><span *ngIf="(item.approver && item.admin === 'true') || (item.buyer && item.admin === 'true')"> | </span><span *ngIf="item.admin === 'true'">Admin</span></td>
                   <td>
                     <label><a (click)="resetPassword(item.logonId)">Reset Password</a></label>
                     <div class="form-check form-check-inline customCheckNew text-right">

@@ -10,14 +10,16 @@ export class ErrorInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(request).pipe(catchError(err => {
+      console.log(err.status);
       if (err.status === 401) {
         // auto logout if 401 response returned from api
-        this.authenticationService.logout();
-        location.reload(true);
+        //this.authenticationService.logout();
+        //location.reload(true);
       }
       let error = '';
-      if (err.status === 500) {
-        error = 'System is down';
+      if (err.status === 0) {
+        error = 'Backend System is down';
+        this.authenticationService.logout();
       }
       if (err.error.error !== undefined) {
         error = err.error.error.message || err.statusText;

@@ -58,9 +58,9 @@ export class StoresService {
 
   saveFinancialDetails(paymentDetails) {
     console.log('Save Financial settings');
-    console.log(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmccatalogcategories/OnOfCategory`);
+    console.log(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcgetupdatepaymethods/updatePayMethods`);
     console.log(paymentDetails);
-    return this.httpClient.post<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmccatalogcategories/OnOfCategory`, paymentDetails,
+    return this.httpClient.post<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcgetupdatepaymethods/updatePayMethods`, paymentDetails,
       this.httpOptions);
   }
 
@@ -94,10 +94,10 @@ export class StoresService {
       this.httpOptions);
   }
 
-  openUserAccounts(searchTerm) {
+  openUserAccounts() {
     console.log('Open User Accounts popup');
-    console.log(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcusersearch/findUser/${searchTerm}`);
-    return this.httpClient.get<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcusersearch/findUser/${searchTerm}`,
+    console.log(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcstore/storeUserAccounts`);
+    return this.httpClient.get<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcstore/storeUserAccounts`,
       this.httpOptions);
   }
 

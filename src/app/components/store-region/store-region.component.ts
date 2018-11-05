@@ -105,8 +105,8 @@ export class StoreRegionComponent implements OnInit {
     this.spinner.show();
     const finalData = {
       'Payment Methods Details': {
-          'paymentMethodsValue': [this.paymethods],
-          'ewayDetail': [this.eWayDetails]
+          'paymentMethodsValue': this.paymethods,
+          'ewayDetail': this.eWayDetails
       }
   };
     this.storesService.saveFinancialDetails(finalData)
@@ -159,12 +159,11 @@ export class StoreRegionComponent implements OnInit {
 
   openUserAccounts() {
     this.spinner.show();
-    this.storesService.openUserAccounts('admin')
+    this.storesService.openUserAccounts()
     .pipe(map(
       (users) => {
-        const searchDetails = users['SearchDetails'];
-        const searchList = searchDetails['SearchList'];
-        return searchList;
+        const searchDetails = users['userAccountDetails'];
+        return searchDetails;
       }
     ))
     .subscribe(

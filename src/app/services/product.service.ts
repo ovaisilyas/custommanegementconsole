@@ -54,7 +54,8 @@ import { ProductModel } from '../model/product.model';
     }
 
     getContractDetail(catEntryId: string) {
-      console.log('Get Contract detail' + catEntryId);
+      console.log(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcitemcontract/itemContractList/${catEntryId}`);
+      console.log('Get Contract detail ' + catEntryId);
       return this.httpClient.get<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcitemcontract/itemContractList/${catEntryId}`,
       this.httpOptions);
     }

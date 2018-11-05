@@ -37,30 +37,25 @@ export class HomeService {
   getRecentPurchaseList() {
     console.log('Get Recent Purchase list');
     console.log(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcorderdetails/getOrdersPurchase?days=10`);
-    return this.httpClient.get<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcorderdetails/getOrdersPurchase?days=10`,
-      this.httpOptions);
+    return this.httpClient.get<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcorderdetails/getOrdersPurchase?days=10`);
   }
 
   getSaleSummary() {
     console.log('Get Sales Summary');
     console.log(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcorderdetails/getOrdersSummary`);
-    return this.httpClient.get<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcorderdetails/getOrdersSummary`,
-      this.httpOptions);
+    return this.httpClient.get<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcorderdetails/getOrdersSummary`);
   }
 
   getPurchaseHistory() {
     console.log('Get Purchase history for 60 days');
     console.log(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcorderdetails/getOrdersPurchase?days=60`);
-    return this.httpClient.get<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcorderdetails/getOrdersPurchase?days=60`,
-      this.httpOptions);
+    return this.httpClient.get<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcorderdetails/getOrdersPurchase?days=60`);
   }
 
   getOrderDetails(orderId) {
-    console.log('Get Order details');
-    console.log(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmccatalogcategories/getTopCategories`);
-    return this.httpClient.get<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmccatalogcategories/getTopCategories`,
+    console.log('Get Order details ', orderId);
+    console.log(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcorderdetails/order/${orderId}/getOrderDetail`);
+    return this.httpClient.get<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcorderdetails/order/${orderId}/getOrderDetail`,
       this.httpOptions);
   }
-
-
 }
