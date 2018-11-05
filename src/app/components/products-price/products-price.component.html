@@ -53,7 +53,7 @@
                       <td scope="col" class="tableDataDesc"><span title="{{item.description}}">{{item.description}}</span></td>
                       <td scope="col"> ${{item.listprice | number:'1.2-2'}}</td>
                       <td scope="col">${{item.govtprice | number:'1.2-2'}}</td>
-                      <td scope="col"><a href="javascript:void(0)" role="button" data-toggle="modal" data-target="#openContract" (click)="openContract(item.catentryId)">Open Contract</a> &nbsp; <a href="javascript:void(0)" role="button" data-toggle="modal" data-target="#openContract" (click)="openContract(item.catentryId)">Show prices</a></td>
+                      <td scope="col"><a href="javascript:void(0)" role="button" data-toggle="modal" data-target="#openContract" (click)="openContract(item.catentryId)">Open Contract</a> &nbsp; <a href="javascript:void(0)" role="button" data-toggle="modal" data-target="#openPriceList" (click)="getPriceList(item.catentryId)">Show prices</a></td>
                     </tr>
                   </tbody>
                 </table>
@@ -270,6 +270,43 @@
                   <tr *ngFor="let item of itemContractList">
                     <td>{{item.contractName}}</td>
                     <td>{{item.contractPrice}}</td>
+                  </tr>
+  
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--Modal Open Price level-->
+  <div class="modal fade openContractModal" id="openPriceList" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered model-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalCenterTitle"><span>Price List</span></h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="table-responsive">
+              <table class="table table-bordered table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Price</th>
+                   
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of itemPriceList">
+                    <td>{{item.name}}</td>
+                    <td *ngIf="item.listPrice === 0">No Price Available</td>
+                    <td *ngIf="item.listPrice !== 0">{{item.listPrice}}</td>
                   </tr>
   
                 </tbody>

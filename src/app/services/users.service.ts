@@ -81,6 +81,7 @@ export class UsersService {
   }
 
   updateUserStatus(userStatusModel: UserStatusModel) {
+    this.getHeaderOptions();
     console.log(this.storeId);
     console.log('in userStatus function');
     console.log(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcuserstatus/update`);

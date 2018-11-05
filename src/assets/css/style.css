@@ -58,11 +58,11 @@ a:hover{color:#404040;}
 .userSearchRow .hintTxtRow{line-height: 1;}
 .userSearchRow .btn{margin-right: 5px;}
 .userSearchRow .btn:last-child{margin-right: 0px;}
-.userDataGrid table th, .homePurchaseGrid table th, .homeStoreGrid table th, .productPriceGrid table th, .productContractGrid table th, .openContractModal table th, .productListGrid table th{background-color:#9e9e9e; color:#fff;font-weight: normal; text-align: center;}
-.userDataGrid table td, .homePurchaseGrid table td, .homeStoreGrid table td, .productPriceGrid table td, .productContractGrid table td, .openContractModal table td, .productListGrid table td{color:#282828; text-align: center;}
+.userDataGrid table th, .homePurchaseGrid table th, .homeStoreGrid table th, .productPriceGrid table th, .productContractGrid table th, .openContractModal table th, .productListGrid table th, .userAccountsGrid table th{background-color:#9e9e9e; color:#fff;font-weight: normal; text-align: center;}
+.userDataGrid table td, .homePurchaseGrid table td, .homeStoreGrid table td, .productPriceGrid table td, .productContractGrid table td, .openContractModal table td, .productListGrid table td, .userAccountsGrid table td{color:#282828; text-align: center;}
 .homeStoreGrid table th,.homeStoreGrid table td{text-align: left;}
-.userDataGrid .form-check-input{margin-left: 10px;margin-right: 0rem;}
-.userDataGrid table td a, .productPriceGrid table td a, .productContractGrid table a{text-decoration: underline !important; cursor: pointer;}
+.userDataGrid .form-check-input, .userAccountsGrid .form-check-input{margin-left: 10px;margin-right: 0rem;}
+.userDataGrid table td a, .productPriceGrid table td a, .productContractGrid table a, .homePurchaseGrid table a{text-decoration: underline !important; cursor: pointer;}
 
 .userSearchRow #searchTerm, .userSearchRow .searchIcon, .searchIconNew, #addNewItem .searchIcon {background:url(../images/search.png) left no-repeat; background-position-x: 5px; padding-left: 25px;}
 .custTabCls ul.nav.nav-tabs > li {float: none;display: table-cell;}
@@ -70,7 +70,10 @@ a:hover{color:#404040;}
 .homePageCont {padding-top: 10px;}
 .homePageCont .homeHeader h5{display: inline-block;}
 .homePageCont .moreIcon span{width: 7px;height: 7px;background-color: #fff;display: inline-block; margin-left: 2px; margin-right: 2px;border-radius:50%;border:1px solid #6a6a6a;}
-.productPriceGrid table td a, .productContractGrid table td a{color:#47a0ed;}
+.orderDetailsView .shipAddress span{display: block;}
+.orderDetailsView .row{border-bottom: 1px dotted #ddd; margin-bottom: .5rem;}
+.orderDetailsView label{font-weight: 600;}
+.productPriceGrid table td a, .productContractGrid table td a, .homePurchaseGrid table td a{color:#47a0ed;}
 .productContractGrid table td a{margin:0 5px 0 5px;}
 .custPriceEdit .priceEditField { display: none;}
 .custPriceEdit .priceLabel { display: block;}
@@ -137,6 +140,12 @@ a:hover{color:#404040;}
 
  /**************Region page***********/
  .regionFinancialDetails .form-check-inline{margin-right: 2.25rem;}
+ .storeAddress {padding: 10px 0;border: 1px solid #6a6a6a !important;}
+ .storeAddress .no-border {border: 0 !important; box-shadow: none !important; line-height: 16px; height: 25px;}
+ .userAccountsGrid .table{font-size:15px;}
+ .userAccountsGrid .table th:first-child{width: 25%;}
+ .userAccountsGrid .table th:nth-child(2){width: 20%;}
+ .regionStoreDetails .col-form-label, .regionFinancialDetails label:first-child {font-weight: 600;}
 
  /*************Responsive************/
   @media (min-width: 1366px)  { 
@@ -160,4 +169,10 @@ a:hover{color:#404040;}
   .custTabCls ul.nav.nav-tabs > li{width:50%;}
   .userSearchRow .btn{font-size: 10pt;padding: .375rem .25rem;}
   .userSearchRow .form-control, .table{font-size: .8rem;}
+}
+@media (min-width: 992px)
+{
+.userAccountsModal .modal-lg {
+    max-width: 900px;
+}
 }

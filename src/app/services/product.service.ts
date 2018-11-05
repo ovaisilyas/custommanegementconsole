@@ -45,6 +45,20 @@ import { ProductModel } from '../model/product.model';
         this.httpOptions);
     }
 
+    getPriceList(catEntryId: any) {
+      console.log('Get price level');
+      console.log(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcshowprices/priceList/${catEntryId}`);
+
+      return this.httpClient.get<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcshowprices/priceList/${catEntryId}`,
+        this.httpOptions);
+    }
+
+    getContractDetail(catEntryId: string) {
+      console.log('Get Contract detail' + catEntryId);
+      return this.httpClient.get<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcitemcontract/itemContractList/${catEntryId}`,
+      this.httpOptions);
+    }
+
     addStoreProduct(productDetail: ProductModel) {
       console.log(productDetail);
       console.log('Add product call');

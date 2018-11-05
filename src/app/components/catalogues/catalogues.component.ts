@@ -16,7 +16,7 @@ export class CataloguesComponent implements OnInit {
   extendedCostGreaterList = [];
   coreCatalogs = [];
   extendedCatalogs = [];
-  localCoreCatalogModel = [];
+  otherCatalogs = [];
   localExtCatalogModel = [];
 
   constructor(
@@ -81,17 +81,11 @@ export class CataloguesComponent implements OnInit {
     this.spinner.show();
     this.coreCatalogs = [];
     this.catalogService.getCoreCatalog()
-    .pipe(map(
-      (list) => {
-        const coreCatlist = list['coreList'];
-        return coreCatlist;
-      }
-    ))
     .subscribe(
       data => {
         this.spinner.hide();
-        this.coreCatalogs = data;
-        this.localCoreCatalogModel = this.coreCatalogs;
+        this.coreCatalogs = data['coreList'];
+        this.otherCatalogs = data['otherList'];
       },
       error => {
         this.spinner.hide();
@@ -123,9 +117,9 @@ export class CataloguesComponent implements OnInit {
 
   saveCoreCatalog() {
     this.spinner.show();
-    const localModel = this.localCoreCatalogModel;
     const finalSaveData = {
-      coreList : localModel,
+      coreList : this.coreCatalogs,
+      otherList : this.otherCatalogs,
     };
     this.catalogService.saveCoreCatalog(finalSaveData)
     .subscribe(
