@@ -88,7 +88,7 @@
           </div>
            <!-- Modal Order Details-->
           <div class="modal fade homeOrderDetailsModal" id="orderDetails" tabindex="-1" role="dialog" aria-labelledby="recentPurchase" aria-hidden="true">
-              <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-dialog modal-dialog-centered modal-lg">
                 <div class="modal-content">
                   <div class="modal-header">
                     <h5 class="modal-title"><span>Order Details</span></h5>
@@ -100,29 +100,94 @@
                     <div class="orderDetailsView">
                         <div class="row">
                         <div class="col-sm-5"><label>Order Number</label></div>
-                        <div class="col-sm-7"><span>7583311</span></div>
+                        <div class="col-sm-7"><span>{{orderDetail.orderId}}</span></div>
                         </div>
                         <div class="row">
                             <div class="col-sm-5"><label>Order Date</label></div>
-                            <div class="col-sm-7"><span>August 30, 2017</span></div>
+                            <div class="col-sm-7"><span>{{orderDetail.orderDate}}</span></div>
                         </div>
                         <div class="row">
                           <div class="col-sm-5"><label>Shipping Address</label></div>
                           <div class="col-sm-7">
                             <div class="shipAddress">
-                            <span>National Store</span>
-                            <span>Street 1</span>
-                            <span>Shipping Address 1</span>
-                            <span>New South Wales</span>
-                            <span>Australia 2150</span>
-                            <span>4125611</span>
-                            <span>testuser@officenat.com</span>
+                            <span>{{orderDetail.ShippingAddress.firstName}} {{orderDetail.ShippingAddress.lastName}}</span>
+                            <span>{{orderDetail.ShippingAddress.address1}}</span>
+                            <span>{{orderDetail.ShippingAddress.address2}}</span>
+                            <span>{{orderDetail.ShippingAddress.city}}</span>
+                            <span>{{orderDetail.ShippingAddress.state}}</span>
+                            <span>{{orderDetail.ShippingAddress.country}}</span>
+                            <span>{{orderDetail.ShippingAddress.zipCode}}</span>
+                            <span>Phone: {{orderDetail.ShippingAddress.phone1}}</span>
                           </div>
                           </div>
                       </div>
                       <div class="row">
-                        <div class="col-sm-5"><label>Ship as Complete</label></div>
-                        <div class="col-sm-7"><span>Yes</span></div>
+                          <div class="col-sm-5"><label>Billing Address</label></div>
+                          <div class="col-sm-7">
+                            <div class="shipAddress">
+                            <span>{{orderDetail.BillingAddress.firstName}} {{orderDetail.BillingAddress.lastName}}</span>
+                            <span>{{orderDetail.BillingAddress.address1}}</span>
+                            <span>{{orderDetail.BillingAddress.address2}}</span>
+                            <span>{{orderDetail.BillingAddress.city}}</span>
+                            <span>{{orderDetail.BillingAddress.state}}</span>
+                            <span>{{orderDetail.BillingAddress.country}}</span>
+                            <span>{{orderDetail.BillingAddress.zipCode}}</span>
+                            <span>Phone: {{orderDetail.BillingAddress.phone1}}</span>
+                          </div>
+                          </div>
+                      </div>
+                      <div class="row">
+                          <div class="col-sm-5"><label>Product Details</label></div>
+                          <div class="col-sm-12">
+                            <div class="productDetails">
+                              <table border="1">
+                                <tr>
+                                  <th>Part Number</th>
+                                  <th>Product Name</th>
+                                  <th>Quantity</th>
+                                  <th>Price</th>
+                                </tr>
+                                <tr *ngFor="let item of orderDetail.orderItems">
+                                  <td>{{item.partNumber}}</td>
+                                  <td>{{item.ProductName}}</td>
+                                  <td>{{item.qty}}</td>
+                                  <td>{{item.purchaseValue}}</td>
+                                </tr>
+                              </table>
+                            </div>
+                          </div>
+                      </div>
+                      <div class="row">
+                          <div class="col-sm-12">
+                            <div class="taxes">
+                              <table border="1">
+                                <tr>
+                                  <td>Shipping Tax</td>
+                                  <td>{{orderDetail.shipingTax}}</td>
+                                </tr>
+                                <tr>
+                                  <td>Tax</td>
+                                  <td>{{orderDetail.tax}}</td>
+                                </tr>
+                                <tr>
+                                  <td>Shipping Charge</td>
+                                  <td>{{orderDetail.shipingCharge}}</td>
+                                </tr>
+                                <tr>
+                                  <td>Discount</td>
+                                  <td>{{orderDetail.discount}}</td>
+                                </tr>
+                                <tr>
+                                  <td>SubTotal</td>
+                                  <td>{{orderDetail.subTotal}}</td>
+                                </tr>
+                              </table>
+                            </div>
+                          </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-5"><label>Email</label></div>
+                        <div class="col-sm-7"><span>{{orderDetail.email}}</span></div>
                     </div>
                     <div class="row">
                         <div class="col-sm-5"><label>Shipping Method</label></div>
@@ -130,7 +195,7 @@
                     </div>
                     <div class="row">
                         <div class="col-sm-5"><label>Purchase Order Number</label></div>
-                        <div class="col-sm-7"><span>18734561</span></div>
+                        <div class="col-sm-7"><span>{{orderDetail.purchaseOrderNumber}}</span></div>
                     </div> 
                   </div>
                   </div>
