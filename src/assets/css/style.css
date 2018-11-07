@@ -71,8 +71,9 @@ a:hover{color:#404040;}
 .homePageCont .homeHeader h5{display: inline-block;}
 .homePageCont .moreIcon span{width: 7px;height: 7px;background-color: #fff;display: inline-block; margin-left: 2px; margin-right: 2px;border-radius:50%;border:1px solid #6a6a6a;}
 .orderDetailsView .shipAddress span{display: block;}
-.orderDetailsView .row{border-bottom: 1px dotted #ddd; margin-bottom: .5rem;}
-.orderDetailsView label{font-weight: 600;}
+.orderDetailsView .shipAddress {padding-bottom: 10px;}
+.orderDetailsView .row{margin-bottom: .5rem;}
+.orderDetailsView label, .productDetails .table th{font-weight: 600;}
 .productPriceGrid table td a, .productContractGrid table td a, .homePurchaseGrid table td a{color:#47a0ed;}
 .productContractGrid table td a{margin:0 5px 0 5px;}
 .custPriceEdit .priceEditField { display: none;}

@@ -99,16 +99,15 @@
                   <div class="modal-body">
                     <div class="orderDetailsView">
                         <div class="row">
-                        <div class="col-sm-5"><label>Order Number</label></div>
-                        <div class="col-sm-7"><span>{{orderDetail.orderId}}</span></div>
+                        <div class="col-sm-3"><label>Order Number</label></div>
+                        <div class="col-sm-3"><span>{{orderDetail.orderId}}</span></div>
+                        <div class="col-sm-2"><label>Order Date</label></div>
+                        <div class="col-sm-4"><span>{{orderDetail.orderDate}}</span></div>
                         </div>
-                        <div class="row">
-                            <div class="col-sm-5"><label>Order Date</label></div>
-                            <div class="col-sm-7"><span>{{orderDetail.orderDate}}</span></div>
-                        </div>
-                        <div class="row">
-                          <div class="col-sm-5"><label>Shipping Address</label></div>
-                          <div class="col-sm-7">
+                       
+                        <div class="row border-bottom">
+                          <div class="col-sm-6">
+                              <div><label>Shipping Address</label></div>
                             <div class="shipAddress">
                             <span>{{orderDetail.ShippingAddress.firstName}} {{orderDetail.ShippingAddress.lastName}}</span>
                             <span>{{orderDetail.ShippingAddress.address1}}</span>
@@ -120,10 +119,9 @@
                             <span>Phone: {{orderDetail.ShippingAddress.phone1}}</span>
                           </div>
                           </div>
-                      </div>
-                      <div class="row">
-                          <div class="col-sm-5"><label>Billing Address</label></div>
-                          <div class="col-sm-7">
+                        
+                          <div class="col-sm-6">
+                          <div><label>Billing Address</label></div>
                             <div class="shipAddress">
                             <span>{{orderDetail.BillingAddress.firstName}} {{orderDetail.BillingAddress.lastName}}</span>
                             <span>{{orderDetail.BillingAddress.address1}}</span>
@@ -136,11 +134,12 @@
                           </div>
                           </div>
                       </div>
+                     
                       <div class="row">
-                          <div class="col-sm-5"><label>Product Details</label></div>
+                          <div class="col-sm-12"><label>Product Details</label></div>
                           <div class="col-sm-12">
-                            <div class="productDetails">
-                              <table border="1">
+                            <div class="productDetails table-responsive">
+                                <table class="table table-bordered table-striped">
                                 <tr>
                                   <th>Part Number</th>
                                   <th>Product Name</th>
@@ -158,9 +157,9 @@
                           </div>
                       </div>
                       <div class="row">
-                          <div class="col-sm-12">
-                            <div class="taxes">
-                              <table border="1">
+                          <div class="col-sm-6 offset-sm-6">
+                            <div class="taxes table-responsive">
+                              <table class="table table-bordered table-striped">
                                 <tr>
                                   <td>Shipping Tax</td>
                                   <td>{{orderDetail.shipingTax}}</td>
@@ -186,17 +185,20 @@
                           </div>
                       </div>
                       <div class="row">
-                        <div class="col-sm-5"><label>Email</label></div>
-                        <div class="col-sm-7"><span>{{orderDetail.email}}</span></div>
+                        <div class="col-sm-5">
+                        <div><label>Email</label></div>
+                        <span>{{orderDetail.email}}</span></div>
+                        <div class="col-sm-3">
+                          <div><label>Shipping Method</label></div>
+                          <span>Courier</span>
+                        </div>
+                        <div class="col-sm-4">
+                            <div><label>Purchase Order Number</label></div>
+                            <span>{{orderDetail.purchaseOrderNumber}}</span>
+                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-sm-5"><label>Shipping Method</label></div>
-                        <div class="col-sm-7"><span>Courier</span></div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-5"><label>Purchase Order Number</label></div>
-                        <div class="col-sm-7"><span>{{orderDetail.purchaseOrderNumber}}</span></div>
-                    </div> 
+                 
+                   
                   </div>
                   </div>
                 </div>
