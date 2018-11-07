@@ -97,7 +97,7 @@
                     </button>
                   </div>
                   <div class="modal-body">
-                    <div class="orderDetailsView">
+                    <div class="orderDetailsView" *ngIf="orderDetail.length !== 0">
                         <div class="row">
                         <div class="col-sm-3"><label>Order Number</label></div>
                         <div class="col-sm-3"><span>{{orderDetail.orderId}}</span></div>
@@ -197,8 +197,14 @@
                             <span>{{orderDetail.purchaseOrderNumber}}</span>
                          </div>
                     </div>
-                 
-                   
+                    <div class="row">
+                        <div class="col-sm-5"><label>Payment Method</label></div>
+                        <div class="col-sm-7"><span>{{orderDetail.paymentMethod}}</span></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-5"><label>Purchase Order Number</label></div>
+                        <div class="col-sm-7"><span>{{orderDetail.purchaseOrderNumber}}</span></div>
+                    </div> 
                   </div>
                   </div>
                 </div>
