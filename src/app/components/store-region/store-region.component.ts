@@ -19,8 +19,8 @@ export class StoreRegionComponent implements OnInit {
   paymethods = [];
   eWayDetails = [];
   eWayChecked = false;
-  loyaltyDetail = [];
-  guestShopping = [];
+  loyaltyDetail = {'loyalityEnable': false};
+  guestShopping = {'enable': false};
   itemList = [];
 
   constructor(
