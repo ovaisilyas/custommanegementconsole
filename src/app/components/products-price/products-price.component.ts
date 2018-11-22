@@ -15,8 +15,10 @@ import { ProductListModel } from '../../model/productlist.model';
 import { ProductModel } from '../../model/product.model';
 import { ItemContractListModel } from '../../model/itemcontractlist.model';
 import {Router} from '@angular/router';
+import { $ } from 'protractor';
 
 declare var require: any;
+declare var jQuery: any;
 
 @Component({
   selector: 'app-products-price',
@@ -69,6 +71,9 @@ export class ProductsPriceComponent implements OnInit {
   }
 
   onEnter(value: string) {
+    if (value.length < 5) {
+      this.alertService.error('Search term must be 5 characters or more');
+    } else {
     this.spinner.show();
     this.searchTerm = value;
     this.searchService.searchProduct(value)
@@ -98,6 +103,7 @@ export class ProductsPriceComponent implements OnInit {
           this.spinner.hide();
           this.showProductListTable = false;
         });
+      }
   }
 
   setPage(page: number) {
@@ -151,6 +157,8 @@ export class ProductsPriceComponent implements OnInit {
       },
       error => {
         console.log(error);
+        this.alertService.error(error);
+        jQuery('#openContract').modal('hide');
         this.spinner.hide();
       }
     );
@@ -190,7 +198,7 @@ export class ProductsPriceComponent implements OnInit {
         data => {
           this.spinner.hide();
           console.log(data);
-          this.alertService.success('Product Added Successfully');
+          this.alertService.success('Product Added Successfully. (Changes will apply on next business day)');
           console.log('Product Saved');
         },
         error => {

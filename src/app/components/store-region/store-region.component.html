@@ -64,7 +64,7 @@
                       <label class="col-xl-2 col-lg-3 col-md-12">Payments Method:</label>
                 <div class="col-xl-10 col-lg-9 col-md-12">
                 <div class="form-check form-check-inline" *ngFor="let item of paymethods; let i = index">
-                  <input class="form-check-input" type="checkbox" [attr.id]="'check'+i" [(ngModel)]="item.paymentMethodValue" [value]="item.paymentMethodValue" [checked]="item.paymentMethodValue">
+                  <input class="form-check-input" type="checkbox" [attr.id]="'check'+i" [(ngModel)]="item.paymentMethodValue" [disabled]="!item.paymentMethodPayPalStatus && item.paymentMethodName === 'PayPal'" [value]="item.paymentMethodValue" [checked]="item.paymentMethodValue">
                   <label class="form-check-label" [attr.for]="'check'+i">{{item.paymentMethodName}}</label>
                 </div> 
                 <div class="form-check form-check-inline">

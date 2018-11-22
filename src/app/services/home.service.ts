@@ -36,8 +36,8 @@ export class HomeService {
 
   getRecentPurchaseList() {
     console.log('Get Recent Purchase list');
-    console.log(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcorderdetails/getOrdersPurchase?days=10`);
-    return this.httpClient.get<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcorderdetails/getOrdersPurchase?days=10`);
+    console.log(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcorderdetails/getOrdersPurchase`);
+    return this.httpClient.get<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcorderdetails/getOrdersPurchase`);
   }
 
   getSaleSummary() {

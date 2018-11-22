@@ -106,6 +106,9 @@ export class ContractListComponent implements OnInit {
   }
 
   searchOnEnter(value: string) {
+    if (value.length < 5) {
+      this.alertService.error('Search term must be 5 characters or more');
+    } else {
     this.spinner.show();
     this.searchTerm = value;
     if (value !== '') {
@@ -138,6 +141,7 @@ export class ContractListComponent implements OnInit {
         } else {
           this.openContractDetail();
         }
+      }
   }
 
   getCustomers() {
@@ -259,7 +263,7 @@ export class ContractListComponent implements OnInit {
     this.contractService.addNewContract(this.contract)
     .subscribe(
       data => {
-        this.alertService.success(data.message);
+        this.alertService.success(data.message + ' (Changes will apply on next business day)');
         this.contract.startDate = '';
         this.contract.endDate = '';
         this.getContractList();
@@ -349,10 +353,10 @@ export class ContractListComponent implements OnInit {
     this.contractService.updateItemPrice(this.contractItem)
     .subscribe(
       data => {
-        this.alertService.success('Price updated successfully');
+        this.alertService.success('Price updated successfully. (Changes will apply on next business day)');
         this.showEdit = null;
         if (this.searchTerm === '') {
-          this.openContractDetail();
+          this.getContractDetail();
         } else {
           this.searchOnEnter(this.searchTerm);
         }
@@ -420,7 +424,7 @@ export class ContractListComponent implements OnInit {
     this.contractService.deleteContractItem(this.contractItem)
     .subscribe(
       data => {
-        this.alertService.success('Item Deleted successfully');
+        this.alertService.success('Item Deleted successfully. (Changes will apply on next business day)');
         if (this.searchTerm === '') {
           this.openContractDetail();
         } else {
@@ -441,7 +445,7 @@ export class ContractListComponent implements OnInit {
     this.contractService.saveContractItem(this.contractItem)
     .subscribe(
       data => {
-        this.alertService.success('Item Added');
+        this.alertService.success('Item Added. (Changes will apply on next business day)');
         this.getContractDetail();
         this.spinner.hide();
       },
@@ -530,7 +534,7 @@ export class ContractListComponent implements OnInit {
       this.contractService.saveSelectedCustomers(list)
       .subscribe(
         data => {
-          this.alertService.success(data.message);
+          this.alertService.success(data.message + ' (Changes will apply on next business day)');
           this.spinner.hide();
         },
         error => {

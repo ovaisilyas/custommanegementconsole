@@ -5,6 +5,8 @@ import {HomeService} from '../../services/home.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { map } from 'rxjs/operators';
 
+declare var $: any;
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -15,6 +17,7 @@ export class HomeComponent implements OnInit {
   salesSummary = [];
   purchaseHistory = [];
   orderDetail = [];
+  orderFlag = '';
 
   constructor(
     private router: Router,
@@ -30,6 +33,12 @@ export class HomeComponent implements OnInit {
     }
     this.getRecentPurchaseList();
     this.getSaleSummary();
+
+    $('#orderDetails').on('hidden.bs.modal', function () {
+      if (!$('body').hasClass('modal-open') && $('#recentPurchase:visible').length) {
+        $('body').addClass('modal-open');
+  }
+    });
   }
 
   getHeaderOptions() {
@@ -66,6 +75,9 @@ export class HomeComponent implements OnInit {
     ))
     .subscribe(
       data => {
+        for (let i = 0; i < data.length; i++) {
+          data[i].price = data[i].price.replace('$', '');
+        }
         this.salesSummary = data;
         this.spinner.hide();
       },
@@ -98,7 +110,18 @@ export class HomeComponent implements OnInit {
     this.homeService.getOrderDetails(orderId)
     .subscribe(
       data => {
+        data.grandTotal = data.grandTotal.replace('$', '');
+        data.discount = data.discount.replace('$', '');
+        data.piAmount = data.piAmount.replace('$', '');
+        data.shipingCharge = data.shipingCharge.replace('$', '');
+        data.shipingTax = data.shipingTax.replace('$', '');
+        data.subTotal = data.subTotal.replace('$', '');
+        data.tax = data.tax.replace('$', '');
+        for (let i = 0; i < data.orderItems.length; i++) {
+          data.orderItems[i].purchaseValue = data.orderItems[i].purchaseValue.replace('$', '');
+        }
         this.orderDetail = data;
+        this.orderFlag = data.flag;
         this.spinner.hide();
       },
       error => {

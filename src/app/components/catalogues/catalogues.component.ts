@@ -124,7 +124,7 @@ export class CataloguesComponent implements OnInit {
     this.catalogService.saveCoreCatalog(finalSaveData)
     .subscribe(
       data => {
-        this.alertService.success(data.message);
+        this.alertService.success(data.message + ' (Changes will apply on next business day)');
         this.spinner.hide();
       },
       error => {
@@ -155,7 +155,7 @@ export class CataloguesComponent implements OnInit {
     this.catalogService.saveExtendedCatalog(finalSaveData)
     .subscribe(
       data => {
-        this.alertService.success(data.message);
+        this.alertService.success(data.message + ' (Changes will apply on next business day)');
         this.spinner.hide();
       },
       error => {

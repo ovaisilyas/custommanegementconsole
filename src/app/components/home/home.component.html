@@ -44,12 +44,28 @@
               <thead>
                 <tr>
                   <th scope="col">&nbsp;</th>
-                  <th scope="col">Value ($)</th>
+                  <th scope="col" class="text-right">Value ($)</th>
               </thead>
-              <tbody>
-                <tr *ngFor="let item of salesSummary">
-                  <td scope="row" class="text-capitalize">{{item.identifier | lowercase}}</td>
-                  <td>{{item.price}}</td>               
+              <tbody *ngIf="salesSummary.length">
+                <tr>
+                  <td scope="row">Financial YTD Sales</td>
+                  <td class="text-right">${{salesSummary[2].price | number:'1.2-2'}}</td>               
+                </tr>
+                <tr>
+                  <td scope="row">Sales this month to date</td>
+                  <td class="text-right">${{salesSummary[0].price | number:'1.2-2'}}</td>    
+                </tr>
+                <tr>
+                  <td scope="row">Sales last month</td>
+                  <td class="text-right">${{salesSummary[1].price | number:'1.2-2'}}</td>    
+                </tr>
+                <tr>
+                  <td scope="row">B2C Sales directed to store</td>
+                  <td class="text-right">${{salesSummary[3].price | number:'1.2-2'}}</td>    
+                </tr>
+                <tr>
+                  <td scope="row">National Account Sales directed to store</td>
+                  <td class="text-right">${{salesSummary[4].price | number:'1.2-2'}}</td>    
                 </tr>
               </tbody>
             </table>
@@ -91,7 +107,7 @@
               <div class="modal-dialog modal-dialog-centered modal-lg">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h5 class="modal-title"><span>Order Details</span></h5>
+                    <h5 class="modal-title"><span>Order Details </span><span class="text-capitalize">({{orderFlag}})</span></h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">×</span>
                     </button>
@@ -150,7 +166,7 @@
                                   <td>{{item.partNumber}}</td>
                                   <td>{{item.ProductName}}</td>
                                   <td>{{item.qty}}</td>
-                                  <td>{{item.purchaseValue}}</td>
+                                  <td>${{item.purchaseValue | number:'1.2-2'}}</td>
                                 </tr>
                               </table>
                             </div>
@@ -162,23 +178,23 @@
                               <table class="table table-bordered table-striped">
                                 <tr>
                                   <td>Shipping Tax</td>
-                                  <td>{{orderDetail.shipingTax}}</td>
+                                  <td>${{orderDetail.shipingTax | number:'1.2-2'}}</td>
                                 </tr>
                                 <tr>
                                   <td>Tax</td>
-                                  <td>{{orderDetail.tax}}</td>
+                                  <td>${{orderDetail.tax | number:'1.2-2'}}</td>
                                 </tr>
                                 <tr>
                                   <td>Shipping Charge</td>
-                                  <td>{{orderDetail.shipingCharge}}</td>
+                                  <td>${{orderDetail.shipingCharge | number:'1.2-2'}}</td>
                                 </tr>
                                 <tr>
                                   <td>Discount</td>
-                                  <td>{{orderDetail.discount}}</td>
+                                  <td>${{orderDetail.discount | number:'1.2-2'}}</td>
                                 </tr>
                                 <tr>
                                   <td>SubTotal</td>
-                                  <td>{{orderDetail.subTotal}}</td>
+                                  <td>${{orderDetail.subTotal | number:'1.2-2'}}</td>
                                 </tr>
                               </table>
                             </div>

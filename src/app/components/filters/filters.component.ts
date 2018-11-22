@@ -123,7 +123,7 @@ export class FiltersComponent implements OnInit {
     .subscribe(
       data => {
         this.spinner.hide();
-        this.alertService.success('Filters saved successfully');
+        this.alertService.success('Filters saved successfully. (Changes will apply on next business day)');
       },
       error => {
         this.spinner.hide();
@@ -140,7 +140,7 @@ export class FiltersComponent implements OnInit {
     .subscribe(
       data => {
         this.spinner.hide();
-        this.alertService.success('Brand filters saved successfully');
+        this.alertService.success('Brand filters saved successfully. (Changes will apply on next business day)');
       },
       error => {
         this.spinner.hide();

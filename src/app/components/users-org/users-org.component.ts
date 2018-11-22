@@ -60,6 +60,9 @@ export class UsersOrgComponent implements OnInit {
   }
 
   onEnter(value: string) {
+    if (value.length < 5) {
+      this.alertService.error('Search term must be 5 characters or more');
+    } else {
     this.spinner.show();
     this.searchTerm = value;
     this.searchService.searchData(value)
@@ -84,6 +87,7 @@ export class UsersOrgComponent implements OnInit {
           }
           this.spinner.hide();
         });
+      }
   }
 
   getCustomers() {
