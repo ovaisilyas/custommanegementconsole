@@ -63,6 +63,7 @@ export class FiltersComponent implements OnInit {
       },
       error => {
         this.spinner.hide();
+        this.alertService.error(error);
         console.log(error);
       });
   }
@@ -85,6 +86,7 @@ export class FiltersComponent implements OnInit {
       },
       error => {
         this.spinner.hide();
+        this.alertService.error(error);
       });
   }
 

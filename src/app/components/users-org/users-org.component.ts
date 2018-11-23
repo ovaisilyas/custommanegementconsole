@@ -106,6 +106,7 @@ export class UsersOrgComponent implements OnInit {
         },
         error => {
           console.log('Unable to Fetch Customers');
+          this.alertService.error(error);
         });
   }
 

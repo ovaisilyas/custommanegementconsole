@@ -126,6 +126,7 @@ export class HomeComponent implements OnInit {
       },
       error => {
         this.spinner.hide();
+        this.alertService.error(error);
       });
   }
 

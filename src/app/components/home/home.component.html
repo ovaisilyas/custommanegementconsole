@@ -11,7 +11,7 @@
   <div class="row">
     <div class="col-lg-9">
       <div class="tab-content" id="nav-tabContent">
-       
+          <app-alert></app-alert>
           <div class="homeHeader"><h5>Recent Purchases</h5>
             <div class="float-right moreIcon">
               <a href="#" data-target="#recentPurchase" data-toggle="modal" role="button" (click)="getPurchaseHistory()">
@@ -196,6 +196,10 @@
                                   <td>SubTotal</td>
                                   <td>${{orderDetail.subTotal | number:'1.2-2'}}</td>
                                 </tr>
+                                <tr>
+                                    <td>Total</td>
+                                    <td>${{orderDetail.piAmount | number:'1.2-2'}}</td>
+                                  </tr>
                               </table>
                             </div>
                           </div>

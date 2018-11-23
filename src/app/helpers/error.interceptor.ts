@@ -12,9 +12,6 @@ export class ErrorInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(catchError(err => {
       console.log(err.status);
       let error = '';
-      if (err.status === 401) {
-        error = 'Session expired. Kindly login';
-      }
 
       if (err.status === 0) {
         error = 'Backend System is down';
@@ -24,6 +21,9 @@ export class ErrorInterceptor implements HttpInterceptor {
         error = err.error.error.message || err.statusText;
       } else if (err.error !== undefined) {
         error = err.error.message || err.statusText;
+      }
+      if (err.status === 401) {
+        error = 'Session expired. Kindly login';
       }
       return throwError(error);
     }));
