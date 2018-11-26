@@ -57,6 +57,7 @@ export class UsersOrgComponent implements OnInit {
 
   getHeaderOptions() {
     this.usersService.getHeaderOptions();
+    this.orgService.getHeaderOptions();
   }
 
   onEnter(value: string) {
