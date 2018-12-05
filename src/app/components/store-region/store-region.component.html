@@ -187,7 +187,7 @@
                   <td>{{item.firstName}} {{item.lastName}}</td>
                   <td>{{item.logonId}}</td>
                   <td>
-                    <label><a (click)="resetPassword(item.logonId)">Reset Password</a></label>
+                    <label *ngIf="item.emailAddress"><a (click)="resetPassword(item.logonId)">Reset Password</a></label>
                     <div class="form-check form-check-inline customCheckNew text-right">
                       <input class="form-check-input" type="checkbox" id="userStatusCheckbox" name="userStatusCheckbox" value="{{item.userStatus}}"
                              [checked]="item.userStatus == '1'"

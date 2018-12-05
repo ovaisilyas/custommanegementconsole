@@ -3,6 +3,7 @@ import {Router} from '@angular/router';
 import {map} from 'rxjs/operators';
 import {StoreDetailsModel} from '../../model/storedetail.model';
 import {UserStatusModel} from '../../model/userstatus.model';
+import {ResetPasswordModel} from '../../model/resetpassword.model';
 import {AlertService} from '../../services/alert.service';
 import {UsersService} from '../../services/users.service';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -19,6 +20,8 @@ export class StoreRegionComponent implements OnInit {
   paymethods = [];
   eWayDetails = [];
   eWayChecked = false;
+  submitted = false;
+  resetPassModel: ResetPasswordModel;
   loyaltyDetail = {'loyalityEnable': false};
   guestShopping = {'enable': false};
   itemList = [];
@@ -44,6 +47,7 @@ export class StoreRegionComponent implements OnInit {
 
   getHeaderOptions() {
     this.storesService.getHeaderOptions();
+    this.usersService.getHeaderOptions();
   }
 
   getStoreDetails() {
@@ -201,6 +205,29 @@ export class StoreRegionComponent implements OnInit {
           console.log(error);
           this.alertService.error(error);
           this.spinner.hide();
+        });
+  }
+
+  resetPassword(logonId: string) {
+    this.spinner.show();
+    this.resetPassModel = new ResetPasswordModel(logonId, '-');
+    this.submitted = true;
+    this.usersService.resetPassword(this.resetPassModel)
+      .pipe(map(
+        (res) => {
+          return res;
+        }
+      ))
+      .subscribe(
+        data => {
+          this.spinner.hide();
+          console.log(data);
+          this.alertService.success('Password reset email has been sent successfully');
+        },
+        error => {
+          this.spinner.hide();
+          console.log(error);
+          this.alertService.error(error);
         });
   }
 

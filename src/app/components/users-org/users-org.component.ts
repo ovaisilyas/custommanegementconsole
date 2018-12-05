@@ -259,7 +259,13 @@ export class UsersOrgComponent implements OnInit {
       .subscribe(
         data => {
           this.orgDetail = data;
-          this.orgDetail.country = 'Australia';
+          if (!this.orgDetail.country) {
+            this.orgDetail.country = 'AU';
+          } else if (this.orgDetail.country === 'AU' || this.orgDetail.country === 'Australia') {
+            this.orgDetail.country = 'AU';
+          } else if (this.orgDetail.country === 'NZ' || this.orgDetail.country === 'New Zealand') {
+            this.orgDetail.country = 'NZ';
+          }
           this.spinner.hide();
         },
         error => {
@@ -331,6 +337,25 @@ export class UsersOrgComponent implements OnInit {
     });
     if (this.IdKey !== -1) {
       return this.selectedId = this.customerList[this.IdKey].orgEntityName;
+    }
+  }
+
+  updateUserState(ele, event) {
+    if ( event.target.checked ) {
+      if ( ele === 'admin') {
+        this.userDetail.approver = true;
+        this.userDetail.buyer = true;
+      } else if (ele === 'approver') {
+        this.userDetail.buyer = true;
+      }
+    }
+    if ( !event.target.checked ) {
+      if ( ele === 'buyer') {
+        this.userDetail.admin = false;
+        this.userDetail.approver = false;
+      } else if (ele === 'approver') {
+        this.userDetail.admin = false;
+      }
     }
   }
 }

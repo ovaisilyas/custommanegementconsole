@@ -62,7 +62,7 @@
      
       <div class="row">
             <div class="col-lg-5 col-sm-5 col-xl-5 catalogCol3">
-                    <h5><span>Extended Aisles</span></h5>
+                    <h5><span>Endless Aisle</span></h5>
             </div>
             <div class="col-xl-7 col-lg-7 col-sm-7 catalogCol4">
                     <div class="form-row">
@@ -108,7 +108,6 @@
                             <div class="col-xl-3 col-lg-3 col-md-3 col-sm-2">
                                
                                 <select [attr.id]="'selectMoq'+item.cfcondgrpId" class="form-control" [(ngModel)]="item.MOQ.attrValId" [name]="item.MOQ.cfcondId" #moqValue="ngModel" [disabled]="!item.onFilter">
-                                    <option value="">N/A</option>
                                   <option *ngFor="let item of extendedMoqList" [value]="item.attrValId" [attr.id]="'optionMoq'+item.attrValId">{{item.attrValue}}</option>                                 
                                 </select>
                                 <input type="hidden" [value]="item.attrValue" />

@@ -39,21 +39,21 @@
                 <table class="table table-bordered table-striped" id="productListTable">
                   <thead>
                     <tr>
-                      <th scope="col">Range</th>
-                      <th scope="col">EZCode</th>
-                      <th scope="col">Description</th>
-                      <th scope="col">List Price (Inc. GST)</th>
-                      <th scope="col">Gov price (Ex GST)</th>
-                      <th scope="col">Actions</th>
+                      <th scope="col" style="width:10%">Range</th>
+                      <th scope="col" style="width:10%">EZCode</th>
+                      <th scope="col" style="width:40%">Description</th>
+                      <th scope="col" style="width:10%">List Price <span style="font-size: 12px;">(Inc. GST)</span></th>
+                      <th scope="col" style="width:10%">Gov price <span style="font-size: 12px;">(Ex GST)</span></th>
+                      <th scope="col" style="width:20%">Actions</th>
                   </thead>
                   <tbody>
                     <tr *ngFor="let item of pagedItems">
-                      <td scope="col"> {{item.identifier}}</td>
-                      <td scope="col"> {{item.partnumber}}</td>
-                      <td scope="col" class="tableDataDesc"><span title="{{item.description}}">{{item.description}}</span></td>
-                      <td scope="col"> ${{item.listprice | number:'1.2-2'}}</td>
-                      <td scope="col">${{item.govtprice | number:'1.2-2'}}</td>
-                      <td scope="col"><a href="javascript:void(0)" role="button" data-toggle="modal" data-target="#openContract" (click)="openContract(item.catentryId)">Open Contract</a> &nbsp; <a href="javascript:void(0)" role="button" data-toggle="modal" data-target="#openPriceList" (click)="getPriceList(item.catentryId)">Show prices</a></td>
+                      <td scope="col" style="width:10%" class="text-capitalize"> {{item.identifier | lowercase}}</td>
+                      <td scope="col" style="width:10%"> {{item.partnumber}}</td>
+                      <td scope="col" class="tableDataDesc" style="width:40%"><span title="{{item.description}}">{{item.description}}</span></td>
+                      <td scope="col" style="width:10%"> ${{item.listprice | number:'1.2-2'}}</td>
+                      <td scope="col" style="width:10%">${{item.govtprice | number:'1.2-2'}}</td>
+                      <td scope="col" style="width:20%"><a href="javascript:void(0)" role="button" data-toggle="modal" data-target="#openContract" (click)="openContract(item.catentryId)">Open Contract</a> <br/> <a href="javascript:void(0)" role="button" data-toggle="modal" data-target="#openPriceList" (click)="getPriceList(item.catentryId)">Show prices</a></td>
                     </tr>
                   </tbody>
                 </table>
