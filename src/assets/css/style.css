@@ -62,7 +62,7 @@ a:hover{color:#404040;}
 .userDataGrid table td, .homePurchaseGrid table td, .homeStoreGrid table td, .productPriceGrid table td, .productContractGrid table td, .openContractModal table td, .productListGrid table td, .userAccountsGrid table td{color:#282828; text-align: center;}
 .homeStoreGrid table th,.homeStoreGrid table td{text-align: left;}
 .userDataGrid .form-check-input, .userAccountsGrid .form-check-input{margin-left: 10px;margin-right: 0rem;}
-.userDataGrid table td a, .productPriceGrid table td a, .productContractGrid table a, .homePurchaseGrid table a{text-decoration: underline !important; cursor: pointer;}
+.userDataGrid table td a, .productPriceGrid table td a, .productContractGrid table a, .homePurchaseGrid table a, #userAccountsModal a{text-decoration: underline !important; cursor: pointer;}
 
 .userSearchRow #searchTerm, .userSearchRow .searchIcon, .searchIconNew, #addNewItem .searchIcon {background:url(../images/search.png) left no-repeat; background-position-x: 5px; padding-left: 25px;}
 .custTabCls ul.nav.nav-tabs > li {float: none;display: table-cell;}

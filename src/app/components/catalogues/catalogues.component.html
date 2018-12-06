@@ -108,6 +108,7 @@
                             <div class="col-xl-3 col-lg-3 col-md-3 col-sm-2">
                                
                                 <select [attr.id]="'selectMoq'+item.cfcondgrpId" class="form-control" [(ngModel)]="item.MOQ.attrValId" [name]="item.MOQ.cfcondId" #moqValue="ngModel" [disabled]="!item.onFilter">
+                                    <option value="">N/A</option>
                                   <option *ngFor="let item of extendedMoqList" [value]="item.attrValId" [attr.id]="'optionMoq'+item.attrValId">{{item.attrValue}}</option>                                 
                                 </select>
                                 <input type="hidden" [value]="item.attrValue" />
