@@ -15,7 +15,7 @@ export class AuthenticationService {
 
   doLogin(username: string, password: string) {
     console.log('in login function');
-    return this.http.post<any>(`${environment.apiUrl}/wcs/resources/cmclogin/doLogin`,
+    return this.http.post<any>(`${environment.apiUrl}/wcs/resources/store/0/cmclogin/doLogin`,
       { logonId: username, logonPassword: password }, httpOptions)
       .pipe(map(
         (users) => {

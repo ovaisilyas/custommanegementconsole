@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://fep8.officebrandstech.com.au'
+  apiUrl: 'https://www.officebrands.net.au'
 };

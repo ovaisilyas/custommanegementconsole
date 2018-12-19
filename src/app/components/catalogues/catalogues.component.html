@@ -28,11 +28,11 @@
                     <label class="col col-lg-7 col-xl-6 offset-sm-1 text-capitalize">{{item.catName | lowercase}}</label>
                     <div class="col col-lg-4 col-xl-5">
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" [name]="item.cfcondValId" [attr.id]="'radioCatlogOff'+item.attrValId" [(ngModel)]="item.attrVal" [value]="false">
+                            <input class="form-check-input" type="radio" [name]="item.attrValId" [attr.id]="'radioCatlogOff'+item.attrValId" [(ngModel)]="item.attrVal" [value]="false">
                             <label class="form-check-label" [attr.for]="'radioCatlogOff'+item.attrValId">Off</label>
                           </div>
                           <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" [name]="item.cfcondValId" [attr.id]="'radioCatlogOn'+item.attrValId" [(ngModel)]="item.attrVal" [value]="true">
+                            <input class="form-check-input" type="radio" [name]="item.attrValId" [attr.id]="'radioCatlogOn'+item.attrValId" [(ngModel)]="item.attrVal" [value]="true">
                             <label class="form-check-label" [attr.for]="'radioCatlogOn'+item.attrValId">On</label>
                           </div>
                     </div>
@@ -43,11 +43,11 @@
                       <label class="col col-lg-7 col-xl-6 offset-sm-1 text-capitalize">{{item.catName | lowercase}}</label>
                       <div class="col col-lg-4 col-xl-5">
                           <div class="form-check form-check-inline">
-                              <input class="form-check-input" type="radio" [name]="item.cfcondId" [attr.id]="'radioCatlogOff'+item.attrValId" [(ngModel)]="item.attrVal" [value]="false">
+                              <input class="form-check-input" type="radio" [name]="item.attrValId" [attr.id]="'radioCatlogOff'+item.attrValId" [(ngModel)]="item.attrVal" [value]="false">
                               <label class="form-check-label" [attr.for]="'radioCatlogOff'+item.attrValId">Off</label>
                             </div>
                             <div class="form-check form-check-inline">
-                              <input class="form-check-input" type="radio" [name]="item.cfcondId" [attr.id]="'radioCatlogOn'+item.attrValId" [(ngModel)]="item.attrVal" [value]="true">
+                              <input class="form-check-input" type="radio" [name]="item.attrValId" [attr.id]="'radioCatlogOn'+item.attrValId" [(ngModel)]="item.attrVal" [value]="true">
                               <label class="form-check-label" [attr.for]="'radioCatlogOn'+item.attrValId">On</label>
                             </div>
                       </div>
