@@ -15,11 +15,11 @@
           <div class="row mt-1">
               <div class="col-lg-5 col-sm-5 col-xl-5 catalogCol1">
                 <h5><span>Core</span></h5>
-           
+
               </div>
               <div class="col-xl-7 col-lg-7 col-sm-6 catalogCol2">
                  <h5><span>Other</span></h5>
-          
+
                </div>
              </div>
         <div class="row wrapperCoreRow">
@@ -55,11 +55,11 @@
                 </div>
         </div>
 
-     
+
       <div class="row">
-            <div class="col-md-2 col-lg-1 offset-md-10 offset-lg-11"><button class="btn btn-primary btn-block" type="button" (click)="saveCoreCatalog();">Save</button></div>
+            <div class="col-md-2 col-lg-1 offset-md-10 offset-lg-11"><button class="btn btn-primary btn-block" type="button" (click)="openConfirmationDialogCore();">Save</button></div>
       </div>
-     
+
       <div class="row">
             <div class="col-lg-5 col-sm-5 col-xl-5 catalogCol3">
                     <h5><span>Endless Aisle</span></h5>
@@ -67,15 +67,15 @@
             <div class="col-xl-7 col-lg-7 col-sm-7 catalogCol4">
                     <div class="form-row">
                             <div class="col-xl-3 col-lg-3 col-md-3 col-sm-2">
-                               
+
                                     <label>MOQ Less Than</label>
                             </div>
                             <div class="col-xl-3 col-lg-3 col-md-3 col-sm-2">
-                               
+
                                     <label>Cost Greater Than</label>
                             </div>
                             <div class="col-xl-1 col-md-2">
-                               
+
                                     <label>RQ=1</label>
                             </div>
                             <div class="col">
@@ -99,35 +99,35 @@
                                     <input class="form-check-input" type="radio" [name]="item.cfcondId" [attr.id]="'radioStationeryOn'+i" [(ngModel)]="item.onFilter" [value]="true">
                                     <label class="form-check-label" [attr.for]="'radioStationeryOn'+i">On</label>
                                   </div>
-                             
+
                             </div>
                           </div>
             </div>
             <div class="col-xl-7 col-lg-7 col-sm-7 catalogCol4">
                     <div class="form-row">
                             <div class="col-xl-3 col-lg-3 col-md-3 col-sm-2">
-                               
+
                                 <select [attr.id]="'selectMoq'+item.cfcondgrpId" class="form-control" [(ngModel)]="item.MOQ.attrValId" [name]="item.MOQ.cfcondId" #moqValue="ngModel" [disabled]="!item.onFilter">
                                     <option value="">N/A</option>
-                                  <option *ngFor="let item of extendedMoqList" [value]="item.attrValId" [attr.id]="'optionMoq'+item.attrValId">{{item.attrValue}}</option>                                 
+                                  <option *ngFor="let item of extendedMoqList" [value]="item.attrValId" [attr.id]="'optionMoq'+item.attrValId">{{item.attrValue}}</option>
                                 </select>
                                 <input type="hidden" [value]="item.attrValue" />
                             </div>
                             <div class="col-xl-3 col-lg-3 col-md-3 col-sm-2">
-                               
+
                                 <select [attr.id]="'selectCost'+item.cfcondgrpId" class="form-control" [(ngModel)]="item.COST.attrValId" [name]="item.COST.cfcondId" #costValue="ngModel" [disabled]="!item.onFilter">
                                     <option value="">0</option>
                                   <option *ngFor="let item of extendedCostGreaterList" [value]="item.attrValId" [attr.id]="'optionCost'+item.attrValId">{{item.attrValue}}</option>
                                 </select>
                             </div>
                             <div class="col-xl-1 col-md-2">
-                               
+
                                 <div class="form-check">
                                     <input id="ChkRq1" class="form-check-input" type="checkbox" [checked]="item.RQ.attrvalue" [(ngModel)]="item.RQ.attrvalue" [name]="item.RQ.cfcondId" #rqValue="ngModel" [disabled]="!item.onFilter">
                                   </div>
                             </div>
                             <div class="col">
-                               
+
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" [name]="'radioEROff'+i" [attr.id]="'radioExtRangeOff'+i" [(ngModel)]="item.EXTRA_RANGE.attrvalue" [value]="false" [disabled]="!item.onFilter">
                                     <label class="form-check-label" [attr.for]="'radioExtRangeOff'+i">Off</label>
@@ -142,7 +142,7 @@
       </div>
 	</div>
       <div class="row">
-            <div class="col-md-2 col-lg-1 offset-md-10 offset-lg-11"><button class="btn btn-primary btn-block" type="button" (click)="saveExtendedCatalog();">Save</button></div>
+            <div class="col-md-2 col-lg-1 offset-md-10 offset-lg-11"><button class="btn btn-primary btn-block" type="button" (click)="openConfirmationDialogExtended();">Save</button></div>
       </div>
       </div>
     </div>

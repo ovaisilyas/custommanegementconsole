@@ -96,6 +96,7 @@ export class StoreRegionComponent implements OnInit {
       data => {
         this.paymethods = data['paymentMethodsValue'];
         this.eWayDetails = data['ewayDetail'];
+        console.log(this.eWayDetails);
         if (this.eWayDetails[0].paymentMethodValue === true || this.eWayDetails[1].paymentMethodValue === true || this.eWayDetails[2].paymentMethodValue === true) {
           this.eWayChecked = true;
         }

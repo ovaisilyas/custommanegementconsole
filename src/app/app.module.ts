@@ -27,6 +27,8 @@ import { StoreRegionComponent } from './components/store-region/store-region.com
 import { AutofocusDirective } from './directives/autofocus.directive';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog/confirmation-dialog.component';
+import {ConfirmationDialogService} from './confirmation-dialog/confirmation-dialog/confirmation-dialog.service';
 
 @NgModule({
   declarations: [
@@ -41,7 +43,8 @@ import { environment } from '../environments/environment';
     FiltersComponent,
     StoreRegionComponent,
     AutofocusDirective,
-    ContractListComponent
+    ContractListComponent,
+    ConfirmationDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -58,10 +61,12 @@ import { environment } from '../environments/environment';
     AuthGuard,
     AlertService,
     AuthenticationService,
+    ConfirmationDialogService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: LocationStrategy, useClass: HashLocationStrategy},
   ],
+  entryComponents: [ ConfirmationDialogComponent ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

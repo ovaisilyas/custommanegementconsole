@@ -3,6 +3,7 @@ import {Router} from '@angular/router';
 import {map} from 'rxjs/operators';
 import {CatalogService} from '../../services/catalog.service';
 import {AlertService} from '../../services/alert.service';
+import {ConfirmationDialogService} from '../../confirmation-dialog/confirmation-dialog/confirmation-dialog.service';
 
 import { NgxSpinnerService } from 'ngx-spinner';
 
@@ -24,6 +25,7 @@ export class CataloguesComponent implements OnInit {
     private catalogService: CatalogService,
     private spinner: NgxSpinnerService,
     private alertService: AlertService,
+    private confirmationDialogService: ConfirmationDialogService,
   ) { }
 
   ngOnInit() {
@@ -115,53 +117,75 @@ export class CataloguesComponent implements OnInit {
       });
   }
 
+  public openConfirmationDialogCore() {
+    this.confirmationDialogService.confirm('Please confirm..', 'Do you really want to save ?')
+      .then((confirmed) => {
+        console.log('User confirmed:', confirmed);
+        if (confirmed) {
+          this.saveCoreCatalog();
+        }
+      })
+      .catch(error => console.log('User dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)'));
+  }
+
   saveCoreCatalog() {
-    this.spinner.show();
-    const finalSaveData = {
-      coreList : this.coreCatalogs,
-      otherList : this.otherCatalogs,
-    };
-    this.catalogService.saveCoreCatalog(finalSaveData)
-    .subscribe(
-      data => {
-        this.alertService.success(data.message + ' (Changes will apply on next business day)');
-        this.spinner.hide();
-      },
-      error => {
-        this.alertService.error(error);
-        this.spinner.hide();
-      });
+      this.spinner.show();
+      const finalSaveData = {
+        coreList: this.coreCatalogs,
+        otherList: this.otherCatalogs,
+      };
+      this.catalogService.saveCoreCatalog(finalSaveData)
+        .subscribe(
+          data => {
+            this.alertService.success(data.message + ' (Changes will apply on next business day)');
+            this.spinner.hide();
+          },
+          error => {
+            this.alertService.error(error);
+            this.spinner.hide();
+          });
+  }
+
+  public openConfirmationDialogExtended() {
+    this.confirmationDialogService.confirm('Please confirm..', 'Do you really want to save ?')
+      .then((confirmed) => {
+        console.log('User confirmed:', confirmed);
+        if (confirmed) {
+          this.saveExtendedCatalog();
+        }
+      })
+      .catch(error => console.log('User dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)'));
   }
 
   saveExtendedCatalog() {
-    this.spinner.show();
-    const localModel = this.localExtCatalogModel;
+      this.spinner.show();
+      const localModel = this.localExtCatalogModel;
 
-    for (const key in localModel) {
-      if (localModel[key].COST.attrValId !== null && localModel[key].COST.attrValId !== '') {
-        localModel[key].COST.attrvalue = document.getElementById('optionCost' + localModel[key].COST.attrValId).innerText;
+      for (const key in localModel) {
+        if (localModel[key].COST.attrValId !== null && localModel[key].COST.attrValId !== '') {
+          localModel[key].COST.attrvalue = document.getElementById('optionCost' + localModel[key].COST.attrValId).innerText;
+        }
       }
-    }
-    for (const key in localModel) {
-      if (localModel[key].MOQ.attrValId !== null && localModel[key].MOQ.attrValId !== '') {
-        localModel[key].MOQ.attrvalue = document.getElementById('optionMoq' + localModel[key].MOQ.attrValId).innerText;
+      for (const key in localModel) {
+        if (localModel[key].MOQ.attrValId !== null && localModel[key].MOQ.attrValId !== '') {
+          localModel[key].MOQ.attrvalue = document.getElementById('optionMoq' + localModel[key].MOQ.attrValId).innerText;
+        }
       }
-    }
 
-    const finalSaveData = {
-      extAisLesList : localModel,
-    };
+      const finalSaveData = {
+        extAisLesList: localModel,
+      };
 
-    this.catalogService.saveExtendedCatalog(finalSaveData)
-    .subscribe(
-      data => {
-        this.alertService.success(data.message + ' (Changes will apply on next business day)');
-        this.spinner.hide();
-      },
-      error => {
-        this.alertService.error(error);
-        this.spinner.hide();
-      });
+      this.catalogService.saveExtendedCatalog(finalSaveData)
+        .subscribe(
+          data => {
+            this.alertService.success(data.message + ' (Changes will apply on next business day)');
+            this.spinner.hide();
+          },
+          error => {
+            this.alertService.error(error);
+            this.spinner.hide();
+          });
   }
 
 }

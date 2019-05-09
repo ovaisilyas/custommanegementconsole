@@ -10,7 +10,7 @@
 <div class="container-fluid PageContWrap regionSettCont">
   <div class="row">
     <div class="col-lg-12">
-      <div class="tab-content" id="nav-tabContent">  
+      <div class="tab-content" id="nav-tabContent">
           <app-alert></app-alert>
         <div class="regionStoreDetails">
           <fieldset>
@@ -51,9 +51,9 @@
                       </div>
                     </div>
               </div>
-            </div> 
+            </div>
             <div class="row">
-            <div class="col-md-2 col-lg-2 col-xl-1 offset-md-10 offset-lg-10 offset-xl-11"><button class="btn btn-primary btn-block" type="button" (click)="saveStoreDetails()">Save</button></div>    
+            <div class="col-md-2 col-lg-2 col-xl-1 offset-md-10 offset-lg-10 offset-xl-11"><button class="btn btn-primary btn-block" type="button" (click)="saveStoreDetails()">Save</button></div>
             </div>
           </fieldset>
         </div>
@@ -66,57 +66,57 @@
                 <div class="form-check form-check-inline" *ngFor="let item of paymethods; let i = index">
                   <input class="form-check-input" type="checkbox" [attr.id]="'check'+i" [(ngModel)]="item.paymentMethodValue" [disabled]="!item.paymentMethodPayPalStatus && item.paymentMethodName === 'PayPal'" [value]="item.paymentMethodValue" [checked]="item.paymentMethodValue">
                   <label class="form-check-label" [attr.for]="'check'+i">{{item.paymentMethodName}}</label>
-                </div> 
+                </div>
                 <div class="form-check form-check-inline">
                   <input class="form-check-input" type="checkbox" id="checkeWay" [(ngModel)]="eWayChecked" [checked]="eWayChecked === true" (change)="$event.currentTarget.checked ? eWayChecked = true : eWayChecked = false">
                   <label class="form-check-label" for="checkeWay">eWay</label>
-                </div>       
-              </div>      
+                </div>
+              </div>
             </div>
-            
+
             <div class="row">
                 <label class="col-xl-2 col-lg-3 col-md-12"></label>
-              
+
                 <div class="col-xl-8 col-lg-9 col-md-12" *ngIf="eWayChecked">
                     <div class="card bg-light mb-3"><div class="card-body">
                     <div class="form-check form-check-inline" *ngFor="let item of eWayDetails | slice:0:3; let i=index">
                         <input class="form-check-input" type="checkbox" [attr.id]="'checkeWay'+i" [(ngModel)]="item.paymentMethodValue" [value]="item.paymentMethodValue" [checked]="item.paymentMethodValue">
                         <label class="form-check-label" [attr.for]="'checkeWay'+i">{{item.paymentMethodName}}</label>
-                      </div> 
+                      </div>
                       <div>
                           <div class="form-group row mt-3">
                           <label class="col-xl-2 col-lg-3 col-md-3 col-form-label">API key</label>
                           <div class="col-xl-10 col-lg-9 col-md-9">
-                              <input type="text" class="form-control" [(ngModel)]="eWayDetails[3].apiKey" #apiKey="ngModel">
+                              <input type="text" class="form-control" [(ngModel)]="eWayDetails[1].apiKey" #apiKey="ngModel">
                           </div>
                           </div>
                           <div class="form-group row">
                           <label class="col-xl-2 col-lg-3 col-md-3 col-form-label">API Password</label>
                           <div class="col-xl-10 col-lg-9 col-md-9">
-                              <input type="text" class="form-control" [(ngModel)]="eWayDetails[3].apiPassword" #apiPassword="ngModel">
+                              <input type="text" class="form-control" [(ngModel)]="eWayDetails[1].apiPassword" #apiPassword="ngModel">
                           </div>
-                          </div>                 
+                          </div>
                           <div class="form-group row">
                           <label class="col-xl-2 col-lg-3 col-md-3 col-form-label">Customer Id</label>
                           <div class="col-xl-10 col-lg-9 col-md-9">
-                              <input type="text" class="form-control" [(ngModel)]="eWayDetails[3].customerId" #customerId="ngModel">
+                              <input type="text" class="form-control" [(ngModel)]="eWayDetails[1].customerId" #customerId="ngModel">
                           </div>
                           </div>
                           <div class="form-group row">
                           <label class="col-xl-2 col-lg-3 col-md-3 col-form-label">Encryption Key</label>
                           <div class="col-xl-10 col-lg-9 col-md-9">
-                              <textarea type="text" class="form-control" rows="6" [(ngModel)]="eWayDetails[3].encryptionKey" #encryptionKey="ngModel">{{eWayDetails[3].encryptionKey}}</textarea>
+                              <textarea type="text" class="form-control" rows="6" [(ngModel)]="eWayDetails[1].encryptionKey" #encryptionKey="ngModel">{{eWayDetails[1].encryptionKey}}</textarea>
                           </div>
                       </div>
-                      </div>   
                       </div>
                       </div>
-            </div>    
-            
+                      </div>
+            </div>
+
               </div>
 
               <div class="row">
-                  <div class="col-md-2 col-lg-2 col-xl-1 offset-md-10 offset-lg-10 offset-xl-11"><button class="btn btn-primary btn-block" type="button" (click)="saveFinancialDetails()">Save</button></div>    
+                  <div class="col-md-2 col-lg-2 col-xl-1 offset-md-10 offset-lg-10 offset-xl-11"><button class="btn btn-primary btn-block" type="button" (click)="saveFinancialDetails()">Save</button></div>
                   </div>
           </fieldset>
         </div>
@@ -133,8 +133,8 @@
                         <div class="form-check form-check-inline">
                           <input class="form-check-input" type="radio" name="radioLoyaltyOn" [(ngModel)]="loyaltyDetail.loyalityEnable" id="radioLoyaltyOn" [value]="true">
                           <label class="form-check-label" for="radioLoyaltyOn">On</label>
-                        </div>                   
-                  </div>      
+                        </div>
+                  </div>
                   </div>
                   <div class="form-group row">
                       <label class="col-xl-2 col-lg-3 col-md-3">Guest Shopping</label>
@@ -146,12 +146,12 @@
                             <div class="form-check form-check-inline">
                               <input class="form-check-input" type="radio" name="radioGuest" [(ngModel)]="guestShopping.enable" id="radioGuestOn" [value]="true">
                               <label class="form-check-label" for="radioGuestOn">On</label>
-                            </div>                   
-                      </div>      
+                            </div>
+                      </div>
                   </div>
-                  
+
                   <div class="row">
-                      <div class="col-md-2 col-lg-2 col-xl-1 offset-md-10 offset-lg-10 offset-xl-11"><button class="btn btn-primary btn-block" type="button" (click)="saveSettingDetails();">Save</button></div>    
+                      <div class="col-md-2 col-lg-2 col-xl-1 offset-md-10 offset-lg-10 offset-xl-11"><button class="btn btn-primary btn-block" type="button" (click)="saveSettingDetails();">Save</button></div>
                   </div>
             </fieldset>
           </div>
