@@ -78,4 +78,19 @@ export class CatalogService {
       this.httpOptions);
   }
 
+  getStoreRange() {
+    console.log('Get Store Range');
+    console.log(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/storefilter/getStore`);
+    return this.httpClient.get<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/storefilter/getStore`,
+      this.httpOptions);
+  }
+
+  saveStoreRange(storeRangeOptions) {
+    console.log('Save Store Range');
+    console.log(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/storefilter/updateStoreList`);
+    console.log(storeRangeOptions);
+    return this.httpClient.post<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/storefilter/updateStoreList`, storeRangeOptions,
+      this.httpOptions);
+  }
+
 }

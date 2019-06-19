@@ -44,16 +44,31 @@
                       <th scope="col" style="width:40%">Description</th>
                       <th scope="col" style="width:10%">List Price <span style="font-size: 12px;">(Inc. GST)</span></th>
                       <th scope="col" style="width:10%">Gov price <span style="font-size: 12px;">(Ex GST)</span></th>
+                      <th scope="col" style="width:10%">MOQ</th>
                       <th scope="col" style="width:20%">Actions</th>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let item of pagedItems">
+                    <tr *ngFor="let item of pagedItems; let i = index">
                       <td scope="col" style="width:10%" class="text-capitalize"> {{item.identifier | lowercase}}</td>
                       <td scope="col" style="width:10%"> {{item.partnumber}}</td>
                       <td scope="col" class="tableDataDesc" style="width:40%"><span title="{{item.description}}">{{item.description}}</span></td>
                       <td scope="col" style="width:10%"> ${{item.listprice | number:'1.2-2'}}</td>
                       <td scope="col" style="width:10%">${{item.govtprice | number:'1.2-2'}}</td>
-                      <td scope="col" style="width:20%"><a href="javascript:void(0)" role="button" data-toggle="modal" data-target="#openContract" (click)="openContract(item.catentryId)">Open Contract</a> <br/> <a href="javascript:void(0)" role="button" data-toggle="modal" data-target="#openPriceList" (click)="getPriceList(item.catentryId)">Show prices</a></td>
+                      <td scope="col" style="width:10%">
+                        <div class="d-flex justify-content-center custPriceEdit" [class.show]="i == showEdit">
+                          <div class="priceLabel"><label>{{item.moq}}</label></div>
+                          <div class="priceEditField">
+                            <div>
+                              <input type="number" class="form-control" class="editPriceInput" [(ngModel)]="newMoq" #newMoqValue='ngModel'>
+                              <button type="submit" class="btn btn-primary" (click)="updateProductMoq(item.catentryId)">&#10004;</button>
+                              <button type="submit" class="btn btn-danger" (click)="cancelContractMoqEdit()">&#10006;</button>
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                      <td scope="col" style="width:20%">
+                        <a *ngIf="item.moq" href="javascript:void(0)" role="button" (click)="showEditMoq(i,item.moq)">Edit MOQ</a> <br/>
+                        <a href="javascript:void(0)" role="button" data-toggle="modal" data-target="#openContract" (click)="openContract(item.catentryId)">Open Contract</a> <br/> <a href="javascript:void(0)" role="button" data-toggle="modal" data-target="#openPriceList" (click)="getPriceList(item.catentryId)">Show prices</a></td>
                     </tr>
                   </tbody>
                 </table>

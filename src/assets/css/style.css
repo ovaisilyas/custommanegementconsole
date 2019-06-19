@@ -108,6 +108,7 @@ a:hover{color:#404040;}
   .catalogCol4 .form-row{margin-top: .4rem;}
   .catalogCol4 .clearfix{height: 2.2rem;}
   .catalogCol4 .form-control{width: 90%;height: calc(1.5rem + 2px);padding: 0rem .75rem;line-height: 1;}
+.cat-box {border: solid 1px #ccc;padding: 2px 7px 15px 5px;}
 
  /**************Filter page***********/
  .filterTab .nav-pills .nav-link{border-radius: 1.25rem;}

@@ -17,8 +17,9 @@ export class CataloguesComponent implements OnInit {
   extendedCostGreaterList = [];
   coreCatalogs = [];
   extendedCatalogs = [];
-  otherCatalogs = [];
-  localExtCatalogModel = [];
+  storeRangeList = [];
+  //endlessExtendedList = [];
+  //coreExtendedList = [];
 
   constructor(
     private router: Router,
@@ -33,10 +34,11 @@ export class CataloguesComponent implements OnInit {
     if (sessionStorage.getItem('WCToken') === null) {
       this.router.navigate(['/login']);
     }
-    this.getExtendedMoqList();
-    this.getExtendedCostGreaterList();
+    //this.getExtendedMoqList();
+    //this.getExtendedCostGreaterList();
     this.getCoreCatalog();
     this.getExtendedCatalog();
+    this.getStoreRange();
   }
 
   getHeaderOptions() {
@@ -87,7 +89,7 @@ export class CataloguesComponent implements OnInit {
       data => {
         this.spinner.hide();
         this.coreCatalogs = data['coreList'];
-        this.otherCatalogs = data['otherList'];
+        //this.coreExtendedList = data['extendedList'];
       },
       error => {
         this.spinner.hide();
@@ -95,21 +97,58 @@ export class CataloguesComponent implements OnInit {
       });
   }
 
+  getStoreRange() {
+    this.spinner.show();
+    this.coreCatalogs = [];
+    this.catalogService.getStoreRange()
+      .subscribe(
+        data => {
+          this.spinner.hide();
+          this.storeRangeList = data['storeList'];
+        },
+        error => {
+          this.spinner.hide();
+          this.alertService.error(error);
+        });
+  }
+
+  saveStoreRange() {
+    this.spinner.show();
+    const finalSaveData = {
+      storeList: this.storeRangeList,
+    };
+    this.catalogService.saveStoreRange(finalSaveData)
+      .subscribe(
+        data => {
+          this.alertService.success(data.message + ' (Changes will apply on next business day)');
+          this.spinner.hide();
+        },
+        error => {
+          this.alertService.error(error);
+          this.spinner.hide();
+        });
+  }
+
+  public openConfirmationDialogStore() {
+    this.confirmationDialogService.confirm('Please confirm..', 'Do you really want to save ?')
+      .then((confirmed) => {
+        console.log('User confirmed:', confirmed);
+        if (confirmed) {
+          this.saveStoreRange();
+        }
+      })
+      .catch(error => console.log('User dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)'));
+  }
+
   getExtendedCatalog() {
     this.spinner.show();
     this.extendedCatalogs = [];
     this.catalogService.getExtendedCatalog()
-    .pipe(map(
-      (list) => {
-        const extCatlist = list['extAisLesList'];
-        return extCatlist;
-      }
-    ))
     .subscribe(
       data => {
         this.spinner.hide();
-        this.extendedCatalogs = data;
-        this.localExtCatalogModel = this.extendedCatalogs;
+        this.extendedCatalogs = data['extAisLesList'];
+        //this.endlessExtendedList = data['extendedList'];
       },
       error => {
         this.spinner.hide();
@@ -132,7 +171,7 @@ export class CataloguesComponent implements OnInit {
       this.spinner.show();
       const finalSaveData = {
         coreList: this.coreCatalogs,
-        otherList: this.otherCatalogs,
+        //extendedList: this.coreExtendedList,
       };
       this.catalogService.saveCoreCatalog(finalSaveData)
         .subscribe(
@@ -159,21 +198,21 @@ export class CataloguesComponent implements OnInit {
 
   saveExtendedCatalog() {
       this.spinner.show();
-      const localModel = this.localExtCatalogModel;
+      /*const localModel = this.extendedCatalogs;
 
       for (const key in localModel) {
-        if (localModel[key].COST.attrValId !== null && localModel[key].COST.attrValId !== '') {
-          localModel[key].COST.attrvalue = document.getElementById('optionCost' + localModel[key].COST.attrValId).innerText;
+        if (localModel[key].attrValId !== null && localModel[key].attrValId !== '') {
+          localModel[key].attrvalue = document.getElementById('optionCost' + localModel[key].attrValId).innerText;
         }
       }
       for (const key in localModel) {
-        if (localModel[key].MOQ.attrValId !== null && localModel[key].MOQ.attrValId !== '') {
-          localModel[key].MOQ.attrvalue = document.getElementById('optionMoq' + localModel[key].MOQ.attrValId).innerText;
+        if (localModel[key].attrValId !== null && localModel[key].attrValId !== '') {
+          localModel[key].attrvalue = document.getElementById('optionMoq' + localModel[key].attrValId).innerText;
         }
-      }
-
+      }*/
       const finalSaveData = {
-        extAisLesList: localModel,
+        extAisLesList: this.extendedCatalogs,
+        //extendedList: this.endlessExtendedList,
       };
 
       this.catalogService.saveExtendedCatalog(finalSaveData)

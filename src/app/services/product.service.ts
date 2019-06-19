@@ -3,6 +3,8 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 import {UserDetailModel} from '../model/userdetail.model';
 import { ProductModel } from '../model/product.model';
+import {ContractItemModel} from '../model/contractitem.model';
+import {ProductMoqModel} from '../model/moq.model';
 
 
 @Injectable({
@@ -64,6 +66,12 @@ import { ProductModel } from '../model/product.model';
       console.log(productDetail);
       console.log('Add product call');
       return this.httpClient.post<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmccategory/addproduct`, productDetail,
+        this.httpOptions);
+    }
+
+    updateProductMoq(productMoq: ProductMoqModel) {
+      console.log(productMoq);
+      return this.httpClient.post<any>(`${environment.apiUrl}/wcs/resources/store/${this.storeId}/cmcproductsearch/updatemoq`, productMoq,
         this.httpOptions);
     }
 

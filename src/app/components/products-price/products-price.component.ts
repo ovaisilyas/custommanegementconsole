@@ -16,6 +16,7 @@ import { ProductModel } from '../../model/product.model';
 import { ItemContractListModel } from '../../model/itemcontractlist.model';
 import {Router} from '@angular/router';
 import { $ } from 'protractor';
+import {ProductMoqModel} from '../../model/moq.model';
 
 declare var require: any;
 declare var jQuery: any;
@@ -30,6 +31,7 @@ export class ProductsPriceComponent implements OnInit {
   productList: ProductListModel[];
   itemContractList: ItemContractListModel[];
   productDetail = new ProductModel('', '', '', '', '', '', '', true, '', true, true, '', '', '', '', '');
+  moqModel = new ProductMoqModel('', '1');
   loading = true;
   showPagination = false;
   itemPriceList = [];
@@ -37,6 +39,8 @@ export class ProductsPriceComponent implements OnInit {
   IdKey = 0;
   searchTerm = '';
   showProductListTable = false;
+  showEdit = Number;
+  newMoq = 0;
 
   constructor(
     private productService: ProductService,
@@ -68,6 +72,32 @@ export class ProductsPriceComponent implements OnInit {
   getHeaderOptions() {
     this.productService.getHeaderOptions();
     this.contractService.getHeaderOptions();
+  }
+
+  showEditMoq(index, moq) {
+    this.showEdit = index;
+    this.newMoq = Number(moq);
+  }
+
+  updateProductMoq(value: any) {
+    this.moqModel.catentryID = value;
+    this.moqModel.moqValue = this.newMoq.toString();
+    this.productService.updateProductMoq(this.moqModel)
+      .subscribe(
+        data => {
+          this.alertService.success('MOQ updated successfully.');
+          this.showEdit = null;
+          this.onEnter(this.searchTerm);
+        },
+        error => {
+          this.alertService.error(error);
+        }
+
+      );
+  }
+
+  cancelContractMoqEdit() {
+    this.showEdit = null;
   }
 
   onEnter(value: string) {

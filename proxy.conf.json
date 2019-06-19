@@ -1,0 +1,7 @@
+{
+  "/api/*": {
+    "target": "http://www.officebrands.net.au",
+    "secure": false,
+    "logLevel": "debug"
+  }
+}

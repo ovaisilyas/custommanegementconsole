@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://obuat.net.au'
+  apiUrl: 'https://www.officebrands.net.au'
 };
 
 /*

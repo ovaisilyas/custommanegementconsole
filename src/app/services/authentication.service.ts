@@ -5,7 +5,7 @@ import {Observable, of, throwError} from 'rxjs';
 import {catchError, map} from 'rxjs/operators';
 
 const httpOptions = {
-  headers: new HttpHeaders({ 'Access-Control-Allow-Origin': 'true', 'Content-Type': 'application/json' })
+  headers: new HttpHeaders({ 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' })
 };
 
 @Injectable()
