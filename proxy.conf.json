@@ -1,6 +1,6 @@
 {
   "/api/*": {
-    "target": "http://www.officebrands.net.au",
+    "target": "http://obuat.net.au",
     "secure": false,
     "logLevel": "debug"
   }
